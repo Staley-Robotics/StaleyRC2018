@@ -6,37 +6,38 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Sends Joystick values to DriveTrain substance
  */
 public class JoystickDrive extends Command {
-	
-	DriveTrain drive;
-	private double speedModifier = 1;
-	
-    public JoystickDrive(double speedModifier) {
-        this.speedModifier = speedModifier;
-        requires(Robot.driveTrain);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	private DriveTrain driveTrain;
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+	public JoystickDrive() {
+		requires(Robot.driveTrain);
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+		driveTrain = new DriveTrain();
+	}
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		driveTrain.tankDrive(Robot.m_oi.getLeftStickY(), Robot.m_oi.getRightStickY());
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 }

@@ -17,37 +17,19 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
 	public static Joystick xboxController;
 	public static Joystick xboxControllertwo;
-	
+
 	public OI() {
-		
+
 		// ***** xbox Controller *****
 		xboxController = new Joystick(RobotMap.XBOX_PORT);
 		xboxControllertwo = new Joystick(RobotMap.XBOX_TWO_PORT);
-		
-		
-		
+
+	}
+	public double getRightStickY() {
+		return xboxController.getRawAxis(RobotMap.RIGHT_Y_AXIS);
 	}
 	
-	public double getUp() {
-		return xboxController.getPOV(1);
-	}
-	
-	public double getDown() {
-		return xboxController.getPOV(5);
-	}
-	
-	// Returns the value of the Left Trigger on the XBOX Controller
-	public double getLeftTrigger() {
-		return xboxController.getRawAxis(RobotMap.LEFT_TRIGGER);
-	}
-	
-	// Returns the value of the Right Trigger on the XBOX Controller
-	public double getRightTrigger() {
-		return xboxController.getRawAxis(RobotMap.RIGHT_TRIGGER);
-	}
-	
-	// Returns the X-Axis value of the Left Stick on the XBOX Controller
-	public double getLeftStickX() {
-		return xboxController.getRawAxis(RobotMap.LEFT_X_AXIS);
+	public double getLeftStickY() {
+		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 }
