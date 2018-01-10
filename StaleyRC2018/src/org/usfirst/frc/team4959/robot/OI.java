@@ -26,10 +26,10 @@ public class OI {
 
 	}
 	public double getRightStickY() {
-		return xboxController.getRawAxis(RobotMap.RIGHT_Y_AXIS);
+		return xboxController.getRawAxis(1);
 	}
 	
 	public double getLeftStickY() {
-		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
+		return xboxController.getRawAxis(5);
 	}
 }

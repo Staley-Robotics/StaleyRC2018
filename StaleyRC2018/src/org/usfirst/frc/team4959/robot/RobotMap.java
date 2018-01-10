@@ -40,8 +40,8 @@ public class RobotMap {
 	public static final int Y_BUTTON = 4;
 
 	// ***** Motor/Speed Controller Ports *****
-	public static final int FRONT_LEFT_DRIVE_MOTOR_PORT = 4;
-	public static final int REAR_LEFT_DRIVE_MOTOR_PORT = 5;
-	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 0;
-	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 1;
+	public static final int FRONT_LEFT_DRIVE_MOTOR_PORT = 0;
+	public static final int REAR_LEFT_DRIVE_MOTOR_PORT = 1;
+	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 2;
+	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 3;
 }

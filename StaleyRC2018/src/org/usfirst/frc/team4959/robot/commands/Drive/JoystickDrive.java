@@ -1,12 +1,13 @@
 package org.usfirst.frc.team4959.robot.commands.Drive;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Sends Joystick values to DriveTrain substance
+ * Sends Joystick values to DriveTrain. Substance.
  */
 public class JoystickDrive extends Command {
 
@@ -15,7 +16,7 @@ public class JoystickDrive extends Command {
 	public JoystickDrive() {
 		requires(Robot.driveTrain);
 
-		driveTrain = new DriveTrain();
+		driveTrain = Robot.driveTrain;
 	}
 
 	// Called just before this Command runs the first time
