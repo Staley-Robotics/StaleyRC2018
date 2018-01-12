@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveDistance;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
 /**
@@ -44,8 +45,8 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrain();
 		
 		driveTrain.resetNavx();
-
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		
+		m_chooser.addObject("Drive Distance", new DriveDistance(50));
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -107,6 +108,10 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
+		driveTrain.resetNavx();
+		driveTrain.resetEncoders();
+		
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -118,6 +123,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("IMU_Connected", driveTrain.isNavxConnected());
+		SmartDashboard.putNumber("Current Angle: ", driveTrain.getTrueAngle());
+		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoder());
+		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoder());
+
 	}
 
 	/**

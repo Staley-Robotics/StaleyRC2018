@@ -53,7 +53,6 @@ public class DriveTrain extends Subsystem {
 		rightEncoder.setDistancePerPulse((3.5 * Math.PI) / 256);
 
 		navx = new AHRS(SPI.Port.kMXP);
-		SmartDashboard.putBoolean("IMU_Connected", navx.isConnected());
 
 		frontLeft = new Victor(RobotMap.FRONT_LEFT_DRIVE_MOTOR_PORT);
 		rearLeft = new Victor(RobotMap.REAR_LEFT_DRIVE_MOTOR_PORT);
@@ -65,7 +64,7 @@ public class DriveTrain extends Subsystem {
 
 		m_drive = new DifferentialDrive(leftSide, rightSide);
 		m_drive.setSafetyEnabled(false);
-
+		
 		drivePS = new PIDSource() {
 
 			@Override
@@ -102,7 +101,51 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	public void execute(double power, double turn) {
-		m_drive.arcadeDrive(power, turn);
+		arcadeDrive(power, turn);
+	}
+	
+	public void stopDriveToPosition() {
+		drivePos.disable();
+		execute(0, 0);
+		drivePos.reset();
+	}
+	
+	public void leftDrive(double speed) {
+		leftSide.set(speed);
+	}
+	
+	public void rightDrive(double speed) {
+		rightSide.set(speed);
+	}
+	
+	public void startDriveToPosition(double position) {
+		drivePos.reset();
+		leftEncoder.reset();
+		rightEncoder.reset();
+		navx.reset();
+		driveToSetpoint(position);
+		drivePos.enable();
+	}
+	
+	public void driveToSetpoint(double pos) {
+		drivePos.setSetpoint(pos);
+	}
+	
+	public boolean isDriveOnTarget() {
+		return drivePos.onTarget();
+	}
+	
+	public double getLeftEncoder() {
+		return leftEncoder.getDistance();
+	}
+	
+	public double getRightEncoder() {
+		return rightEncoder.getDistance();
+	}
+	
+	public void resetEncoders() {
+		leftEncoder.reset();
+		rightEncoder.reset();
 	}
 	
 	// ***** NavX *****
@@ -139,12 +182,25 @@ public class DriveTrain extends Subsystem {
 		return navx.getRate();
 	}
 	
+	public double getQuaternion() {
+		return navx.getQuaternionZ();
+	}
+	
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new JoystickDrive());
 	}
 
+	
+	// ***** Drives *****
 	public void tankDrive(double speedL, double speedR) {
 		m_drive.tankDrive(speedL, speedR);
 	}
+	
+	public void arcadeDrive(double power, double turn) {
+		leftDrive(power + turn);
+		rightDrive(power + turn);
+	}
+	
 }
