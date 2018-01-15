@@ -25,11 +25,20 @@ public class OI {
 		xboxControllertwo = new Joystick(RobotMap.XBOX_TWO_PORT);
 
 	}
-	public double getRightStickY() {
+
+	public double getRightStickYCont1() {
 		return xboxController.getRawAxis(1);
 	}
-	
-	public double getLeftStickY() {
+
+	public double getLeftStickYCont1() {
 		return xboxController.getRawAxis(5);
+	}
+
+	public double getRightStickYCont2() {
+		return xboxControllertwo.getRawAxis(1);
+	}
+
+	public double getLeftStickYCont2() {
+		return xboxControllertwo.getRawAxis(5);
 	}
 }

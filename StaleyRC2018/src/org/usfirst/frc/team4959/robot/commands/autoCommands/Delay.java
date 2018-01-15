@@ -1,39 +1,38 @@
-package org.usfirst.frc.team4959.robot.commands.Drive;
+package org.usfirst.frc.team4959.robot.commands.autoCommands;
 
-import org.usfirst.frc.team4959.robot.Robot;
-import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command is always active. Control the power to the drivetrain with input
- * from a controller.
+ * Delays in time for given amount of seconds
  */
-public class JoystickDrive extends Command {
+public class Delay extends Command {
+	private double seconds;
+	private Timer time = new Timer();
 
-	private DriveTrain driveTrain;
-
-	public JoystickDrive() {
-		requires(Robot.driveTrain);
-		driveTrain = Robot.driveTrain;
+	public Delay(double seconds) {
+		this.seconds = seconds;
+		time.reset();
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		time.start();
+		System.out.println("Delay has started");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		driveTrain.tankDrive(Robot.m_oi.getLeftStickYCont1(), Robot.m_oi.getRightStickYCont1());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return (time.get() > seconds);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		time.stop();
 	}
 
 	// Called when another command which requires one or more of the same

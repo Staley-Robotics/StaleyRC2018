@@ -16,7 +16,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveDistance;
+import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.GyroTurning;
+import org.usfirst.frc.team4959.robot.commands.autoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4959.robot.subsystems.Arm;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,8 +32,8 @@ public class Robot extends TimedRobot {
 
 	// ***** Subsystems *****
 	public static DriveTrain driveTrain;
-	
 	public static OI m_oi;
+	public static Arm arm;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -43,10 +46,13 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		driveTrain = new DriveTrain();
-		
+		arm = new Arm();
+
 		driveTrain.resetNavx();
-		
-		m_chooser.addObject("Drive Distance", new DriveDistance(50));
+
+		// Add a list of autonomous modes to choose from to the Smart Dashboard
+		m_chooser.addObject("Drive Distance", new DriveDistance(20));
+		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -100,6 +106,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		//System.out.println(driveTrain.getTrueAngle());
 	}
 
 	@Override
@@ -108,10 +115,10 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		
+
 		driveTrain.resetNavx();
 		driveTrain.resetEncoders();
-		
+
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
@@ -123,17 +130,20 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
 		SmartDashboard.putBoolean("IMU_Connected", driveTrain.isNavxConnected());
 		SmartDashboard.putNumber("Current Angle: ", driveTrain.getTrueAngle());
-		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoder());
-		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoder());
-
-	}
+		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
+		SmartDashboard.putData("DriveTrain PID", driveTrain.getDrivePID());
+		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
+			}
 
 	/**
 	 * This function is called periodically during test mode.
 	 */
 	@Override
 	public void testPeriodic() {
+		LiveWindow.add(driveTrain);
 	}
 }

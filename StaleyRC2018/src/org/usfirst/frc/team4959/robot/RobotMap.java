@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team4959.robot;
 
-//Change
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -44,4 +43,7 @@ public class RobotMap {
 	public static final int REAR_LEFT_DRIVE_MOTOR_PORT = 1;
 	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 2;
 	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 3;
+
+	public static final int BOTTOM_ARM_PORT = 4;
+	public static final int TOP_ARM_PORT = 5;
 }

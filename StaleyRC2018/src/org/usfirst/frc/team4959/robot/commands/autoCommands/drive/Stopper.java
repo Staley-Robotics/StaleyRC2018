@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4959.robot.commands.Drive;
+package org.usfirst.frc.team4959.robot.commands.autoCommands.drive;
 
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
@@ -6,25 +6,24 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command is always active. Control the power to the drivetrain with input
- * from a controller.
+ * Stops the robot from moving during autonomous
  */
-public class JoystickDrive extends Command {
-
+public class Stopper extends Command {
+	
 	private DriveTrain driveTrain;
 
-	public JoystickDrive() {
-		requires(Robot.driveTrain);
+	public Stopper() {
 		driveTrain = Robot.driveTrain;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		driveTrain.arcadeDrive(0, 0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		driveTrain.tankDrive(Robot.m_oi.getLeftStickYCont1(), Robot.m_oi.getRightStickYCont1());
+		driveTrain.arcadeDrive(0, 0);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -34,6 +33,7 @@ public class JoystickDrive extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		driveTrain.arcadeDrive(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same
