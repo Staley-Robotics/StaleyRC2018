@@ -106,7 +106,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//System.out.println(driveTrain.getTrueAngle());
+		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
+		System.out.print(driveTrain.getTrueAngle());
 	}
 
 	@Override
@@ -132,12 +133,11 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 
 		SmartDashboard.putBoolean("IMU_Connected", driveTrain.isNavxConnected());
-		SmartDashboard.putNumber("Current Angle: ", driveTrain.getTrueAngle());
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putData("DriveTrain PID", driveTrain.getDrivePID());
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
-			}
+	}
 
 	/**
 	 * This function is called periodically during test mode.

@@ -55,9 +55,6 @@ public class GyroTurning extends Command implements PIDOutput{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
-		SmartDashboard.putNumber("Motor Power", turnPID.get());
-
     	System.out.println(driveTrain.getYaw());
     }
 
@@ -69,14 +66,11 @@ public class GyroTurning extends Command implements PIDOutput{
     // Called once after isFinished returns true
     protected void end() {
 		SmartDashboard.putNumber("Motor Power", turnPID.get());
-
     	System.out.println("Finished: "  + driveTrain.getYaw());
-    	
-    	turnPID.disable();
     	driveTrain.arcadeDrive(0, 0);
-
+    	turnPID.disable();
     	turnPID.reset();
-    	//driveTrain.resetNavx();
+    	driveTrain.resetNavx();
     }
 
     // Called when another command which requires one or more of the same

@@ -26,16 +26,28 @@ public class OI {
 
 	}
 
+	public double getLeftStickXCont1() {
+		return xboxController.getRawAxis(RobotMap.LEFT_X_AXIS);
+	}
+	
 	public double getRightStickYCont1() {
-		return xboxController.getRawAxis(1);
+		return xboxController.getRawAxis(RobotMap.RIGHT_Y_AXIS);
+	}
+	
+	public double getLeftTriggerCont1() {
+		return xboxController.getRawAxis(RobotMap.LEFT_TRIGGER);
+	}
+	
+	public double getRightTriggerCont1() {
+		return xboxController.getRawAxis(RobotMap.RIGHT_TRIGGER);
 	}
 
 	public double getLeftStickYCont1() {
-		return xboxController.getRawAxis(5);
+		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 
 	public double getRightStickYCont2() {
-		return xboxControllertwo.getRawAxis(1);
+		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_Y_AXIS);
 	}
 
 	public double getLeftStickYCont2() {

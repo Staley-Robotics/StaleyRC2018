@@ -28,8 +28,8 @@ public class DriveDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		currentDisplacement = ((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2;
-		SmartDashboard.putNumber("Current Displacement", currentDisplacement);
+		currentDisplacement = ((driveTrain.getLeftEncoderDistance() + driveTrain.getRightEncoderDistance()) / 2);
+		System.out.println();
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 	}
@@ -42,7 +42,7 @@ public class DriveDistance extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		driveTrain.arcadeDrive(0, 0);
+		driveTrain.stopMotors();
 		driveTrain.stopDriveToPosition();
 		driveTrain.resetNavx();
 	}
@@ -50,8 +50,6 @@ public class DriveDistance extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		driveTrain.tankDrive(0, 0);
-		driveTrain.stopDriveToPosition();
-		driveTrain.resetNavx();
+		end();
 	}
 }

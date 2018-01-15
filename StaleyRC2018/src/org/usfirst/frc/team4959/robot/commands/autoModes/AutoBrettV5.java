@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoBrettV5 extends CommandGroup {
 
 	public AutoBrettV5() {
-		addSequential(new DriveDistance(20));
-		addSequential(new Stopper());
+		addSequential(new DriveDistance(30));
 	}
 }

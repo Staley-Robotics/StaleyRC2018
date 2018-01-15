@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Controls basic drive functionality of the robot
@@ -27,9 +26,13 @@ public class DriveTrain extends Subsystem {
 	private Encoder leftEncoder;
 	private Encoder rightEncoder;
 
-	PIDSource drivePS;
-	PIDOutput drivePO;
+	private PIDSource drivePS;
+	private PIDOutput drivePO;
 	public static PIDController drivePos;
+	// PID Values
+	private final double kP = 0.0353;
+	private final double kI = 0.005;
+	private final double kD = 0.2;
 
 	private Victor frontLeft;
 	private Victor rearLeft;
@@ -48,8 +51,8 @@ public class DriveTrain extends Subsystem {
 		leftEncoder.reset();
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
-		leftEncoder.setDistancePerPulse((3.5 * Math.PI) / 256);
-		rightEncoder.setDistancePerPulse((3.5 * Math.PI) / 256);
+		leftEncoder.setDistancePerPulse((4 * Math.PI) / 256);
+		rightEncoder.setDistancePerPulse((4 * Math.PI) / 256);
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);
@@ -68,36 +71,26 @@ public class DriveTrain extends Subsystem {
 
 		// PID setup
 		drivePS = new PIDSource() {
-			
 			@Override
 			public void setPIDSourceType(PIDSourceType pidSource) {
-				// TODO Auto-generated method stub
 				setPIDSourceType(PIDSourceType.kDisplacement);
 			}
-
 			@Override
 			public double pidGet() {
-				// TODO use two
-				return (rightEncoder.getDistance() + leftEncoder.getDistance()) / 2;
+				return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
 			}
-
 			@Override
 			public PIDSourceType getPIDSourceType() {
-				// TODO Auto-generated method stub
 				return PIDSourceType.kDisplacement;
 			}
 		};
-
 		drivePO = new PIDOutput() {
-			
 			@Override
 			public void pidWrite(double output) {
-				double angle = getYaw();
-				SmartDashboard.putNumber("Power", output);
-				execute(output, angle * -.05);
+				execute(output, getYaw() * -0.02);
 			}
 		};
-		drivePos = new PIDController(.0353, 0.005, 0, drivePS, drivePO);
+		drivePos = new PIDController(kP, kI, kD, drivePS, drivePO);
 		drivePos.setContinuous(false);
 		drivePos.setOutputRange(-1, 1);
 		drivePos.setAbsoluteTolerance(.5);
@@ -129,11 +122,28 @@ public class DriveTrain extends Subsystem {
 	public void execute(double power, double turn) {
 		arcadeDrive(power, turn);
 	}
+	
+	public void stopMotors() {
+		m_drive.stopMotor();
+	}
 
 	// ***** Drives *****
 
 	public void tankDrive(double speedL, double speedR) {
 		m_drive.tankDrive(speedL, speedR);
+	}
+	
+	public void worldOfTanksDrive(double backward, double forward, double rotate) {
+		double speedModifier = 1;
+		double turnSpeedModifier = 1;
+		
+		if (backward * speedModifier < 0) {
+			m_drive.arcadeDrive(-backward * speedModifier, rotate * turnSpeedModifier);
+		} else if (forward < 0) {
+			m_drive.arcadeDrive(forward * speedModifier, rotate * turnSpeedModifier);
+		} else {
+			m_drive.arcadeDrive(0, rotate * turnSpeedModifier);
+		}
 	}
 
 	public void arcadeDrive(double power, double turn) {
