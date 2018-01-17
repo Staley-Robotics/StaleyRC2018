@@ -207,31 +207,36 @@ public class DriveTrain extends Subsystem {
 		navx.reset();
 	}
 
-	// Yaw is like the same thing as the angle we think but idk
+	// Resets the Yaw value set by user (Z-axis by default)
 	public void resetYaw() {
 		navx.zeroYaw();
 	}
 
+	// Returns the current yaw value
 	public double getYaw() {
-		return navx.getAngle();
+		return navx.getYaw();
 	}
 
 	public boolean isNavxConnected() {
 		return navx.isConnected();
 	}
-
+	
+	// Returns the yaw angle (Z-axis, in degrees)
 	public double getTrueAngle() {
 		return navx.getAngle();
 	}
-
+	
+	// Returns the X-axis value
 	public double getPitch() {
 		return navx.getPitch();
 	}
 
+	// Returns the Y-axis value
 	public double getRoll() {
 		return navx.getRoll();
 	}
 
+	// Returns the rotation of the yaw gyro, in degrees per second
 	public double getRotationSpeed() {
 		return navx.getRate();
 	}
