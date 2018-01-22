@@ -8,7 +8,11 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
+import org.usfirst.frc.team4959.robot.commands.Shifter.ShifterToggle;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,6 +28,9 @@ public class OI {
 		xboxController = new Joystick(RobotMap.XBOX_PORT);
 		xboxControllertwo = new Joystick(RobotMap.XBOX_TWO_PORT);
 
+		// Toggle for shifting between high and low gear
+		Button shifterToggle = new JoystickButton(xboxController, RobotMap.B_BUTTON);
+		shifterToggle.whenPressed(new ShifterToggle());
 	}
 
 	public double getLeftStickXCont1() {

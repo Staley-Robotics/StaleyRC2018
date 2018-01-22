@@ -46,13 +46,15 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		// Encoder setup
-		leftEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-		rightEncoder = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_ONE, RobotMap.LEFT_ENCODER_PORT_TWO, false, Encoder.EncodingType.k4X);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_ONE, RobotMap.RIGHT_ENCODER_PORT_TWO, false, Encoder.EncodingType.k4X);
 		leftEncoder.reset();
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
-		leftEncoder.setDistancePerPulse((4 * Math.PI) / 256);
-		rightEncoder.setDistancePerPulse((4 * Math.PI) / 256);
+		// We don't why distance per pulse is this number, but it works
+		leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE);
+		rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE);
+		
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);

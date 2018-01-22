@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Drive a certain distance that is passed in.
  */
-public class DriveDistance extends Command {
+public class DriveStraight extends Command {
 
 	private DriveTrain driveTrain;
 	private double distance;
 	private double currentDisplacement;
 
-	public DriveDistance(double distance) {
+	public DriveStraight(double distance) {
 		requires(Robot.driveTrain);
 		driveTrain = Robot.driveTrain;
 		this.distance = distance;

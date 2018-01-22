@@ -15,10 +15,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveDistance;
+import org.usfirst.frc.team4959.robot.commands.autoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveStraight;
+import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.autoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.subsystems.Arm;
 
 /**
@@ -34,6 +37,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain driveTrain;
 	public static OI m_oi;
 	public static Arm arm;
+	public static Pneumatics pneumatics;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -47,12 +51,19 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		driveTrain = new DriveTrain();
 		arm = new Arm();
+		pneumatics = new Pneumatics();
 
 		driveTrain.resetNavx();
 
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
-		m_chooser.addObject("Drive Distance", new DriveDistance(20));
+		m_chooser.addDefault("Delay", new Delay(15));
+		m_chooser.addObject("Drive Distance", new DriveStraight(20));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
+		m_chooser.addObject("45 Inches", new DriveTurn(45, 0.7, 0, 8));
+		m_chooser.addObject("25 Inches", new DriveTurn(25, 0.6, 0, 8));
+		m_chooser.addObject("60 Inches", new DriveTurn(60, 0.7, 0, 8));
+		m_chooser.addObject("80 Inches", new DriveTurn(80, 0.7, 0, 8));
+		m_chooser.addObject("10 Inches", new DriveTurn(10, 0.5, 0, 8));
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -107,7 +118,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
-		System.out.print(driveTrain.getTrueAngle());
+		//System.out.print(driveTrain.getTrueAngle());
 	}
 
 	@Override
