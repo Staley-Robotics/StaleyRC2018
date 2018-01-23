@@ -23,8 +23,8 @@ public class DriveTrain extends Subsystem {
 
 	private AHRS navx;
 
-	private Encoder leftEncoder;
-	private Encoder rightEncoder;
+	public Encoder leftEncoder;
+	public Encoder rightEncoder;
 
 	private PIDSource drivePS;
 	private PIDOutput drivePO;
@@ -32,7 +32,7 @@ public class DriveTrain extends Subsystem {
 	// PID Values
 	private final double kP = 0.0353;
 	private final double kI = 0.005;
-	private final double kD = 0.2;
+	private final double kD = 0.2; // 0.2
 
 	private Victor frontLeft;
 	private Victor rearLeft;
@@ -52,8 +52,8 @@ public class DriveTrain extends Subsystem {
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
 		// We don't why distance per pulse is this number, but it works
-		leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE);
-		rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE);
+		leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+		rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
 		
 
 		// Gyro setup

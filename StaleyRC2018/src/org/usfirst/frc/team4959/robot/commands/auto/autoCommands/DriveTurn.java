@@ -1,6 +1,7 @@
-package org.usfirst.frc.team4959.robot.commands.autoCommands.drive;
+package org.usfirst.frc.team4959.robot.commands.auto.autoCommands;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -16,9 +17,9 @@ public class DriveTurn extends Command {
 	private double desiredPower;
 	private double currentDisplacement;
 	// Sets distance from when it starts using user-made PID controls motor power
-	private int pThreshold = 3;
+	private int pThreshold = 5;
 	
-	private double stopThreshold = 0.25;
+	private double stopThreshold = 0.5;
 	private Timer timer;
 	private double time;
 	private double turn = 0;
@@ -38,21 +39,32 @@ public class DriveTurn extends Command {
     	timer.start();
     	driveTrain.resetEncoders();
     	driveTrain.resetNavx();
+    	if(desiredPower < 0) {
+    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
+    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
+    	}
+    	else {
+    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double currentAngle = driveTrain.getYaw();
-//    	currentDisplacement = ((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2;
+    	currentDisplacement = ((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2;
 //    	currentDisplacement = Math.max(driveTrain.getRightEncoderDistance(), driveTrain.getLeftEncoderDistance());
-    	currentDisplacement = driveTrain.getRightEncoderDistance();
+//    	currentDisplacement = driveTrain.getRightEncoderDistance();
 
     	double error = Math.abs(desiredDistance) - Math.abs(currentDisplacement);
     	System.out.println("Error:" + error);
     	if(error < pThreshold) {
-    		if(turn == 0) {
+    		if(turn == 0 && desiredPower > 0) {
     			System.out.println("gyro");
     			driveTrain.arcadeDrive(error * 0.2, 0);
+    		} else if(turn == 0 && desiredPower < 0) {
+    			System.out.println("gyro");
+    			driveTrain.arcadeDrive(-error * 0.2, 0);
     		} else {
     			System.out.println("turn");
     			driveTrain.arcadeDrive(desiredPower, turn);
@@ -60,7 +72,7 @@ public class DriveTurn extends Command {
     	} else {
     		if(turn == 0) {
     			System.out.println("Current Angle: " + currentAngle);
-    			driveTrain.arcadeDrive(desiredPower, -currentAngle * 0.2);
+    			driveTrain.arcadeDrive(desiredPower, -currentAngle * 0.1);
     		} else {
     			System.out.println("turn");
     			driveTrain.arcadeDrive(desiredPower, turn);
@@ -88,6 +100,8 @@ public class DriveTurn extends Command {
     	driveTrain.arcadeDrive(0, 0);
     	driveTrain.resetNavx();
     	driveTrain.resetEncoders();
+    	
+    	System.out.println(Robot.gameData);
     }
 
     // Called when another command which requires one or more of the same

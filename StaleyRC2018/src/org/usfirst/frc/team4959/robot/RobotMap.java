@@ -44,7 +44,8 @@ public class RobotMap {
 	public static final int RIGHT_ENCODER_PORT_ONE = 2;
 	public static final int RIGHT_ENCODER_PORT_TWO = 3;
 	// We don't why distance per pulse is this number, but it works
-	public static final double ENCODER_DISTANCE_PER_PULSE = 180;
+	public static final double ENCODER_DISTANCE_PER_PULSE_POSITIVE = 185;
+	public static final double ENCODER_DISTANCE_PER_PULSE_NEGATIVE = 175;
 
 	// ***** Motor/Speed Controller Ports *****
 	public static final int FRONT_LEFT_DRIVE_MOTOR_PORT = 0;

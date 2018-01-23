@@ -6,8 +6,8 @@
 /*----------------------------------------------------------------------------*/
 
 package org.usfirst.frc.team4959.robot;
-//Do STUFFFFF
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,11 +15,14 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4959.robot.commands.autoCommands.Delay;
-import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveStraight;
-import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.DriveTurn;
-import org.usfirst.frc.team4959.robot.commands.autoCommands.drive.GyroTurning;
-import org.usfirst.frc.team4959.robot.commands.autoModes.AutoBrettV5;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveStraight;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.AutoBrettV5;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.CenterToSwitch;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.subsystems.Arm;
@@ -38,7 +41,9 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static Arm arm;
 	public static Pneumatics pneumatics;
-
+	
+	// Contains values for which switches are which color
+	public static String gameData;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -57,13 +62,10 @@ public class Robot extends TimedRobot {
 
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
 		m_chooser.addDefault("Delay", new Delay(15));
-		m_chooser.addObject("Drive Distance", new DriveStraight(20));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
-		m_chooser.addObject("45 Inches", new DriveTurn(45, 0.7, 0, 8));
-		m_chooser.addObject("25 Inches", new DriveTurn(25, 0.6, 0, 8));
-		m_chooser.addObject("60 Inches", new DriveTurn(60, 0.7, 0, 8));
-		m_chooser.addObject("80 Inches", new DriveTurn(80, 0.7, 0, 8));
-		m_chooser.addObject("10 Inches", new DriveTurn(10, 0.5, 0, 8));
+		m_chooser.addObject("Left Switch", new LeftSwitch());
+		m_chooser.addObject("CenterToSwitch", new CenterToSwitch());
+		m_chooser.addObject("Right Switch", new RightSwitch());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -96,6 +98,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		m_autonomousCommand = m_chooser.getSelected();
 
 		/*
@@ -116,6 +119,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
 		//System.out.print(driveTrain.getTrueAngle());
@@ -156,5 +160,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.add(driveTrain);
+	}
+	
+	public static String getGameData() {
+		return DriverStation.getInstance().getGameSpecificMessage();
 	}
 }
