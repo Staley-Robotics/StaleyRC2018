@@ -23,12 +23,12 @@ public class ShifterToggle extends Command {
 	protected void execute() {
 		// Toggles to high gear
 		if (shifterToggle) {
-			Robot.pneumatics.shifterOn();
+			Robot.driveTrain.shifterOn();
 			System.out.println("High Gear");
 		}
 		// Toggles to low gear
 		else {
-			Robot.pneumatics.shifterOff();
+			Robot.driveTrain.shifterOff();
 			System.out.println("Low Gear");
 		}
 	}

@@ -24,8 +24,8 @@ import org.usfirst.frc.team4959.robot.commands.auto.autoModes.CenterToSwitch;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
-import org.usfirst.frc.team4959.robot.subsystems.Arm;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,8 +39,8 @@ public class Robot extends TimedRobot {
 	// ***** Subsystems *****
 	public static DriveTrain driveTrain;
 	public static OI m_oi;
-	public static Arm arm;
 	public static Pneumatics pneumatics;
+	public static Intake intake;
 	
 	// Contains values for which switches are which color
 	public static String gameData;
@@ -55,8 +55,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		driveTrain = new DriveTrain();
-		arm = new Arm();
 		pneumatics = new Pneumatics();
+		intake = new Intake();
 
 		driveTrain.resetNavx();
 

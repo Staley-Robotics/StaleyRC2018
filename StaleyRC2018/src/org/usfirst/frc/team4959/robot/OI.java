@@ -8,6 +8,10 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
+import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
+import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
+import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
+import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 import org.usfirst.frc.team4959.robot.commands.Shifter.ShifterToggle;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,6 +35,23 @@ public class OI {
 		// Toggle for shifting between high and low gear
 		Button shifterToggle = new JoystickButton(xboxController, RobotMap.B_BUTTON);
 		shifterToggle.whenPressed(new ShifterToggle());
+		
+		// Brings in power cubes
+		Button intake = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
+		intake.whileHeld(new RunIntake(0.4));
+		
+		// Spits the cube back out like a quitter
+		Button reverseIntake = new JoystickButton(xboxControllertwo, RobotMap.A_BUTTON);
+		reverseIntake.whileHeld(new RunIntake(-0.7));
+		
+//		Button expandIntake = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
+//		expandIntake.whenPressed(new ExpandIntake());
+//		
+//		Button closeIntake = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
+//		closeIntake.whenPressed(new CloseIntake());
+		
+		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
+		intakePistonToggle.whenPressed(new IntakePistonToggle());
 	}
 
 	public double getLeftStickXCont1() {

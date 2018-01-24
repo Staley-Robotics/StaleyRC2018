@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,6 +26,9 @@ public class DriveTrain extends Subsystem {
 
 	public Encoder leftEncoder;
 	public Encoder rightEncoder;
+
+	Solenoid shifter = new Solenoid(RobotMap.SHIFTER_ONE_PORT);
+	Solenoid shifter2 = new Solenoid(RobotMap.SHIFTER_TWO_PORT);
 
 	private PIDSource drivePS;
 	private PIDOutput drivePO;
@@ -46,15 +50,16 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		// Encoder setup
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_ONE, RobotMap.LEFT_ENCODER_PORT_TWO, false, Encoder.EncodingType.k4X);
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_ONE, RobotMap.RIGHT_ENCODER_PORT_TWO, false, Encoder.EncodingType.k4X);
+		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_ONE, RobotMap.LEFT_ENCODER_PORT_TWO, false,
+				Encoder.EncodingType.k4X);
+		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_ONE, RobotMap.RIGHT_ENCODER_PORT_TWO, false,
+				Encoder.EncodingType.k4X);
 		leftEncoder.reset();
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
 		// We don't why distance per pulse is this number, but it works
 		leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
 		rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
-		
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);
@@ -77,10 +82,12 @@ public class DriveTrain extends Subsystem {
 			public void setPIDSourceType(PIDSourceType pidSource) {
 				setPIDSourceType(PIDSourceType.kDisplacement);
 			}
+
 			@Override
 			public double pidGet() {
 				return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
 			}
+
 			@Override
 			public PIDSourceType getPIDSourceType() {
 				return PIDSourceType.kDisplacement;
@@ -124,7 +131,7 @@ public class DriveTrain extends Subsystem {
 	public void execute(double power, double turn) {
 		arcadeDrive(power, turn);
 	}
-	
+
 	public void stopMotors() {
 		m_drive.stopMotor();
 	}
@@ -134,11 +141,11 @@ public class DriveTrain extends Subsystem {
 	public void tankDrive(double speedL, double speedR) {
 		m_drive.tankDrive(speedL, speedR);
 	}
-	
+
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
 		double turnSpeedModifier = 1;
-		
+
 		if (backward * speedModifier < 0) {
 			m_drive.arcadeDrive(-backward * speedModifier, rotate * turnSpeedModifier);
 		} else if (forward < 0) {
@@ -152,6 +159,20 @@ public class DriveTrain extends Subsystem {
 		// leftDrive(power + turn);
 		// rightDrive(power + turn);
 		m_drive.arcadeDrive(power, turn);
+	}
+
+	// ***** Shifters *****
+
+	// Shifts the gearbox up
+	public void shifterOn() {
+		shifter2.set(true);
+		shifter.set(false);
+	}
+
+	// Shifts the gearbox down
+	public void shifterOff() {
+		shifter.set(true);
+		shifter2.set(false);
 	}
 
 	// ***** PID *****
@@ -222,12 +243,12 @@ public class DriveTrain extends Subsystem {
 	public boolean isNavxConnected() {
 		return navx.isConnected();
 	}
-	
+
 	// Returns the yaw angle (Z-axis, in degrees)
 	public double getTrueAngle() {
 		return navx.getAngle();
 	}
-	
+
 	// Returns the X-axis value
 	public double getPitch() {
 		return navx.getPitch();
@@ -246,7 +267,7 @@ public class DriveTrain extends Subsystem {
 	public double getQuaternion() {
 		return navx.getQuaternionZ();
 	}
-	
+
 	public AHRS getNavx() {
 		return navx;
 	}
