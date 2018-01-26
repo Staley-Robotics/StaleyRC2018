@@ -23,6 +23,7 @@ import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -43,6 +44,7 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static Pneumatics pneumatics;
 	public static Intake intake;
+	public static Elevator elevator;
 	
 	// Contains values for which switches are which color
 	public static String gameData;
@@ -59,6 +61,7 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrain();
 		pneumatics = new Pneumatics();
 		intake = new Intake();
+		elevator = new Elevator();
 
 		driveTrain.resetNavx();
 
