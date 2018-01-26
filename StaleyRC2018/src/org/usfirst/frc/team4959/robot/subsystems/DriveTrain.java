@@ -22,21 +22,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class DriveTrain extends Subsystem {
 
-	private AHRS navx;
+	public AHRS navx;
 
 	public Encoder leftEncoder;
 	public Encoder rightEncoder;
 
 	Solenoid shifter = new Solenoid(RobotMap.SHIFTER_ONE_PORT);
 	Solenoid shifter2 = new Solenoid(RobotMap.SHIFTER_TWO_PORT);
-
-	private PIDSource drivePS;
-	private PIDOutput drivePO;
-	public static PIDController drivePos;
-	// PID Values
-	private final double kP = 0.0353;
-	private final double kI = 0.005;
-	private final double kD = 0.2; // 0.2
 
 	private Victor frontLeft;
 	private Victor rearLeft;
@@ -46,7 +38,7 @@ public class DriveTrain extends Subsystem {
 	private Victor rearRight;
 	private SpeedControllerGroup rightSide;
 
-	private DifferentialDrive m_drive;
+	public DifferentialDrive m_drive;
 
 	public DriveTrain() {
 		// Encoder setup
@@ -76,37 +68,8 @@ public class DriveTrain extends Subsystem {
 		m_drive = new DifferentialDrive(leftSide, rightSide);
 		m_drive.setSafetyEnabled(false);
 
-		// PID setup
-		drivePS = new PIDSource() {
-			@Override
-			public void setPIDSourceType(PIDSourceType pidSource) {
-				setPIDSourceType(PIDSourceType.kDisplacement);
-			}
-
-			@Override
-			public double pidGet() {
-				return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-			}
-
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				return PIDSourceType.kDisplacement;
-			}
-		};
-		drivePO = new PIDOutput() {
-			@Override
-			public void pidWrite(double output) {
-				execute(output, getYaw() * -0.02);
-			}
-		};
-		drivePos = new PIDController(kP, kI, kD, drivePS, drivePO);
-		drivePos.setContinuous(false);
-		drivePos.setOutputRange(-1, 1);
-		drivePos.setAbsoluteTolerance(.5);
-
 		// Live Window stuff
 		setName("Drive Train");
-		addChild("Drivetrain Position PID", drivePos);
 		addChild("Gyro", navx);
 		addChild("Left Encoder", leftEncoder);
 		addChild("Right Encoder", rightEncoder);
@@ -173,40 +136,6 @@ public class DriveTrain extends Subsystem {
 	public void shifterOff() {
 		shifter.set(true);
 		shifter2.set(false);
-	}
-
-	// ***** PID *****
-
-	// Starts the PID controller to a given setpoint
-	public void startDriveToPosition(double position) {
-		drivePos.reset();
-		leftEncoder.reset();
-		rightEncoder.reset();
-		navx.reset();
-		driveToSetpoint(position);
-		drivePos.enable();
-
-	}
-
-	// Stops and resets the PID controller
-	public void stopDriveToPosition() {
-		drivePos.disable();
-		execute(0, 0);
-		drivePos.reset();
-	}
-
-	// Gives the PID controller a setpoint
-	public void driveToSetpoint(double pos) {
-		drivePos.setSetpoint(pos);
-	}
-
-	// Returns true if the value from the PID controller is within the tolerance
-	public boolean isDriveOnTarget() {
-		return drivePos.onTarget();
-	}
-
-	public PIDController getDrivePID() {
-		return drivePos;
 	}
 
 	// ***** Encoders *****

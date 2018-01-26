@@ -22,9 +22,9 @@ public class IntakePistonToggle extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (intakeToggle) {
-    		Robot.pneumatics.expandIntake();
+    		Robot.intake.expandIntake();
     	} else {
-    		Robot.pneumatics.closeIntake();
+    		Robot.intake.closeIntake();
     	}
     }
 

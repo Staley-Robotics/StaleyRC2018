@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Pneumatics extends Subsystem {
 	
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR_PORT);
-	DoubleSolenoid intakeSolenoid = new DoubleSolenoid(RobotMap.INTAKE_SOLENOID_PORT_ONE, RobotMap.INTAKE_SOLENOID_PORT_TWO);
-
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -27,14 +26,6 @@ public class Pneumatics extends Subsystem {
 	// then it stops
 	public void runCompressor() {
 		compressor.setClosedLoopControl(true);
-	}
-	
-	public void expandIntake() {
-		intakeSolenoid.set(DoubleSolenoid.Value.kForward);
-	}
-	
-	public void closeIntake() {
-		intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 }
 

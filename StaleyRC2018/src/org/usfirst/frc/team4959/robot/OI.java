@@ -8,11 +8,9 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
-import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
-import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
+import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
-import org.usfirst.frc.team4959.robot.commands.Shifter.ShifterToggle;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;

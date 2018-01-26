@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.Delay;
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveStraight;
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.AutoBrettV5;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.CenterToSwitch;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.CenterSwitch;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftToScale;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
+import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +33,8 @@ import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.properties file in the
  * project.
+ * 
+ * Tyler sux at building.
  */
 public class Robot extends TimedRobot {
 
@@ -64,8 +66,10 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Delay", new Delay(15));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
 		m_chooser.addObject("Left Switch", new LeftSwitch());
-		m_chooser.addObject("CenterToSwitch", new CenterToSwitch());
+		m_chooser.addObject("CenterToSwitch", new CenterSwitch());
 		m_chooser.addObject("Right Switch", new RightSwitch());
+		m_chooser.addObject("Right To Scale", new RightToScale());
+		m_chooser.addObject("Left To Scale", new LeftToScale());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -119,7 +123,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(PlateColorChecker.rightScaleColor()) {
+			System.out.println("R");
+		}
+		else {
+			System.out.println("L");
+		}
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
 		//System.out.print(driveTrain.getTrueAngle());
@@ -150,7 +159,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("IMU_Connected", driveTrain.isNavxConnected());
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
-		SmartDashboard.putData("DriveTrain PID", driveTrain.getDrivePID());
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
 	}
 
