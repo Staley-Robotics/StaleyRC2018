@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Closes the claw of the arms to hold in the power cube
  */
 public class CloseIntake extends Command {
 

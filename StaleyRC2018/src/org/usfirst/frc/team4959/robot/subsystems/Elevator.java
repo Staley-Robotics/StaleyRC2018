@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Subsystem that controls our elevator system that lifts power cubes to certain
+ * elevations
  */
 public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 
@@ -21,7 +22,7 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 
 	// PID values
 	private final double kP = 0.0353;
-	private final double kI = 0.005;
+	private final double kI = 0;
 	private final double kD = 0.2;
 
 	private PIDController elevatorPID;
@@ -35,6 +36,9 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 
 		encoder.reset();
 
+		// encoder.setDistancePerPulse((4 * Math.PI) /
+		// RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+
 		elevatorPID = new PIDController(kP, kI, kD, this, this);
 
 		elevatorPID.setContinuous(false);
@@ -43,22 +47,22 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 		elevatorPID.reset();
 	}
 
-	public void driveToSetpoint(double pos) {
-		elevatorPID.setSetpoint(pos);
-	}
-
 	public void startPID(double pos) {
 		elevatorPID.setSetpoint(pos);
 		elevatorPID.enable();
 	}
-	
+
 	public void stopPID() {
 		elevatorPID.disable();
 	}
-	
+
+	/**
+	 * @return True if elevator has reached set point
+	 */
 	public boolean pidOnTarget() {
 		return elevatorPID.onTarget();
 	}
+
 	public void initDefaultCommand() {
 
 	}
@@ -76,7 +80,6 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 	@Override
 	public void setPIDSourceType(PIDSourceType pidSource) {
 		setPIDSourceType(PIDSourceType.kDisplacement);
-
 	}
 
 	@Override

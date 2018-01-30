@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Drive a certain distance that is passed in.
+ * Currently not in use
  */
 public class DriveStraight extends Command {
 

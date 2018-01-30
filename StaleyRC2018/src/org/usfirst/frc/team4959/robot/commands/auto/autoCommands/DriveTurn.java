@@ -3,12 +3,13 @@ package org.usfirst.frc.team4959.robot.commands.auto.autoCommands;
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Uses encoders to drive to a desired distance while also be capable of turning at the same time.
  */
 public class DriveTurn extends Command {
 	private DriveTrain driveTrain;
@@ -40,12 +41,12 @@ public class DriveTurn extends Command {
     	driveTrain.resetEncoders();
     	driveTrain.resetNavx();
     	if(desiredPower < 0) {
-    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
-    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
+    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
+    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_NEGATIVE);
     	}
     	else {
-    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
-    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+    		driveTrain.rightEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+    		driveTrain.leftEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
     	}
     }
 
@@ -53,8 +54,6 @@ public class DriveTurn extends Command {
     protected void execute() {
     	double currentAngle = driveTrain.getYaw();
     	currentDisplacement = ((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2;
-//    	currentDisplacement = Math.max(driveTrain.getRightEncoderDistance(), driveTrain.getLeftEncoderDistance());
-//    	currentDisplacement = driveTrain.getRightEncoderDistance();
 
     	double error = Math.abs(desiredDistance) - Math.abs(currentDisplacement);
     	System.out.println("Error:" + error);

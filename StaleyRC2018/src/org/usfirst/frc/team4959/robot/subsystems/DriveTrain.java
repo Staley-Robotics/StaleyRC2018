@@ -2,14 +2,11 @@ package org.usfirst.frc.team4959.robot.subsystems;
 
 import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.commands.Drive.JoystickDrive;
+import org.usfirst.frc.team4959.robot.util.Constants;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -50,8 +47,8 @@ public class DriveTrain extends Subsystem {
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
 		// We don't why distance per pulse is this number, but it works
-		leftEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
-		rightEncoder.setDistancePerPulse((4 * Math.PI) / RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+		leftEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
+		rightEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);
@@ -109,9 +106,9 @@ public class DriveTrain extends Subsystem {
 		double speedModifier = 1;
 		double turnSpeedModifier = 1;
 
-		if (backward * speedModifier < 0) {
+		if (backward * speedModifier > 0) {
 			m_drive.arcadeDrive(-backward * speedModifier, rotate * turnSpeedModifier);
-		} else if (forward < 0) {
+		} else if (forward > 0) {
 			m_drive.arcadeDrive(forward * speedModifier, rotate * turnSpeedModifier);
 		} else {
 			m_drive.arcadeDrive(0, rotate * turnSpeedModifier);
@@ -119,20 +116,18 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void arcadeDrive(double power, double turn) {
-		// leftDrive(power + turn);
-		// rightDrive(power + turn);
 		m_drive.arcadeDrive(power, turn);
 	}
 
 	// ***** Shifters *****
 
-	// Shifts the gearbox up
+	// Shifts the gear-box up
 	public void shifterOn() {
 		shifter2.set(true);
 		shifter.set(false);
 	}
 
-	// Shifts the gearbox down
+	// Shifts the gear-box down
 	public void shifterOff() {
 		shifter.set(true);
 		shifter2.set(false);
@@ -159,7 +154,7 @@ public class DriveTrain extends Subsystem {
 		navx.reset();
 	}
 
-	// Resets the Yaw value set by user (Z-axis by default)
+	// Resets the yaw value set by user (Z-axis by default)
 	public void resetYaw() {
 		navx.zeroYaw();
 	}

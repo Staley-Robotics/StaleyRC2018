@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Brings in a power cube
+ * Brings in a power cube or spits one out
  */
 public class RunIntake extends Command {
 	

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Subsystem that controls the intake system, including the motors on the claws and the piston that expands and closes the claw
  */
 public class Intake extends Subsystem {
 	

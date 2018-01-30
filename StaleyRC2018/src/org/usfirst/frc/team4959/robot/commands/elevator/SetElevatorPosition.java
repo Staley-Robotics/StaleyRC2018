@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Sets the elevators position to the set point. 
  */
 public class SetElevatorPosition extends Command {
 	

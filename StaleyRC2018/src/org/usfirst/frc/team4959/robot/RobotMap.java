@@ -45,9 +45,6 @@ public class RobotMap {
 	public static final int RIGHT_ENCODER_PORT_TWO = 3;
 	public static final int ELEVATOR_ENCODER_PORT_ONE = 4;
 	public static final int ELEVATOR_ENCODER_PORT_TWO = 5;
-	// We don't why distance per pulse is this number, but it works
-	public static final double ENCODER_DISTANCE_PER_PULSE_POSITIVE = 185;
-	public static final double ENCODER_DISTANCE_PER_PULSE_NEGATIVE = 175;
 
 	// ***** Motor/Speed Controller Ports *****
 	public static final int FRONT_LEFT_DRIVE_MOTOR_PORT = 0;
@@ -61,6 +58,8 @@ public class RobotMap {
 	public static final int ELEVATOR_MOTOR_ONE_PORT = 6;
 	public static final int ELEVATOR_MOTOR_TWO_PORT = 7;
 	
+	public static final int WINCH_MOTOR_PORT = 8;
+	
 	// ***** Pneumatics Ports *****
 	public static final int COMPRESSOR_PORT = 0;
 	
@@ -69,4 +68,6 @@ public class RobotMap {
 	
 	public static final int INTAKE_SOLENOID_PORT_ONE = 0;
 	public static final int INTAKE_SOLENOID_PORT_TWO = 1; 
+	
+	// Collin sucks at coding and he smells like poop, ps he has Julia's cooties 
 }

@@ -4,12 +4,11 @@ import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.commands.Pneumatics.RunCompressor;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * Subsystem controlling anything that only belongs to Pneumatics
+ * Usually only the compressor 
  */
 public class Pneumatics extends Subsystem {
 	
@@ -28,4 +27,3 @@ public class Pneumatics extends Subsystem {
 		compressor.setClosedLoopControl(true);
 	}
 }
-

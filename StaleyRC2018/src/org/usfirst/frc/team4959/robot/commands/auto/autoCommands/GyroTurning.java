@@ -18,6 +18,7 @@ public class GyroTurning extends Command implements PIDOutput{
 	private PIDController turnPID;
 	
 	private double angle;
+	
 	// PID Values
 	private final double kP = 0.024;
 	private final double kI = 0;
@@ -42,7 +43,7 @@ public class GyroTurning extends Command implements PIDOutput{
     	
     	// Tolerance of how far off the angle can be
     	turnPID.setAbsoluteTolerance(0.5);
-    	turnPID.setContinuous(true);
+    	turnPID.setContinuous(false);
     }
     
     // Called just before this Command runs the first time

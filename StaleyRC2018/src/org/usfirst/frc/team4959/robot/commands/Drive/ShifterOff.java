@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
  
 /**
- * Shifts the gearbox into low
+ * Shifts the gear-box into low
  */
 public class ShifterOff extends Command {
 

@@ -1,8 +1,13 @@
 package org.usfirst.frc.team4959.robot.commands.auto.autoModes;
 
+import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.AutoDropSequence;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.AutoRunIntake;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
+import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
@@ -20,19 +25,20 @@ public class RightSwitch extends CommandGroup {
 
 	public RightSwitch() {
 
-		// Start raising elevator
+		addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to drop into switch
 
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
 			addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH, 0.85, 0, 5)); // Drive Forward to switch
-			// Drop power cube into switch
+			addSequential(new AutoDropSequence()); // Drop power cube into switch
 			addSequential(new Delay(1.0));
 			addSequential(new DriveTurn(-30, -0.75, 0, 2)); // Back off the switch
 			// Turn to around the switch
 		}
+		
 		// If left switch is ours
 		else {
-			addSequential(new DriveTurn(130, 0.99, 0, 2)); // Goes straight
+			addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 2)); // Goes straight
 			addSequential(new DriveTurn(50, 0.8, 0.65, 3)); // Moves forward while turning right
 			addSequential(new DriveTurn(42, 0.8, -0.69, 3)); // Moves forward while turning left to straighten back out
 			addSequential(new DriveTurn(30, 0.9, 0, 2)); // Move past the switch

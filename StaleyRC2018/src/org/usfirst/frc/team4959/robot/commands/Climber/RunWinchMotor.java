@@ -1,18 +1,18 @@
-package org.usfirst.frc.team4959.robot.commands.Intake;
+package org.usfirst.frc.team4959.robot.commands.Climber;
 
 import org.usfirst.frc.team4959.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Toggles the piston on the in-take to expand and contract the claws that hold the power cube
+ * Runs the winch to pull us up to the rung
  */
-public class IntakePistonToggle extends Command {
-	private static boolean intakeToggle;
-	private final String TAG = "Intake: ";
+public class RunWinchMotor extends Command {
+	
+	private double power;
 
-    public IntakePistonToggle() {
-        
+    public RunWinchMotor(double power) {
+    	this.power = power;
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +21,7 @@ public class IntakePistonToggle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (intakeToggle) {
-    		Robot.intake.expandIntake();
-    	} else {
-    		Robot.intake.closeIntake();
-    	}
+    	Robot.climber.runWinch(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,13 +31,6 @@ public class IntakePistonToggle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(intakeToggle) {
-    		System.out.println(TAG + "Expand Intake End");
-    	} else {
-    		System.out.println(TAG + "Close Intake End");
-    	}
-    	
-    	intakeToggle = !intakeToggle;
     }
 
     // Called when another command which requires one or more of the same

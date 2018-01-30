@@ -22,6 +22,7 @@ import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftToScale;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
+import org.usfirst.frc.team4959.robot.subsystems.Climber;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
 	public static Pneumatics pneumatics;
 	public static Intake intake;
 	public static Elevator elevator;
+	public static Climber climber;
 	
 	// Contains values for which switches are which color
 	public static String gameData;
@@ -62,6 +64,7 @@ public class Robot extends TimedRobot {
 		pneumatics = new Pneumatics();
 		intake = new Intake();
 		elevator = new Elevator();
+		climber = new Climber();
 
 		driveTrain.resetNavx();
 

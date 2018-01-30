@@ -1,47 +1,42 @@
-package org.usfirst.frc.team4959.robot.commands.Intake;
+package org.usfirst.frc.team4959.robot.commands.auto.autoCommands;
 
 import org.usfirst.frc.team4959.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Toggles the piston on the in-take to expand and contract the claws that hold the power cube
+ * Runs intake during auto for a specific amount of time
  */
-public class IntakePistonToggle extends Command {
-	private static boolean intakeToggle;
-	private final String TAG = "Intake: ";
+public class AutoRunIntake extends Command {
+	
+	private double power;
+	private double seconds;
+	private Timer time = new Timer();
 
-    public IntakePistonToggle() {
-        
+    public AutoRunIntake(double power, double seconds) {
+        this.power = power;
+        this.seconds = seconds;
+        time.reset();;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	time.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (intakeToggle) {
-    		Robot.intake.expandIntake();
-    	} else {
-    		Robot.intake.closeIntake();
-    	}
+    	Robot.intake.succBoi(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	return (time.get() > seconds);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(intakeToggle) {
-    		System.out.println(TAG + "Expand Intake End");
-    	} else {
-    		System.out.println(TAG + "Close Intake End");
-    	}
-    	
-    	intakeToggle = !intakeToggle;
     }
 
     // Called when another command which requires one or more of the same

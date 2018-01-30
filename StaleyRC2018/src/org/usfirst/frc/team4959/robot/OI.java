@@ -8,9 +8,12 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
+import org.usfirst.frc.team4959.robot.commands.Climber.RunWinchMotor;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
+import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -35,22 +38,30 @@ public class OI {
 		shifterToggle.whenPressed(new ShifterToggle());
 		
 		// Brings in power cubes
-		Button intake = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
-		intake.whileHeld(new RunIntake(0.4));
+		Button intake = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_TRIGGER);
+		intake.whileHeld(new RunIntake(Constants.INTAKE_IN_SPEED));
 		
 		// Spits the cube back out like a quitter
-		Button reverseIntake = new JoystickButton(xboxControllertwo, RobotMap.A_BUTTON);
-		reverseIntake.whileHeld(new RunIntake(-0.7));
-		
-//		Button expandIntake = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
-//		expandIntake.whenPressed(new ExpandIntake());
-//		
-//		Button closeIntake = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
-//		closeIntake.whenPressed(new CloseIntake());
+		Button reverseIntake = new JoystickButton(xboxControllertwo, RobotMap.LEFT_TRIGGER);
+		reverseIntake.whileHeld(new RunIntake(Constants.INTAKE_OUT_SPEED));
 		
 		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
 		intakePistonToggle.whenPressed(new IntakePistonToggle());
+		
+		Button bottomElevation = new JoystickButton(xboxControllertwo, RobotMap.A_BUTTON);
+		bottomElevation.whenPressed(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
+		
+		Button switchElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
+		switchElevation.whenPressed(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
+		
+		Button scaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
+		scaleElevation.whenPressed(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION));
+		
+		Button winch = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
+		winch.whileHeld(new RunWinchMotor(1));
 	}
+	
+	// ***** Getters for X-Box controller(s) raw axis *****
 
 	public double getLeftStickXCont1() {
 		return xboxController.getRawAxis(RobotMap.LEFT_X_AXIS);

@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Shifts the gearbox into high
+ * Shifts the gear-box into high
  */
 public class ShifterOn extends Command {
 

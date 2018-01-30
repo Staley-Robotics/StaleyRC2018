@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Expands the claws of the in-take to release a power cube or get ready to pick one up
  */
 public class ExpandIntake extends Command {
 

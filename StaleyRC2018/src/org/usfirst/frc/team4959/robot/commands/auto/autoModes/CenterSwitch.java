@@ -2,6 +2,8 @@ package org.usfirst.frc.team4959.robot.commands.auto.autoModes;
 
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
+import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
@@ -11,10 +13,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * Drops a power cube at whichever side of the switch belongs to us.
  * 
  * DriveTurn(inches, power, turn, time)
+ * GyroTurning(angle)
  */
 public class CenterSwitch extends CommandGroup {
 
 	public CenterSwitch() {
+		addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to drop into switch
 
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
@@ -28,6 +32,7 @@ public class CenterSwitch extends CommandGroup {
 			addSequential(new DriveTurn(30, 0.6, -0.4, 3)); // Moves forward while turning left
 			addSequential(new DriveTurn(30, 0.8, 0, 3)); // Drives straight
 		}
+		
 		// If left switch is ours
 		else {
 			addSequential(new DriveTurn(FieldDimensions.ROBOT_SIZE, 0, 0, 2)); // Drives straight

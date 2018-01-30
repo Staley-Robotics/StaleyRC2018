@@ -6,7 +6,7 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command is always active. Control the power to the drivetrain with input
+ * This command is always active. Control the power to the drive-train with input
  * from a controller.
  */
 public class JoystickDrive extends Command {
@@ -24,7 +24,7 @@ public class JoystickDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		driveTrain.worldOfTanksDrive(-Robot.m_oi.getLeftTriggerCont1(), -Robot.m_oi.getRightTriggerCont1(), Robot.m_oi.getLeftStickXCont1());
+		driveTrain.worldOfTanksDrive(Robot.m_oi.getLeftTriggerCont1(), Robot.m_oi.getRightTriggerCont1(), Robot.m_oi.getLeftStickXCont1());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
