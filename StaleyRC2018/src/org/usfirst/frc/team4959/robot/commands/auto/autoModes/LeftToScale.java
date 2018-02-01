@@ -26,16 +26,16 @@ public class LeftToScale extends CommandGroup {
 
 		// If Left scale is ours
 		if (PlateColorChecker.leftScaleColor()) {
-			addSequential(new DriveTurn(15, 0.5, 0.4, 3)); // Turns and drives towards the scale.
-			addSequential(new DriveTurn(15, 0.5, -0.4, 3)); // Straightens out and touches scale
+			addSequential(new DriveTurn(15, 0.5, 0.4, 2)); // Turns and drives towards the scale.
+			addSequential(new DriveTurn(15, 0.5, -0.4, 2)); // Straightens out and touches scale
 			addSequential(new AutoDropSequence()); // Place the power cube
 			addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale
 		}
 		
 		// If right scale is ours
 		else {
-			addSequential(new DriveTurn(20, 0.8, 0.6, 5)); // Turn right
-			addSequential(new DriveTurn(60, 1, 0, 5)); // Drive to the right side of the scale
+			addSequential(new DriveTurn(20, 0.8, 0.6, 2.5)); // Turn right
+			addSequential(new DriveTurn(60, 1, 0, 2)); // Drive to the right side of the scale
 			addSequential(new GyroTurning(-90, 1)); // Turn towards the scale
 			addSequential(new AutoDropSequence()); // Place the power cube
 			addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale

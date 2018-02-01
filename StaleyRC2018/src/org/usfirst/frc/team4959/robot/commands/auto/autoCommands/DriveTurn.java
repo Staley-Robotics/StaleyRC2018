@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4959.robot.commands.auto.autoCommands;
 
 import org.usfirst.frc.team4959.robot.Robot;
-import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.util.Constants;
 

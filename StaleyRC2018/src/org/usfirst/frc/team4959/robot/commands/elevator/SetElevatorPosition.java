@@ -17,7 +17,7 @@ public class SetElevatorPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.elevator.startPID(pos);
+    	Robot.elevator.setPosition(pos);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,12 +26,11 @@ public class SetElevatorPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.elevator.pidOnTarget();
+    	return Robot.elevator.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.elevator.stopPID();
     }
 
     // Called when another command which requires one or more of the same

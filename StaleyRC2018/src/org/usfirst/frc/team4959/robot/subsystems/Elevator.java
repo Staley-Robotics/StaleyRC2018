@@ -2,91 +2,56 @@ package org.usfirst.frc.team4959.robot.subsystems;
 
 import org.usfirst.frc.team4959.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.Victor;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Subsystem that controls our elevator system that lifts power cubes to certain
  * elevations
  */
-public class Elevator extends Subsystem implements PIDSource, PIDOutput {
+public class Elevator extends Subsystem {
 
-	private Victor motor;
-	private Encoder encoder;
+	private TalonSRX talon;
+	
+	boolean brake = false;
 
 	// PID values
 	private final double kP = 0.0353;
 	private final double kI = 0;
 	private final double kD = 0.2;
 
-	private PIDController elevatorPID;
-
 	public Elevator() {
-		motor = new Victor(RobotMap.ELEVATOR_MOTOR_PORT);
-
-		encoder = new Encoder(RobotMap.ELEVATOR_ENCODER_PORT_ONE, RobotMap.ELEVATOR_ENCODER_PORT_TWO, false,
-				Encoder.EncodingType.k4X);
-
-		encoder.reset();
-
-		// encoder.setDistancePerPulse((4 * Math.PI) /
-		// RobotMap.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
-
-		elevatorPID = new PIDController(kP, kI, kD, this, this);
-
-		elevatorPID.setContinuous(false);
-		elevatorPID.setOutputRange(-1, 1);
-		elevatorPID.setAbsoluteTolerance(.5);
-		elevatorPID.reset();
-	}
-
-	public void startPID(double pos) {
-		elevatorPID.setSetpoint(pos);
-		elevatorPID.enable();
-	}
-
-	public void stopPID() {
-		elevatorPID.disable();
-	}
-
-	/**
-	 * @return True if elevator has reached set point
-	 */
-	public boolean pidOnTarget() {
-		return elevatorPID.onTarget();
+		talon = new TalonSRX(RobotMap.ELEVATOR_MOTOR_PORT);
+		talon.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		talon.setSensorPhase(false);
+		
+		talon.config_kP(0, kP, 10);
+		talon.config_kI(0, kI, 10);
+		talon.config_kD(0, kD, 10);
 	}
 
 	public void initDefaultCommand() {
 
 	}
 
-	public void powerElevator(double power) {
-		motor.set(power);
+	public void setPosition(double position) {
+		talon.set(ControlMode.Position, position);
 	}
-
-	@Override
-	public void pidWrite(double output) {
-		powerElevator(output);
+	
+	public void zeroPosition() {
+		talon.setSelectedSensorPosition(0, 0, 10);
 	}
-
-	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
-		setPIDSourceType(PIDSourceType.kDisplacement);
+	
+	public boolean onTarget() {
+		return false; // yolo
 	}
-
-	@Override
-	public PIDSourceType getPIDSourceType() {
-		return PIDSourceType.kDisplacement;
+	
+	public double getPosition() {
+		return talon.getSelectedSensorPosition(0);
 	}
-
-	@Override
-	public double pidGet() {
-		return encoder.getDistance();
-	}
-
 }

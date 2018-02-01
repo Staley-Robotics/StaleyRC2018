@@ -52,12 +52,12 @@ public class RobotMap {
 	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 2;
 	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 3;
 
-	public static final int INTAKE_LEFT_PORT = 4;
-	public static final int INTAKE_RIGHT_PORT = 5;
+	public static final int WINCH_MOTOR_PORT = 4;
 	
-	public static final int ELEVATOR_MOTOR_PORT = 6;
-	
-	public static final int WINCH_MOTOR_PORT = 7;
+	public static final int INTAKE_LEFT_PORT = 6;
+	public static final int INTAKE_RIGHT_PORT = 7;
+			
+	public static final int ELEVATOR_MOTOR_PORT = 0;
 	
 	// ***** Pneumatics Ports *****
 	public static final int COMPRESSOR_PORT = 0;

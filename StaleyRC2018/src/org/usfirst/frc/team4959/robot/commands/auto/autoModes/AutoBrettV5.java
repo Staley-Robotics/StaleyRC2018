@@ -12,6 +12,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoBrettV5 extends CommandGroup {
 
 	public AutoBrettV5() {
-		addSequential(new DriveTurn(40, 0.7, 0.5, 5));
+		addSequential(new DriveTurn(40, 0.7, 0, 5));
 	}
 }

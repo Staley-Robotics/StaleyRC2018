@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4959.robot.commands.auto.autoModes;
 
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
-import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -20,9 +18,9 @@ public class CenterScale extends CommandGroup {
 		
 		// If right scale is ours
 		if (PlateColorChecker.rightScaleColor()) {
-			addSequential(new DriveTurn(50, 0.9, 0.7, 3)); // Drives out to the right with DriveTurn
-			addSequential(new DriveTurn(50, 0.9, -0.7, 3)); // Turns back in a left direction to straighten back out
-			addSequential(new DriveTurn(50, 0.9, 0, 3));// Drives straight to get to the scale
+			addSequential(new DriveTurn(50, 0.9, 0.7, 2)); // Drives out to the right with DriveTurn
+			addSequential(new DriveTurn(50, 0.9, -0.7, 2)); // Turns back in a left direction to straighten back out
+			addSequential(new DriveTurn(50, 0.9, 0, 2));// Drives straight to get to the scale
 			// Possible adjustments to line up with scale
 			// Drop power cube onto the scale
 			// Back off from the scale
@@ -30,9 +28,9 @@ public class CenterScale extends CommandGroup {
 
 		// If left scale is ours
 		else {
-			addSequential(new DriveTurn(50, 0.9, -0.7, 3)); // Drives out to the right with DriveTurn
-			addSequential(new DriveTurn(50, 0.9, 0.7, 3)); // Drive and turn to the right direction to straighten back out
-			addSequential(new DriveTurn(50, 0.9, 0, 3)); // Drives straight to get to the scale
+			addSequential(new DriveTurn(50, 0.9, -0.7, 2)); // Drives out to the right with DriveTurn
+			addSequential(new DriveTurn(50, 0.9, 0.7, 2)); // Drive and turn to the right direction to straighten back out
+			addSequential(new DriveTurn(50, 0.9, 0, 2)); // Drives straight to get to the scale
 			// Possible adjustments to line up with the scale
 			// Drop power cube onto the scale
 			// Back off from the scale

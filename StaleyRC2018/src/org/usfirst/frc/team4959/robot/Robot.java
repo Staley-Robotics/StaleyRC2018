@@ -27,7 +27,6 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
-import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -64,6 +63,7 @@ public class Robot extends TimedRobot {
 		elevator = new Elevator();
 		climber = new Climber();
 
+		elevator.zeroPosition();
 		driveTrain.resetNavx();
 		
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
@@ -157,6 +157,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
+		SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
 	}
 
 	/**
