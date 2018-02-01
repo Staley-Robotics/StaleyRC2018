@@ -36,7 +36,7 @@ public class LeftToScale extends CommandGroup {
 		else {
 			addSequential(new DriveTurn(20, 0.8, 0.6, 5)); // Turn right
 			addSequential(new DriveTurn(60, 1, 0, 5)); // Drive to the right side of the scale
-			addSequential(new GyroTurning(-90)); // Turn towards the scale
+			addSequential(new GyroTurning(-90, 1)); // Turn towards the scale
 			addSequential(new AutoDropSequence()); // Place the power cube
 			addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale
 		}

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4959.robot.util;
 
+import org.usfirst.frc.team4959.robot.Robot;
+
 import edu.wpi.first.wpilibj.DriverStation;
 
 /*
@@ -12,6 +14,7 @@ public class PlateColorChecker {
 	 * @return False if right switch is ours
 	 */
 	public static boolean leftSwitchColor() {
+		System.out.println("Left Switch: " + (messageToCharArray()[0] == 'L'));
 		return messageToCharArray()[0] == 'L';
 	}
 	
@@ -20,6 +23,7 @@ public class PlateColorChecker {
 	 * @return False if left switch is ours
 	 */
 	public static boolean rightSwitchColor() {
+		System.out.println("Right Switch: " + (messageToCharArray()[0] == 'R'));
 		return messageToCharArray()[0] == 'R';
 	}
 	
@@ -28,6 +32,7 @@ public class PlateColorChecker {
 	 * @return False if right scale is ours
 	 */
 	public static boolean leftScaleColor() {
+		System.out.println("Left Scale: " + (messageToCharArray()[1] == 'L'));
 		return messageToCharArray()[1] == 'L';
 	}
 
@@ -36,6 +41,7 @@ public class PlateColorChecker {
 	 * @return False if left scale is ours
 	 */
 	public static boolean rightScaleColor() {
+		System.out.println("Right Scale: " + (messageToCharArray()[1] == 'R'));
 		return messageToCharArray()[1] == 'R';
 	}
 	

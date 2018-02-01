@@ -16,8 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 
-	private Victor motor1;
-	private Victor motor2;
+	private Victor motor;
 	private Encoder encoder;
 
 	// PID values
@@ -28,8 +27,7 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 	private PIDController elevatorPID;
 
 	public Elevator() {
-		motor1 = new Victor(RobotMap.ELEVATOR_MOTOR_ONE_PORT);
-		motor2 = new Victor(RobotMap.ELEVATOR_MOTOR_TWO_PORT);
+		motor = new Victor(RobotMap.ELEVATOR_MOTOR_PORT);
 
 		encoder = new Encoder(RobotMap.ELEVATOR_ENCODER_PORT_ONE, RobotMap.ELEVATOR_ENCODER_PORT_TWO, false,
 				Encoder.EncodingType.k4X);
@@ -68,8 +66,7 @@ public class Elevator extends Subsystem implements PIDSource, PIDOutput {
 	}
 
 	public void powerElevator(double power) {
-		motor1.set(power);
-		motor2.set(-power);
+		motor.set(power);
 	}
 
 	@Override

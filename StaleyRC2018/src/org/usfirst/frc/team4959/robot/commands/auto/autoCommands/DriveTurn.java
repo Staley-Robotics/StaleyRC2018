@@ -7,6 +7,7 @@ import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Uses encoders to drive to a desired distance while also be capable of turning at the same time.
@@ -56,51 +57,47 @@ public class DriveTurn extends Command {
     	currentDisplacement = ((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2;
 
     	double error = Math.abs(desiredDistance) - Math.abs(currentDisplacement);
-    	System.out.println("Error:" + error);
     	if(error < pThreshold) {
     		if(turn == 0 && desiredPower > 0) {
-    			System.out.println("gyro");
     			driveTrain.arcadeDrive(error * 0.2, 0);
     		} else if(turn == 0 && desiredPower < 0) {
-    			System.out.println("gyro");
     			driveTrain.arcadeDrive(-error * 0.2, 0);
     		} else {
-    			System.out.println("turn");
     			driveTrain.arcadeDrive(desiredPower, turn);
     		}
     	} else {
     		if(turn == 0) {
-    			System.out.println("Current Angle: " + currentAngle);
     			driveTrain.arcadeDrive(desiredPower, -currentAngle * 0.1);
     		} else {
-    			System.out.println("turn");
     			driveTrain.arcadeDrive(desiredPower, turn);
     		}
     	}
+    	SmartDashboard.putNumber("Desired Power: ", desiredPower);
+    	SmartDashboard.putNumber("Turn Power", turn);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//    	System.out.println("Current Displacement: " + currentDisplacement);
     	if (  Math.abs(currentDisplacement - desiredDistance) <= stopThreshold )
     		System.out.println("Ended with distance");
     	else if (timer.get() > time)
-    		System.out.println("Timed out");
+    		System.out.println("Drive Turn Timed out");
         return Math.abs(currentDisplacement - desiredDistance) <= stopThreshold || timer.get() > time;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("end");
-    	System.out.println("Left Encoder: " + driveTrain.getLeftEncoderDistance());
-    	System.out.println("Right Encoder: " + driveTrain.getRightEncoderDistance());
-    	System.out.println("Current Displacement: " + currentDisplacement);
-    	System.out.println("Current Yaw: " + driveTrain.getTrueAngle());
+//    	System.out.println("end");
+//    	System.out.println("Left Encoder: " + driveTrain.getLeftEncoderDistance());
+//    	System.out.println("Right Encoder: " + driveTrain.getRightEncoderDistance());
+//    	System.out.println("Current Displacement: " + currentDisplacement);
+//    	System.out.println("Current Yaw: " + driveTrain.getTrueAngle());
+    	
+    	System.out.println("Target: " + desiredDistance + "\tCurrent Displacement: " + currentDisplacement + "\tTimer: " + timer.get() + "\n");
+    	timer.reset();
     	driveTrain.arcadeDrive(0, 0);
     	driveTrain.resetNavx();
-    	driveTrain.resetEncoders();
-    	
-    	System.out.println(Robot.gameData);
+    	driveTrain.resetEncoders();	
     }
 
     // Called when another command which requires one or more of the same

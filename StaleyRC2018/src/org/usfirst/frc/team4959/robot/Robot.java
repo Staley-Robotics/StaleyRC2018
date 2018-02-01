@@ -48,8 +48,6 @@ public class Robot extends TimedRobot {
 	public static Elevator elevator;
 	public static Climber climber;
 	
-	// Contains values for which switches are which color
-	public static String gameData;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -67,7 +65,7 @@ public class Robot extends TimedRobot {
 		climber = new Climber();
 
 		driveTrain.resetNavx();
-
+		
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
 		m_chooser.addDefault("Delay", new Delay(15));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
@@ -108,7 +106,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		m_autonomousCommand = m_chooser.getSelected();
 
 		/*
@@ -129,12 +126,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(PlateColorChecker.rightScaleColor()) {
-			System.out.println("R");
-		}
-		else {
-			System.out.println("L");
-		}
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
 		//System.out.print(driveTrain.getTrueAngle());

@@ -23,10 +23,9 @@ public class LeftSwitch extends CommandGroup {
 
 	public LeftSwitch() {
 
-		addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to drop into switch
-
 		// If left switch is ours
 		if (PlateColorChecker.leftSwitchColor()) {
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to
 			addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH, 0.85, 0, 3)); // Drive Forward to switch
 			addSequential(new AutoDropSequence()); // Drop power cube into switch
 			addSequential(new Delay(1.0));
@@ -35,25 +34,26 @@ public class LeftSwitch extends CommandGroup {
 		}
 		// If right switch is ours
 		else {
-			addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 2)); // Goes straight
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION));
+			addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 1)); // Goes straight
 			addSequential(new DriveTurn(50, 0.8, -0.75, 3)); // Moves forward while turning left
 			addSequential(new DriveTurn(50, 0.8, 0.75, 3)); // Moves forward while turning right to straighten back out
 			addSequential(new DriveTurn(30, 0.9, 0, 2)); // Move past the switch
 
 			// If left scale is ours
 			if (PlateColorChecker.leftScaleColor()) {
-				addSequential(new DriveTurn(75, 1, 0, 4)); // Move all the way to the scale
-				addSequential(new GyroTurning(90)); // Turn towards the scale
+				addSequential(new DriveTurn(75, 1, 0, 2)); // Move all the way to the scale
+//				addSequential(new GyroTurning(90, 1)); // Turn towards the scale
 				addSequential(new AutoDropSequence()); // Place the power cube
-				addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale }
+				addSequential(new DriveTurn(-30, -0.5, 0, 1)); // Back off the scale }
 			}
-			
+
 			// If right scale is ours
 			else {
-				addSequential(new DriveTurn(30, 0.9, 0, 4)); // Move to between the switch and scale
-				addSequential(new DriveTurn(20, 0.8, 0.6, 5)); // Turn right
-				addSequential(new DriveTurn(60, 1, 0, 5)); // Drive to the right side of the scale
-				addSequential(new GyroTurning(-90)); // Turn towards the scale
+				addSequential(new DriveTurn(30, 0.9, 0, 1)); // Move to between the switch and scale
+				addSequential(new DriveTurn(20, 0.8, 0.6, 1)); // Turn right
+				addSequential(new DriveTurn(60, 1, 0, 2)); // Drive to the right side of the scale
+//				addSequential(new GyroTurning(-90, 1)); // Turn towards the scale
 				addSequential(new AutoDropSequence()); // Place the power cube
 				addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale
 			}

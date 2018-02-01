@@ -5,6 +5,7 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,20 +17,26 @@ public class GyroTurning extends Command implements PIDOutput{
 	
 	private DriveTrain driveTrain;
 	private PIDController turnPID;
+	private Timer time;
 	
 	private double angle;
+	private double seconds;
 	
 	// PID Values
 	private final double kP = 0.024;
 	private final double kI = 0;
 	private final double kD = 0.06;
 	
-    public GyroTurning(double angle) {
+    public GyroTurning(double angle, double seconds) {
     	requires(Robot.driveTrain);
         
     	driveTrain = Robot.driveTrain;
     	
+    	time = new Timer();
+    	time.reset();
+    	
     	this.angle = angle;
+    	this.seconds = seconds;
     	
     	turnPID = new PIDController(kP, kI, kD, driveTrain.getNavx(), this);
     	// Range of angles that can be inputted
@@ -48,20 +55,23 @@ public class GyroTurning extends Command implements PIDOutput{
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("Gyro initialize");
     	driveTrain.resetNavx();
     	
     	turnPID.setSetpoint(angle);
     	turnPID.enable();
+    	
+    	time.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(driveTrain.getYaw());
+//    	System.out.println(driveTrain.getYaw());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-       return turnPID.onTarget();
+       return turnPID.onTarget() || time.get() > seconds;
     }
 
     // Called once after isFinished returns true
@@ -72,6 +82,7 @@ public class GyroTurning extends Command implements PIDOutput{
     	turnPID.disable();
     	turnPID.reset();
     	driveTrain.resetNavx();
+    	time.reset();
     }
 
     // Called when another command which requires one or more of the same

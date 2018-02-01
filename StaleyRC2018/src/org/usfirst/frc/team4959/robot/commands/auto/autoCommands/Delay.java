@@ -33,6 +33,7 @@ public class Delay extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		time.stop();
+		System.out.println("Delay has ended\n");
 	}
 
 	// Called when another command which requires one or more of the same

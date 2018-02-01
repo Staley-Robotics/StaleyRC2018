@@ -28,7 +28,7 @@ public class CenterSwitch extends CommandGroup {
 			addSequential(new DriveTurn(20, 0.8, 0, 3)); // Drives straight
 			// Drop
 			addSequential(new DriveTurn(-(FieldDimensions.ROBOT_SIZE), 0, 0, 2)); // Backs up
-			addSequential(new GyroTurning(90));
+			addSequential(new GyroTurning(90, 1));
 			addSequential(new DriveTurn(30, 0.6, -0.4, 3)); // Moves forward while turning left
 			addSequential(new DriveTurn(30, 0.8, 0, 3)); // Drives straight
 		}
@@ -41,7 +41,7 @@ public class CenterSwitch extends CommandGroup {
 			addSequential(new DriveTurn(20, 0.8, 0, 3)); // Drives straight
 			// drop
 			addSequential(new DriveTurn(-(FieldDimensions.ROBOT_SIZE), 0, 0, 2)); // Backs up
-			addSequential(new GyroTurning(90));
+			addSequential(new GyroTurning(90, 1));
 			addSequential(new DriveTurn(30, 0.6, 0.4, 3)); // Moves forward while turning right
 			addSequential(new DriveTurn(30, 0.8, 0, 3)); // Drives straight
 		}
