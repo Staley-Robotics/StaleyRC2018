@@ -10,6 +10,10 @@ public class Constants {
 	public static final double ELEVATOR_SWITCH_ELEVATION = 30;
 	public static final double ELEVATOR_SCALE_ELEVATION = 60;
 	
+	// Soft limits for how far the elevator can go
+	public static final double FWD_SOFT_LIMIT = 1000; // Adjust this later on
+	public static final double REV_SOFT_LIMIT = 0;
+	
 	// Pulses per revolution of encoders
 	public static final double ENCODER_DISTANCE_PER_PULSE_POSITIVE = 185;
 	public static final double ENCODER_DISTANCE_PER_PULSE_NEGATIVE = 175;
