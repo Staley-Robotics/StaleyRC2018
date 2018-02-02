@@ -157,7 +157,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
-		SmartDashboard.putNumber("Elevator Position", elevator.getPosition());
 	}
 
 	/**
