@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Subsystem for our climber system to climb the run at the end of the game
  */
 public class Climber extends Subsystem {
-	private Victor winch;
+	private Victor winchOne;
+	private Victor winchTwo;
 	
 	public Climber() {
-		winch = new Victor(RobotMap.WINCH_MOTOR_PORT);
+		winchOne = new Victor(RobotMap.WINCH_MOTOR_PORT_ONE);
+		winchTwo = new Victor(RobotMap.WINCH_MOTOR_PORT_TWO);
 	}
 
     public void initDefaultCommand() {
@@ -20,7 +22,8 @@ public class Climber extends Subsystem {
     }
     
     public void runWinch(double power) {
-    	winch.set(power);
+    	winchOne.set(power);
+    	winchTwo.set(power);
     }
 }
 

@@ -52,7 +52,8 @@ public class RobotMap {
 	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 0;
 	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 1;
 
-	public static final int WINCH_MOTOR_PORT = 6;
+	public static final int WINCH_MOTOR_PORT_ONE = 6;
+	public static final int WINCH_MOTOR_PORT_TWO = 7;
 	
 	public static final int INTAKE_LEFT_PORT = 2;
 	public static final int INTAKE_RIGHT_PORT = 3;
