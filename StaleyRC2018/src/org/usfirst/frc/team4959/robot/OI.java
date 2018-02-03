@@ -13,7 +13,6 @@ import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
-import org.usfirst.frc.team4959.robot.commands.elevator.StopElevator;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -79,8 +78,13 @@ public class OI {
 	
 	// ***** Getters for X-Box controller(s) raw axis *****
 
+	// Controller 1
 	public double getLeftStickXCont1() {
 		return xboxController.getRawAxis(RobotMap.LEFT_X_AXIS);
+	}
+	
+	public double getLeftStickYCont1() {
+		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 	
 	public double getRightStickYCont1() {
@@ -95,10 +99,7 @@ public class OI {
 		return xboxController.getRawAxis(RobotMap.RIGHT_TRIGGER);
 	}
 
-	public double getLeftStickYCont1() {
-		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
-	}
-
+	// Controller 2
 	public double getRightStickYCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_Y_AXIS);
 	}
