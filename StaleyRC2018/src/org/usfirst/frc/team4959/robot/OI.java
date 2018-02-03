@@ -10,9 +10,9 @@ package org.usfirst.frc.team4959.robot;
 
 import org.usfirst.frc.team4959.robot.commands.Climber.RunWinchMotor;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
+import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
 import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
-import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,7 +33,7 @@ public class OI {
 
 	public OI() {
 
-		// ***** xbox Controller *****
+		// ***** X-Box Controller *****
 		xboxController = new Joystick(RobotMap.XBOX_PORT);
 		xboxControllertwo = new Joystick(RobotMap.XBOX_TWO_PORT);
 

@@ -151,10 +151,10 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		SmartDashboard.putBoolean("IMU_Connected", driveTrain.isNavxConnected());
+		SmartDashboard.putBoolean("IMU_Connected: ", driveTrain.isNavxConnected());
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
-		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
+		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
 		SmartDashboard.putString("Elevator State: ", States.elevatorState.toString());
 		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());

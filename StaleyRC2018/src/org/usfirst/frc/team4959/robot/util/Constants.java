@@ -7,7 +7,7 @@ public class Constants {
 	
 	// Set elevations for the elevator
 	public static final double ELEVATOR_BOTTOM_ELEVATION = 0;
-	public static final double ELEVATOR_SWITCH_ELEVATION = -5000;
+	public static final double ELEVATOR_SWITCH_ELEVATION = 20000;
 	public static final double ELEVATOR_SCALE_ELEVATION = 100000;
 	
 	// Soft limits for how far the elevator can go

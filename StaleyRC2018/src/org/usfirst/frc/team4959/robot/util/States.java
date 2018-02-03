@@ -18,7 +18,7 @@ public class States {
 		high;
 	}
 	
-	// Tells us if the intake claw is open or closed
+	// Tells us if the in-take claw is open or closed
 	public static enum IntakeClawStates {
 		open,
 		closed;

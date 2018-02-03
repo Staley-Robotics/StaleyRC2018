@@ -1,8 +1,9 @@
 package org.usfirst.frc.team4959.robot.commands.auto.autoModes;
 
+import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.GyroTurning;
-import org.usfirst.frc.team4959.robot.commands.elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -23,10 +24,11 @@ public class CenterSwitch extends CommandGroup {
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
 			addSequential(new DriveTurn(FieldDimensions.ROBOT_SIZE, 0.8, 0, 1)); // Drives straight
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION));
 			addSequential(new DriveTurn(50, 0.4, 0.65, 3)); // Moves forward while turning right
 			addSequential(new DriveTurn(42, 0.4, -0.69, 3)); // Moves forward while turning left to straighten back out
 			addSequential(new DriveTurn(20, 0.8, 0, 1)); // Drives straight
-			// Drop
+			addSequential(new AutoDropSequence());
 			addSequential(new DriveTurn(-(FieldDimensions.ROBOT_SIZE), 0.8, 0, 1)); // Backs up
 			addSequential(new GyroTurning(90, 1));
 			addSequential(new DriveTurn(30, 0.6, -0.4, 2)); // Moves forward while turning left
@@ -36,10 +38,11 @@ public class CenterSwitch extends CommandGroup {
 		// If left switch is ours
 		else {
 			addSequential(new DriveTurn(FieldDimensions.ROBOT_SIZE, 0.8, 0, 1)); // Drives straight
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION));
 			addSequential(new DriveTurn(50, 0.4, -0.65, 3)); // Moves forward while turning left
 			addSequential(new DriveTurn(42, 0.4, 0.69, 3)); // Moves forward while turning right to straighten back out
 			addSequential(new DriveTurn(20, 0.8, 0, 1)); // Drives straight
-			// drop
+			addSequential(new AutoDropSequence());
 			addSequential(new DriveTurn(-(FieldDimensions.ROBOT_SIZE), 0.8, 0, 1)); // Backs up
 			addSequential(new GyroTurning(90, 1));
 			addSequential(new DriveTurn(30, 0.6, 0.4, 2)); // Moves forward while turning right

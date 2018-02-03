@@ -19,7 +19,7 @@ public class RobotMap {
 	public static final int XBOX_PORT = 0;
 	public static final int XBOX_TWO_PORT = 1;
 
-	// ***** HID Controller Buttons/Joysticks *****
+	// ***** HID Controller Buttons/Joy-sticks *****
 	public static final int LEFT_X_AXIS = 0;
 	public static final int LEFT_Y_AXIS = 1;
 	public static final int RIGHT_X_AXIS = 4;

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4959.robot.subsystems;
 
 import org.usfirst.frc.team4959.robot.RobotMap;
-import org.usfirst.frc.team4959.robot.commands.elevator.MoveElevator;
+import org.usfirst.frc.team4959.robot.commands.Elevator.MoveElevator;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -43,7 +43,7 @@ public class Elevator extends Subsystem {
 		talon.configForwardSoftLimitEnable(false, 0);
 		talon.configReverseSoftLimitEnable(false, 0);
 		
-		// Setting up PID values
+		// Set PID values
 		talon.config_kP(0, kP, 0);
 		talon.config_kI(0, kI, 0);
 		talon.config_kD(0, kD, 0);

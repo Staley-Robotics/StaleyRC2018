@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4959.robot.commands.elevator;
+package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.util.States;
@@ -6,7 +6,7 @@ import org.usfirst.frc.team4959.robot.util.States;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Moves the elevator using user input of the left joystick on controller 2
+ * Moves the elevator using user input of the left joy-stick on controller 2
  */
 public class MoveElevator extends Command {
 
