@@ -27,6 +27,7 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team4959.robot.util.States;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -62,6 +63,8 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		elevator = new Elevator();
 		climber = new Climber();
+		
+		States.resetStates();
 
 		elevator.zeroPosition();
 		driveTrain.resetNavx();
@@ -84,7 +87,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		elevator.stopElevator();
 	}
 
 	@Override
@@ -106,14 +109,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		driveTrain.shifterOff();
+		intake.closeIntake();
 		m_autonomousCommand = m_chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		 * switch(autoSelected) { case "My Auto": autonomousCommand = new
-		 * MyAutoCommand(); break; case "Default Auto": default: autonomousCommand = new
-		 * ExampleCommand(); break; }
-		 */
 
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
@@ -157,6 +155,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Gyro Yaw", driveTrain.getYaw());
+		SmartDashboard.putString("Elevator State: ", States.elevatorState.toString());
+		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
+		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
 	}
 
 	/**

@@ -105,6 +105,6 @@ public class OI {
 	}
 
 	public double getLeftStickYCont2() {
-		return xboxControllertwo.getRawAxis(5);
+		return xboxControllertwo.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 }

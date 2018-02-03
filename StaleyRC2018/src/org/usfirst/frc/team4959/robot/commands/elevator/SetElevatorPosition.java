@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,6 +19,7 @@ public class SetElevatorPosition extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.elevator.setPosition(pos);
+		States.elevatorState = States.ElevatorStates.pidControl;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -34,6 +36,7 @@ public class SetElevatorPosition extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.stopElevator();
+		States.elevatorState = States.ElevatorStates.joystickControl;
 	}
 
 	// Called when another command which requires one or more of the same

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.Intake;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -35,9 +36,11 @@ public class IntakePistonToggle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(intakeToggle) {
+    	if(intakeToggle && States.intakeClawState == States.IntakeClawStates.closed) {
+    		States.intakeClawState = States.IntakeClawStates.open;
     		System.out.println(TAG + "Expand Intake End");
     	} else {
+    		States.intakeClawState = States.IntakeClawStates.closed;
     		System.out.println(TAG + "Close Intake End");
     	}
     	

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.Intake;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,6 +30,7 @@ public class CloseIntake extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	States.intakeClawState = States.IntakeClawStates.closed;
     	System.out.println("Close Intake End");
     }
 
