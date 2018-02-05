@@ -66,7 +66,6 @@ public class Robot extends TimedRobot {
 		
 		States.resetStates();
 
-		elevator.zeroPosition();
 		driveTrain.resetNavx();
 		
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
@@ -111,6 +110,8 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		driveTrain.shifterOff();
 		intake.closeIntake();
+		elevator.zeroPosition();
+
 		m_autonomousCommand = m_chooser.getSelected();
 
 		// schedule the autonomous command (example)
@@ -154,10 +155,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("IMU_Connected: ", driveTrain.isNavxConnected());
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
+		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
 		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
 		SmartDashboard.putString("Elevator State: ", States.elevatorState.toString());
 		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
+		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
 	}
 
 	/**
