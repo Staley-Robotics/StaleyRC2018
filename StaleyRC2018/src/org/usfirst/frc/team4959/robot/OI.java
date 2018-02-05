@@ -29,7 +29,9 @@ public class OI {
 	
 	SetElevatorPosition bottomPosition = new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION);
 	SetElevatorPosition switchPosition = new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION);
-	SetElevatorPosition scalePosition = new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION);
+	SetElevatorPosition lowScalePosition = new SetElevatorPosition(Constants.ELEVATOR_LOW_SCALE_ELEVATION);
+	SetElevatorPosition midScalePosition = new SetElevatorPosition(Constants.ELEVATOR_MID_SCALE_ELEVATION);
+	SetElevatorPosition highScalePosition = new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION);
 
 	public OI() {
 
@@ -52,25 +54,53 @@ public class OI {
 		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.LEFT_BUMPER);
 		intakePistonToggle.whenPressed(new IntakePistonToggle());
 
+		// Sets the elevator's position to bottom elevation and cancels any other elevation command occuring
 		Button bottomElevation = new JoystickButton(xboxControllertwo, RobotMap.A_BUTTON);
 		bottomElevation.cancelWhenPressed(switchPosition);
-		bottomElevation.cancelWhenPressed(scalePosition);
+		bottomElevation.cancelWhenPressed(lowScalePosition);
+		bottomElevation.cancelWhenPressed(midScalePosition);
+		bottomElevation.cancelWhenPressed(highScalePosition);
 		bottomElevation.whenPressed(bottomPosition);
 		
+		// Sets the elevator's position to switch elevation and cancels any other elevation command occuring
 		Button switchElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
 		switchElevation.cancelWhenPressed(bottomPosition);
-		switchElevation.cancelWhenPressed(scalePosition);
+		switchElevation.cancelWhenPressed(lowScalePosition);
+		switchElevation.cancelWhenPressed(midScalePosition);
+		switchElevation.cancelWhenPressed(highScalePosition);
 		switchElevation.whenPressed(switchPosition);
 		
-		Button scaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
-		scaleElevation.cancelWhenPressed(bottomPosition);
-		scaleElevation.cancelWhenPressed(switchPosition);
-		scaleElevation.whenPressed(scalePosition);
+		// Sets the elevator's position to low scale elevation and cancels any other elevation command occuring
+		Button lowScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
+		lowScaleElevation.cancelWhenPressed(bottomPosition);
+		lowScaleElevation.cancelWhenPressed(switchPosition);
+		lowScaleElevation.cancelWhenPressed(midScalePosition);
+		lowScaleElevation.cancelWhenPressed(highScalePosition);
+		lowScaleElevation.whenPressed(lowScalePosition);
 		
+		// Sets the elevator's position to mid scale elevation and cancels any other elevation command occuring
+		Button midScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
+		midScaleElevation.cancelWhenPressed(bottomPosition);
+		midScaleElevation.cancelWhenPressed(switchPosition);
+		midScaleElevation.cancelWhenPressed(lowScalePosition);
+		midScaleElevation.cancelWhenPressed(highScalePosition);
+		midScaleElevation.whenPressed(midScalePosition);
+		
+		// Sets the elevator's position to high scale elevation and cancels any other elevation command occuring
+		Button highScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
+		highScaleElevation.cancelWhenPressed(bottomPosition);
+		highScaleElevation.cancelWhenPressed(switchPosition);
+		highScaleElevation.cancelWhenPressed(lowScalePosition);
+		highScaleElevation.cancelWhenPressed(midScalePosition);
+		highScaleElevation.whenPressed(highScalePosition);
+		
+		// Stops any elevation command to allow player to use joystick control on the elevator. 
 		Button stopElevator = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
 		stopElevator.cancelWhenPressed(bottomPosition);
 		stopElevator.cancelWhenPressed(switchPosition);
-		stopElevator.cancelWhenPressed(scalePosition);
+		stopElevator.cancelWhenPressed(lowScalePosition);
+		stopElevator.cancelWhenPressed(midScalePosition);
+		stopElevator.cancelWhenPressed(highScalePosition);
 		
 		Button winch = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
 		winch.whileHeld(new RunWinchMotor(1));
