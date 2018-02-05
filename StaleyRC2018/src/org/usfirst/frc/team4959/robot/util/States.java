@@ -3,6 +3,7 @@ package org.usfirst.frc.team4959.robot.util;
 public class States {
 	
 	public static ElevatorStates elevatorState;
+	public static ElevatorPosStates elevatorPosState;
 	public static ShifterStates shifterState;
 	public static IntakeClawStates intakeClawState;
 	
@@ -24,9 +25,17 @@ public class States {
 		closed;
 	}
 	
+	public static enum ElevatorPosStates {
+		bottom, 
+		switchPos, 
+		scaleLow, scaleMid, scaleHigh,
+		userControl;
+	}
+	
 	// Resets all of the states
 	public static void resetStates() {
 		elevatorState = ElevatorStates.joystickControl;
+		elevatorPosState = ElevatorPosStates.userControl;
 		shifterState = ShifterStates.low;
 		intakeClawState = IntakeClawStates.closed;
 	}
