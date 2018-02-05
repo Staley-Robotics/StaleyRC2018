@@ -1,12 +1,13 @@
 package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Moves the elevator to a set point. 
+ * Moves the elevator to a set point.
  */
 public class SetElevatorPosition extends Command {
 
@@ -20,6 +21,17 @@ public class SetElevatorPosition extends Command {
 	protected void initialize() {
 		Robot.elevator.setPosition(pos);
 		States.elevatorState = States.ElevatorStates.pidControl;
+
+		if (pos == Constants.ELEVATOR_BOTTOM_ELEVATION)
+			States.elevatorPosState = States.ElevatorPosStates.bottom;
+		else if (pos == Constants.ELEVATOR_SWITCH_ELEVATION)
+			States.elevatorPosState = States.ElevatorPosStates.switchPos;
+		else if (pos == Constants.ELEVATOR_LOW_SCALE_ELEVATION)
+			States.elevatorPosState = States.ElevatorPosStates.scaleLow;
+		else if (pos == Constants.ELEVATOR_MID_SCALE_ELEVATION)
+			States.elevatorPosState = States.ElevatorPosStates.scaleMid;
+		else if (pos == Constants.ELEVATOR_HIGH_SCALE_ELEVATION)
+			States.elevatorPosState = States.ElevatorPosStates.scaleHigh;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
