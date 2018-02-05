@@ -23,6 +23,7 @@ public class MoveElevator extends Command {
 		if (States.elevatorState == States.ElevatorStates.joystickControl) {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
 				Robot.elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				States.elevatorPosState = States.ElevatorPosStates.userControl;
 			}
 			else {
 				Robot.elevator.stopElevator();
