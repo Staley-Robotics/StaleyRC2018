@@ -107,11 +107,11 @@ public class DriveTrain extends Subsystem {
 		double turnSpeedModifier = 1;
 
 		if (backward * speedModifier > 0) {
-			m_drive.arcadeDrive(-backward * speedModifier, rotate * turnSpeedModifier);
+			m_drive.arcadeDrive(backward * speedModifier, -rotate * turnSpeedModifier);
 		} else if (forward > 0) {
-			m_drive.arcadeDrive(forward * speedModifier, rotate * turnSpeedModifier);
+			m_drive.arcadeDrive(-forward * speedModifier, -rotate * turnSpeedModifier);
 		} else {
-			m_drive.arcadeDrive(0, rotate * turnSpeedModifier);
+			m_drive.arcadeDrive(0, -rotate * turnSpeedModifier);
 		}
 	}
 
