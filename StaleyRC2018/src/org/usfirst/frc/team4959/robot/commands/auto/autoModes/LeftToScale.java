@@ -21,7 +21,7 @@ public class LeftToScale extends CommandGroup {
 
 	public LeftToScale() {
 		
-		addParallel(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION)); // Raises elevator to position to drop into scale
+		addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION)); // Raises elevator to position to drop into scale
 		addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 35), 0.99, 0, 2)); // Goes straight to decision point
 
 		// If Left scale is ours

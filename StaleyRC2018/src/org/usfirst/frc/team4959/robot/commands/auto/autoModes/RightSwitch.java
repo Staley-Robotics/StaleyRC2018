@@ -34,7 +34,7 @@ public class RightSwitch extends CommandGroup {
 
 		// If left switch is ours
 		else {
-			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SCALE_ELEVATION));
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION));
 			addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 1)); // Goes straight
 			addSequential(new DriveTurn(50, 0.8, 0.75, 3)); // Moves forward while turning right
 			addSequential(new DriveTurn(42, 0.8, -0.75, 3)); // Moves forward while turning left to straighten back out
