@@ -1,6 +1,6 @@
-package org.usfirst.frc.team4959.robot.commands.auto.autoModes;
+package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.DriveTurn;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

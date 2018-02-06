@@ -67,7 +67,5 @@ public class RobotMap {
 	public static final int SHIFTER_TWO_PORT = 3;
 	
 	public static final int INTAKE_SOLENOID_PORT_ONE = 0;
-	public static final int INTAKE_SOLENOID_PORT_TWO = 1; 
-	
-	// Collin sucks at coding and he smells like poop, ps he has Julia's cooties 
+	public static final int INTAKE_SOLENOID_PORT_TWO = 7; 
 }

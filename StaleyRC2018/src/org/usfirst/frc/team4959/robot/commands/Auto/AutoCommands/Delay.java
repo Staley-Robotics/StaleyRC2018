@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4959.robot.commands.auto.autoCommands;
+package org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

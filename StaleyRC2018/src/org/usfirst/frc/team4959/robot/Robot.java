@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team4959.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,13 +14,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4959.robot.commands.auto.autoCommands.Delay;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.AutoBrettV5;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.CenterSwitch;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftToScale;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.LeftSwitch;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightToScale;
-import org.usfirst.frc.team4959.robot.commands.auto.autoModes.RightSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToScale;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.subsystems.Climber;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
@@ -169,9 +168,5 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		LiveWindow.add(driveTrain);
-	}
-	
-	public static String getGameData() {
-		return DriverStation.getInstance().getGameSpecificMessage();
 	}
 }
