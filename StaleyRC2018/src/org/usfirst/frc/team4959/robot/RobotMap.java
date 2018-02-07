@@ -43,6 +43,7 @@ public class RobotMap {
 	public static final int LEFT_ENCODER_PORT_TWO = 1;
 	public static final int RIGHT_ENCODER_PORT_ONE = 2;
 	public static final int RIGHT_ENCODER_PORT_TWO = 3;
+	
 	public static final int ELEVATOR_ENCODER_PORT_ONE = 4;
 	public static final int ELEVATOR_ENCODER_PORT_TWO = 5;
 
@@ -64,8 +65,8 @@ public class RobotMap {
 	public static final int COMPRESSOR_PORT = 0;
 	
 	public static final int SHIFTER_ONE_PORT = 2;
-	public static final int SHIFTER_TWO_PORT = 3;
+	public static final int SHIFTER_TWO_PORT = 5;
 	
-	public static final int INTAKE_SOLENOID_PORT_ONE = 0;
-	public static final int INTAKE_SOLENOID_PORT_TWO = 7; 
+	public static final int INTAKE_SOLENOID_PORT_ONE = 1;
+	public static final int INTAKE_SOLENOID_PORT_TWO = 6; 
 }
