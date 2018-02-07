@@ -12,7 +12,6 @@ import org.usfirst.frc.team4959.robot.commands.Climber.RunWinchMotor;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
-import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,15 +42,7 @@ public class OI {
 		Button shifterToggle = new JoystickButton(xboxController, RobotMap.B_BUTTON);
 		shifterToggle.whenPressed(new ShifterToggle());
 		
-		// Brings in power cubes
-		Button intake = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_TRIGGER);
-		intake.whileHeld(new RunIntake(Constants.INTAKE_IN_SPEED));
-		
-		// Spits the cube back out like a quitter
-		Button reverseIntake = new JoystickButton(xboxControllertwo, RobotMap.LEFT_TRIGGER);
-		reverseIntake.whileHeld(new RunIntake(Constants.INTAKE_OUT_SPEED));
-		
-		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.LEFT_BUMPER);
+		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
 		intakePistonToggle.whenPressed(new IntakePistonToggle());
 
 		// Sets the elevator's position to bottom elevation and cancels any other elevation command occuring
@@ -136,5 +127,13 @@ public class OI {
 
 	public double getLeftStickYCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.LEFT_Y_AXIS);
+	}
+	
+	public double getLeftTriggerCont2() {
+		return xboxControllertwo.getRawAxis(RobotMap.LEFT_TRIGGER);
+	}
+	
+	public double getRightTriggerCont2() {
+		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_TRIGGER);
 	}
 }

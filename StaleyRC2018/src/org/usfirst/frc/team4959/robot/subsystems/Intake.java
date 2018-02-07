@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.subsystems;
 
 import org.usfirst.frc.team4959.robot.RobotMap;
+import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -22,11 +23,11 @@ public class Intake extends Subsystem {
     }
 
     public void initDefaultCommand() {
-        
+        setDefaultCommand(new RunIntake());
     }
     
     public void succBoi(double power) {
-    	leftMotor.set(power);
+    	leftMotor.set(-power);
     	rightMotor.set(-power);
     }
     

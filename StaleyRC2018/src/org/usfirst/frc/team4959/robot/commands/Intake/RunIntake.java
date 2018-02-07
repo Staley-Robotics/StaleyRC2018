@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.Intake;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,11 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntake extends Command {
 	
-	private double power;
+	private double intakeInPower;
+	private double intakeOutPower;
 
-    public RunIntake(double power) {
-    	//requires(Robot.intake);
-        this.power = power;
+    public RunIntake() {
+    	requires(Robot.intake);
+    	intakeInPower = Constants.INTAKE_IN_SPEED;
+    	intakeOutPower = Constants.INTAKE_OUT_SPEED;
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +25,15 @@ public class RunIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.succBoi(power);
+    	if(Robot.m_oi.getRightTriggerCont2() > 0.15) {
+    		Robot.intake.succBoi(intakeOutPower);
+    	}
+    	else if(Robot.m_oi.getLeftTriggerCont2() > 0.15) {
+    		Robot.intake.succBoi(intakeInPower);
+    	}
+    	else {
+    		Robot.intake.succBoi(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
