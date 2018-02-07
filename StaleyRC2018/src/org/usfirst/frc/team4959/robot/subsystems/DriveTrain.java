@@ -46,9 +46,6 @@ public class DriveTrain extends Subsystem {
 		leftEncoder.reset();
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
-		// We don't why distance per pulse is this number, but it works
-		leftEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
-		rightEncoder.setDistancePerPulse((4 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE_POSITIVE);
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);
@@ -146,6 +143,10 @@ public class DriveTrain extends Subsystem {
 	public void resetEncoders() {
 		leftEncoder.reset();
 		rightEncoder.reset();
+	}
+	
+	public double ticksToInches(double ticks, double ticksPerRev, double wheelDiameter, double gearRatio) {
+		return (ticks / ticksPerRev) * gearRatio * (wheelDiameter * Math.PI);
 	}
 
 	// ***** NavX *****
