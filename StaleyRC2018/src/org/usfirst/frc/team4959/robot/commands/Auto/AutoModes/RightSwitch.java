@@ -2,6 +2,7 @@ package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
@@ -24,12 +25,7 @@ public class RightSwitch extends CommandGroup {
 
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
-			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to
-			addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH, 0.85, 0, 2)); // Drive Forward to switch
-			addSequential(new AutoDropSequence()); // Drop power cube into switch
-			addSequential(new Delay(1.0));
-			addSequential(new DriveTurn(-30, -0.75, 0, 2)); // Back off the switch
-			// Turn to around the switch
+			addSequential(new DriveToSwitch());
 		}
 
 		// If left switch is ours
