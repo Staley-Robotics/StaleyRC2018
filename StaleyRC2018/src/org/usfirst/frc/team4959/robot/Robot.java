@@ -159,6 +159,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
+		SmartDashboard.putNumber("Elevator Motor Power: ", elevator.getMotorPower());
 	}
 
 	/**
