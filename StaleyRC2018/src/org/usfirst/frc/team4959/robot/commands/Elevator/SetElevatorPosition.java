@@ -48,6 +48,7 @@ public class SetElevatorPosition extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.stopElevator();
+		Robot.elevator.moveElevator.pos = pos;
 		States.elevatorState = States.ElevatorStates.joystickControl;
 	}
 

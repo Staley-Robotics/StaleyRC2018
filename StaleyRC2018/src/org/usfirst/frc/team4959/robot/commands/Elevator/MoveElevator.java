@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,8 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveElevator extends Command {
 
+	Elevator elevator;
+	public double pos;
+	
 	public MoveElevator() {
 		requires(Robot.elevator);
+		elevator = Robot.elevator;
+		pos = elevator.getPosition();
 	}
 
 	// Called just before this Command runs the first time
@@ -22,11 +28,12 @@ public class MoveElevator extends Command {
 	protected void execute() {
 		if (States.elevatorState == States.ElevatorStates.joystickControl) {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
-				Robot.elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				States.elevatorPosState = States.ElevatorPosStates.userControl;
+				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				pos = elevator.getPosition();
 			}
 			else {
-				Robot.elevator.stopElevator();
+				elevator.setPosition(pos); // To help maintain the elevator's position
 			}
 		}
 	}

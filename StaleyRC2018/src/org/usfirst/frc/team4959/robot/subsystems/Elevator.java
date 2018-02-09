@@ -19,7 +19,9 @@ public class Elevator extends Subsystem {
 
 	private WPI_TalonSRX talon;
 	
-	boolean brake = false;
+	boolean brake = true;
+	
+	public MoveElevator moveElevator;
 
 	// PID values
 	private final double kP = 0.0353;
@@ -34,10 +36,10 @@ public class Elevator extends Subsystem {
 		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
 		talon.setSensorPhase(false);
 		
-		talon.configPeakOutputForward(0.6, 0); // Max power going up
-		talon.configPeakOutputReverse(-0.6, 0); // Max power going down
-		talon.configNominalOutputForward(0.4, 0);
-		talon.configNominalOutputReverse(-0.4, 0);
+		talon.configPeakOutputForward(1.0, 0); // Max power going up
+		talon.configPeakOutputReverse(-1.0, 0); // Max power going down
+		talon.configNominalOutputForward(0.05, 0);
+		talon.configNominalOutputReverse(-0.05, 0);
 		talon.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
 		talon.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
 		talon.configForwardSoftLimitEnable(false, 0);
@@ -47,10 +49,12 @@ public class Elevator extends Subsystem {
 		talon.config_kP(0, kP, 0);
 		talon.config_kI(0, kI, 0);
 		talon.config_kD(0, kD, 0);
+		
+		moveElevator = new MoveElevator();
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(new MoveElevator());
+		setDefaultCommand(moveElevator);
 	}
 	
 	// Lets us know if the talon SRX is alive
@@ -62,6 +66,10 @@ public class Elevator extends Subsystem {
 	public double getSpeed() {
 		return talon.get();
 	}
+	
+	public double getMotorPower() {
+		return talon.getMotorOutputPercent();
+	}
 
 	// Used to set a position for the elevator to move to and makes it begin moving. 
 	public void setPosition(double position) {
@@ -70,7 +78,7 @@ public class Elevator extends Subsystem {
 	
 	// Powers the elevator motor with specified power 
 	public void moveElevator(double power) {
-		talon.set(power);
+		talon.set(-power);
 	}
 	
 	// Zeros the encoder connected to the talon SRX
