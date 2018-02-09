@@ -54,7 +54,7 @@ public class OI {
 		bottomElevation.whenPressed(bottomPosition);
 		
 		// Sets the elevator's position to switch elevation and cancels any other elevation command occuring
-		Button switchElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
+		Button switchElevation = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
 		switchElevation.cancelWhenPressed(bottomPosition);
 		switchElevation.cancelWhenPressed(lowScalePosition);
 		switchElevation.cancelWhenPressed(midScalePosition);
@@ -62,7 +62,7 @@ public class OI {
 		switchElevation.whenPressed(switchPosition);
 		
 		// Sets the elevator's position to low scale elevation and cancels any other elevation command occuring
-		Button lowScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
+		Button lowScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
 		lowScaleElevation.cancelWhenPressed(bottomPosition);
 		lowScaleElevation.cancelWhenPressed(switchPosition);
 		lowScaleElevation.cancelWhenPressed(midScalePosition);
@@ -70,23 +70,23 @@ public class OI {
 		lowScaleElevation.whenPressed(lowScalePosition);
 		
 		// Sets the elevator's position to mid scale elevation and cancels any other elevation command occuring
-		Button midScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
-		midScaleElevation.cancelWhenPressed(bottomPosition);
-		midScaleElevation.cancelWhenPressed(switchPosition);
-		midScaleElevation.cancelWhenPressed(lowScalePosition);
-		midScaleElevation.cancelWhenPressed(highScalePosition);
-		midScaleElevation.whenPressed(midScalePosition);
+//		Button midScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
+//		midScaleElevation.cancelWhenPressed(bottomPosition);
+//		midScaleElevation.cancelWhenPressed(switchPosition);
+//		midScaleElevation.cancelWhenPressed(lowScalePosition);
+//		midScaleElevation.cancelWhenPressed(highScalePosition);
+//		midScaleElevation.whenPressed(midScalePosition);
 		
 		// Sets the elevator's position to high scale elevation and cancels any other elevation command occuring
-		Button highScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
+		Button highScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
 		highScaleElevation.cancelWhenPressed(bottomPosition);
 		highScaleElevation.cancelWhenPressed(switchPosition);
 		highScaleElevation.cancelWhenPressed(lowScalePosition);
 		highScaleElevation.cancelWhenPressed(midScalePosition);
 		highScaleElevation.whenPressed(highScalePosition);
 		
-		// Stops any elevation command to allow player to use joystick control on the elevator. 
-		Button stopElevator = new JoystickButton(xboxControllertwo, RobotMap.X_BUTTON);
+		// Stops any elevation command to allow player to use joy-stick control on the elevator. 
+		Button stopElevator = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
 		stopElevator.cancelWhenPressed(bottomPosition);
 		stopElevator.cancelWhenPressed(switchPosition);
 		stopElevator.cancelWhenPressed(lowScalePosition);
