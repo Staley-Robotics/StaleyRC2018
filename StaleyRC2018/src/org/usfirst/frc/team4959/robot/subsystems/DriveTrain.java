@@ -106,13 +106,21 @@ public class DriveTrain extends Subsystem {
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
 		double turnSpeedModifier = 0.7;
+		
+		backward = backward * speedModifier;
+		forward = forward * speedModifier;
+		rotate = -rotate * turnSpeedModifier;
 
-		if (backward * speedModifier > 0) {
-			m_drive.arcadeDrive(backward * speedModifier, -rotate * turnSpeedModifier);
+		if (backward > 0) {
+			// m_drive.arcadeDrive(backward, -rotate);
+			leftSide.set(backward - rotate);
+			rightSide.set(backward + rotate);		
 		} else if (forward > 0) {
-			m_drive.arcadeDrive(-forward * speedModifier, -rotate * turnSpeedModifier);
+			// m_drive.arcadeDrive(-forward, rotate);
+			leftSide.set((-forward - rotate));
+			rightSide.set((-forward + rotate) * .90);
 		} else {
-			m_drive.arcadeDrive(0, -rotate * turnSpeedModifier);
+			m_drive.arcadeDrive(0, rotate);
 		}
 	}
 
