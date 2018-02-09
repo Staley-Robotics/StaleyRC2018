@@ -85,20 +85,24 @@ public class DriveTrain extends Subsystem {
 		rightSide.set(speed);
 	}
 
+	// Drives the robot using arcade drive
 	public void execute(double power, double turn) {
 		arcadeDrive(power, turn);
 	}
 
+	// Stops drive motors
 	public void stopMotors() {
 		m_drive.stopMotor();
 	}
 
 	// ***** Drives *****
 
+	// Not in use
 	public void tankDrive(double speedL, double speedR) {
 		m_drive.tankDrive(speedL, speedR);
 	}
 
+	// The drive we are using right now
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
 		double turnSpeedModifier = 0.7;
@@ -145,6 +149,7 @@ public class DriveTrain extends Subsystem {
 		rightEncoder.reset();
 	}
 	
+	// Takes in encoder ticks and returns it as inches 
 	public double ticksToInches(double ticks, double ticksPerRev, double wheelDiameter, double gearRatio) {
 		return (ticks / ticksPerRev) * gearRatio * (wheelDiameter * Math.PI);
 	}
@@ -165,6 +170,7 @@ public class DriveTrain extends Subsystem {
 		return navx.getYaw();
 	}
 
+	// Returns true if NavX is connected to the Roborio
 	public boolean isNavxConnected() {
 		return navx.isConnected();
 	}
@@ -193,6 +199,7 @@ public class DriveTrain extends Subsystem {
 		return navx.getQuaternionZ();
 	}
 
+	// Returns the NavX object being used
 	public AHRS getNavx() {
 		return navx;
 	}

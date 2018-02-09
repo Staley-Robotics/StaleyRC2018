@@ -13,15 +13,16 @@ public class Climber extends Subsystem {
 	private Victor winchTwo;
 	
 	public Climber() {
-		winchOne = new Victor(RobotMap.WINCH_MOTOR_PORT_ONE);
-		winchTwo = new Victor(RobotMap.WINCH_MOTOR_PORT_TWO);
+		winchOne = new Victor(RobotMap.CLIMBER_MOTOR_PORT_ONE);
+		winchTwo = new Victor(RobotMap.CLIMBER_MOTOR_PORT_TWO);
 	}
 
     public void initDefaultCommand() {
         
     }
     
-    public void runWinch(double power) {
+    // Runs the climber motors at the given power. 
+    public void runClimber(double power) {
     	winchOne.set(power);
     	winchTwo.set(power);
     }

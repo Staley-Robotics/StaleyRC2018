@@ -1,5 +1,9 @@
 package org.usfirst.frc.team4959.robot.util;
 
+/*
+ * Holds constants for different distances on the field
+ */
+
 public class FieldDimensions {
 	public static final double ROBOT_SIZE = 28;
 	public static final double DS_TO_AUTO_LINE = 120 - ROBOT_SIZE;

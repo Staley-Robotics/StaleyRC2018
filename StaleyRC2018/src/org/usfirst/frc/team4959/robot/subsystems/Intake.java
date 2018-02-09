@@ -26,15 +26,18 @@ public class Intake extends Subsystem {
         setDefaultCommand(new RunIntake());
     }
     
+    // Runs intake motors. 
     public void succBoi(double power) {
     	leftMotor.set(-power);
     	rightMotor.set(-power);
     }
     
+    // Retracts piston to inversely expand the intake
     public void expandIntake() {
 		intakeSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 	
+    // Extends piston to inversely close the intake
 	public void closeIntake() {
 		intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}

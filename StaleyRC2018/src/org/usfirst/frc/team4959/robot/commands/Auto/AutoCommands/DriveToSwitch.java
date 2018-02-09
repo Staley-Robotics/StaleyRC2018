@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * The code used for driving straight to the switch, dropping the cube there, then backing off
  */
 public class DriveToSwitch extends CommandGroup {
 

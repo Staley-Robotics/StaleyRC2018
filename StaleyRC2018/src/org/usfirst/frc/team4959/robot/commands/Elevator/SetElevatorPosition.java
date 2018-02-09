@@ -48,7 +48,7 @@ public class SetElevatorPosition extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.stopElevator();
-		Robot.elevator.moveElevator.pos = pos;
+		Robot.elevator.moveElevator.pos = Robot.elevator.getPosition(); // Stores last position to maintain it during teleop
 		States.elevatorState = States.ElevatorStates.joystickControl;
 	}
 

@@ -61,12 +61,8 @@ public class Elevator extends Subsystem {
 	public boolean isAlive() {
 		return talon.isAlive();
 	}
-	
-	// Returns the current speed of the motor connected to the talon SRX (Currently not working) 
-	public double getSpeed() {
-		return talon.get();
-	}
-	
+
+	// Returns what percent of motor power is being used by the elevator motor
 	public double getMotorPower() {
 		return talon.getMotorOutputPercent();
 	}

@@ -8,7 +8,7 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
-import org.usfirst.frc.team4959.robot.commands.Climber.RunWinchMotor;
+import org.usfirst.frc.team4959.robot.commands.Climber.RunClimberMotor;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
@@ -93,8 +93,8 @@ public class OI {
 		stopElevator.cancelWhenPressed(midScalePosition);
 		stopElevator.cancelWhenPressed(highScalePosition);
 		
-		Button winch = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
-		winch.whileHeld(new RunWinchMotor(1));
+		Button climber = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
+		climber.whileHeld(new RunClimberMotor(1));
 	}
 	
 	// ***** Getters for X-Box controller(s) raw axis *****

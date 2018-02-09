@@ -41,9 +41,6 @@ public class DriveTurn extends Command {
 		timer.start();
 		driveTrain.resetEncoders();
 		driveTrain.resetNavx();
-
-//		driveTrain.rightEncoder.setDistancePerPulse((6 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE);
-//		driveTrain.leftEncoder.setDistancePerPulse((6 * Math.PI) / Constants.ENCODER_DISTANCE_PER_PULSE);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -63,8 +60,8 @@ public class DriveTurn extends Command {
 			}
 		} else {
 			if (turn == 0) {
-				// driveTrain.arcadeDrive(desiredPower, -currentAngle * 0.05);
-				driveTrain.arcadeDrive(desiredPower, 0 * 0.05);
+				 driveTrain.arcadeDrive(desiredPower, -currentAngle * 0.05);
+//				driveTrain.arcadeDrive(desiredPower, 0 * 0.05);
 			} else {
 				driveTrain.arcadeDrive(desiredPower, turn);
 			}

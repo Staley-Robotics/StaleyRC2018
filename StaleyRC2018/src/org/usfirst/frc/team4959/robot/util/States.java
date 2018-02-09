@@ -1,5 +1,9 @@
 package org.usfirst.frc.team4959.robot.util;
 
+/*
+ * Contains the different states that the subsystems in the robot can be in. 
+ */
+
 public class States {
 	
 	public static ElevatorStates elevatorState;
