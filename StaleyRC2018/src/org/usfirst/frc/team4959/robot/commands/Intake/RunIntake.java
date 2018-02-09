@@ -25,11 +25,11 @@ public class RunIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.m_oi.getRightTriggerCont2() > 0.15) {
-    		Robot.intake.succBoi(intakeOutPower);
+    	if(Robot.m_oi.getLeftTriggerCont2() > 0.15) {
+    		Robot.intake.succBoi(Robot.m_oi.getLeftTriggerCont2());
     	}
-    	else if(Robot.m_oi.getLeftTriggerCont2() > 0.15) {
-    		Robot.intake.succBoi(intakeInPower);
+    	else if(Robot.m_oi.getRightTriggerCont2() > 0.15) {
+    		Robot.intake.succBoi(-Robot.m_oi.getRightTriggerCont2());
     	}
     	else {
     		Robot.intake.succBoi(0);
