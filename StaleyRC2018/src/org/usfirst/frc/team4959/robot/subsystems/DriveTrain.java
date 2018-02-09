@@ -101,7 +101,7 @@ public class DriveTrain extends Subsystem {
 
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
-		double turnSpeedModifier = 1;
+		double turnSpeedModifier = 0.7;
 
 		if (backward * speedModifier > 0) {
 			m_drive.arcadeDrive(backward * speedModifier, -rotate * turnSpeedModifier);
