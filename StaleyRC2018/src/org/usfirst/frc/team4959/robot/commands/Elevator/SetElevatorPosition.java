@@ -42,13 +42,18 @@ public class SetElevatorPosition extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.stopElevator();
-		Robot.elevator.moveElevator.pos = Robot.elevator.getPosition(); // Stores last position to maintain it during teleop
+		Robot.elevator.moveElevator.pos = Robot.elevator.getPosition(); // Stores last position to maintain it during
+																		// teleop
 		States.elevatorState = States.ElevatorStates.joystickControl;
 	}
 
