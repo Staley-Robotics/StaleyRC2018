@@ -21,8 +21,6 @@ public class Elevator extends Subsystem {
 	
 	boolean brake = true;
 	
-	public MoveElevator moveElevator;
-
 	// PID values
 	private final double kP = 0.0353;
 	private final double kI = 0;
@@ -50,11 +48,11 @@ public class Elevator extends Subsystem {
 		talon.config_kI(0, kI, 0);
 		talon.config_kD(0, kD, 0);
 		
-		moveElevator = new MoveElevator();
+		
 	}
 
 	public void initDefaultCommand() {
-		setDefaultCommand(moveElevator);
+		setDefaultCommand(new MoveElevator());
 	}
 	
 	// Lets us know if the talon SRX is alive

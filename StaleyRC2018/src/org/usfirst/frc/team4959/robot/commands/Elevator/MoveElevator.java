@@ -12,12 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveElevator extends Command {
 
 	Elevator elevator;
-	public double pos;
 	
 	public MoveElevator() {
 		requires(Robot.elevator);
 		elevator = Robot.elevator;
-		pos = elevator.getPosition();
 	}
 
 	// Called just before this Command runs the first time
@@ -30,10 +28,9 @@ public class MoveElevator extends Command {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl;
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
-				pos = elevator.getPosition(); // Stores the last moved to position in order to maintain it for whenever using isn't inputting during joystick control
 			}
 			else {
-				elevator.setPosition(pos); // To help maintain the elevator's position
+				elevator.stopElevator(); // To help maintain the elevator's position
 			}
 		}
 	}
