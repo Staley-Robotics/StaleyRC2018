@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShifterToggle extends Command {
 
-	private static boolean shifterToggle;
 	private final String TAG = "Shifter: ";
 
 	public ShifterToggle() {
@@ -23,7 +22,7 @@ public class ShifterToggle extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		// Toggles to high gear
-		if (shifterToggle && States.shifterState == States.ShifterStates.low) {
+		if (States.shifterState == States.ShifterStates.low) {
 			Robot.driveTrain.shifterOn();
 			States.shifterState = States.ShifterStates.high;
 			System.out.println("High Gear");
@@ -43,18 +42,16 @@ public class ShifterToggle extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		if (shifterToggle) {
+		if (States.shifterState == States.ShifterStates.low) {
 			System.out.println(TAG + "Shifter on End");
 		} else {
 			System.out.println(TAG + "Shifter off End");
 		}
-
-		shifterToggle = !shifterToggle;
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-
+		this.end();
 	}
 }
