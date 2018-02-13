@@ -29,11 +29,12 @@ public class MoveElevator extends Command {
 	protected void execute() {
 		if (States.elevatorState == States.ElevatorStates.joystickControl) {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
+				// Makes sure motor doesn't try to stay where it was, not sure if this does anything since elevator was jank due to encoder and motor controller needing to be inverted
 				if(motorStopper) {
 					elevator.stopElevator();
 					motorStopper = false;
 				}
-				States.elevatorPosState = States.ElevatorPosStates.userControl;
+				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
 			} else {
