@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4959.robot.subsystems;
 
+import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.RobotMap;
+import org.usfirst.frc.team4959.robot.commands.Climber.RunClimberMotor;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -18,7 +20,7 @@ public class Climber extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-        
+        setDefaultCommand(new RunClimberMotor(Robot.m_oi.getRightStickYCont2()));
     }
     
     // Runs the climber motors at the given power. 
