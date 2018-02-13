@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveElevator extends Command {
 
 	Elevator elevator;
+	public static boolean motorStopper = true;
 	
 	public MoveElevator() {
 		requires(Robot.elevator);
@@ -28,12 +29,16 @@ public class MoveElevator extends Command {
 	protected void execute() {
 		if (States.elevatorState == States.ElevatorStates.joystickControl) {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
+				if(motorStopper) {
+					elevator.stopElevator();
+					motorStopper = false;
+				}
 				States.elevatorPosState = States.ElevatorPosStates.userControl;
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
-			}
-			else {
+			} else {
 				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
+				motorStopper = true;
 			}
 		}
 	}
