@@ -11,6 +11,9 @@ package org.usfirst.frc.team4959.robot;
 import org.usfirst.frc.team4959.robot.commands.Climber.RunClimberMotor;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.commands.Elevator.ZeroElevator;
+import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
+import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
 import org.usfirst.frc.team4959.robot.commands.Intake.IntakePistonToggle;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
@@ -42,8 +45,11 @@ public class OI {
 		Button shifterToggle = new JoystickButton(xboxController, RobotMap.B_BUTTON);
 		shifterToggle.whenPressed(new ShifterToggle());
 		
-		Button intakePistonToggle = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
-		intakePistonToggle.whenPressed(new IntakePistonToggle());
+		Button closeIntake = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
+		closeIntake.whenPressed(new CloseIntake());
+		
+		Button expandIntake = new JoystickButton(xboxControllertwo, RobotMap.LEFT_BUMPER);
+		expandIntake.whenPressed(new ExpandIntake());
 
 		// Sets the elevator's position to bottom elevation and cancels any other elevation command occuring
 		Button bottomElevation = new JoystickButton(xboxControllertwo, RobotMap.A_BUTTON);
@@ -69,14 +75,6 @@ public class OI {
 		lowScaleElevation.cancelWhenPressed(highScalePosition);
 		lowScaleElevation.whenPressed(lowScalePosition);
 		
-		// Sets the elevator's position to mid scale elevation and cancels any other elevation command occuring
-//		Button midScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.B_BUTTON);
-//		midScaleElevation.cancelWhenPressed(bottomPosition);
-//		midScaleElevation.cancelWhenPressed(switchPosition);
-//		midScaleElevation.cancelWhenPressed(lowScalePosition);
-//		midScaleElevation.cancelWhenPressed(highScalePosition);
-//		midScaleElevation.whenPressed(midScalePosition);
-		
 		// Sets the elevator's position to high scale elevation and cancels any other elevation command occuring
 		Button highScaleElevation = new JoystickButton(xboxControllertwo, RobotMap.Y_BUTTON);
 		highScaleElevation.cancelWhenPressed(bottomPosition);
@@ -93,8 +91,9 @@ public class OI {
 		stopElevator.cancelWhenPressed(midScalePosition);
 		stopElevator.cancelWhenPressed(highScalePosition);
 		
-		Button climber = new JoystickButton(xboxControllertwo, RobotMap.RIGHT_BUMPER);
-		climber.whileHeld(new RunClimberMotor(1));
+		// Sets the encoder on the elevator to 0
+		Button zeroElevator = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
+		zeroElevator.whenPressed(new ZeroElevator());
 	}
 	
 	// ***** Getters for X-Box controller(s) raw axis *****
