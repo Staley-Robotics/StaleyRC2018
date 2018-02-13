@@ -12,6 +12,7 @@ public class RunIntake extends Command {
 	
 	private double intakeInPower;
 	private double intakeOutPower;
+	private final double DEAD_ZONE = 0.1;
 
     public RunIntake() {
     	requires(Robot.intake);
@@ -26,12 +27,12 @@ public class RunIntake extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// Push out
-    	if(Robot.m_oi.getLeftTriggerCont2() > 0.15) {
-    		Robot.intake.succBoi(Robot.m_oi.getLeftTriggerCont2());
+    	if(Robot.m_oi.getLeftTriggerCont2() > DEAD_ZONE) {
+    		Robot.intake.succBoi(intakeOutPower);
     	}
     	// Bring in
-    	else if(Robot.m_oi.getRightTriggerCont2() > 0.15) {
-    		Robot.intake.succBoi(-Robot.m_oi.getRightTriggerCont2());
+    	else if(Robot.m_oi.getRightTriggerCont2() > DEAD_ZONE) {
+    		Robot.intake.succBoi(intakeInPower);
     	}
     	else {
     		Robot.intake.succBoi(0);
