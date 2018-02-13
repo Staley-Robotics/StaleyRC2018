@@ -46,6 +46,9 @@ public class DriveTrain extends Subsystem {
 		leftEncoder.reset();
 		rightEncoder.reset();
 		rightEncoder.setReverseDirection(true);
+		
+		rightEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
+		leftEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
 
 		// Gyro setup
 		navx = new AHRS(SPI.Port.kMXP);
@@ -112,13 +115,13 @@ public class DriveTrain extends Subsystem {
 		rotate = -rotate * turnSpeedModifier;
 
 		if (backward > 0) {
-			// m_drive.arcadeDrive(backward, -rotate);
-			leftSide.set(backward - rotate);
-			rightSide.set(backward + rotate);		
+			 m_drive.arcadeDrive(backward, rotate);
+//			leftSide.set(backward - rotate);
+//			rightSide.set(backward + rotate);		
 		} else if (forward > 0) {
-			// m_drive.arcadeDrive(-forward, rotate);
-			leftSide.set((-forward - rotate));
-			rightSide.set((-forward + rotate) * .90);
+			 m_drive.arcadeDrive(-forward, rotate);
+//			leftSide.set((-forward - rotate));
+//			rightSide.set((-forward + rotate) * .90);
 		} else {
 			m_drive.arcadeDrive(0, rotate);
 		}
@@ -159,7 +162,8 @@ public class DriveTrain extends Subsystem {
 	
 	// Takes in encoder ticks and returns it as inches 
 	public double ticksToInches(double ticks, double ticksPerRev, double wheelDiameter, double gearRatio) {
-		return (ticks / ticksPerRev) * gearRatio * (wheelDiameter * Math.PI);
+		return ((ticks / ticksPerRev) * gearRatio * (wheelDiameter * Math.PI));
+		
 	}
 
 	// ***** NavX *****
