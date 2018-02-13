@@ -36,8 +36,8 @@ public class Elevator extends Subsystem {
 		
 		talon.configPeakOutputForward(1.0, 0); // Max power going up
 		talon.configPeakOutputReverse(-1.0, 0); // Max power going down
-		talon.configNominalOutputForward(0.30, 0);
-		talon.configNominalOutputReverse(-0.30, 0);
+		talon.configNominalOutputForward(0.30, 0); // Minimal power going up
+		talon.configNominalOutputReverse(-0.30, 0); // Minimal power going down
 		talon.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
 		talon.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
 		talon.configForwardSoftLimitEnable(false, 0);
@@ -68,11 +68,17 @@ public class Elevator extends Subsystem {
 	// Used to set a position for the elevator to move to and makes it begin moving. 
 	public void setPosition(double position) {
 		talon.set(ControlMode.Position, position);
+		// Sets minimal power to send to motor when moving on its own
+		talon.configNominalOutputForward(0.35, 0);
+		talon.configNominalOutputReverse(-0.20, 0);
 	}
 	
 	// Powers the elevator motor with specified power 
 	public void moveElevator(double power) {
 		talon.set(-power);
+		// Sets minimal power to send to motor when controlled by player
+		talon.configNominalOutputForward(0.15, 0);
+		talon.configNominalOutputReverse(-0.15, 0);
 	}
 	
 	// Zeros the encoder connected to the talon SRX
