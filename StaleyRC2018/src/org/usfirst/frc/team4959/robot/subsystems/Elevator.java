@@ -22,7 +22,7 @@ public class Elevator extends Subsystem {
 	boolean brake = true;
 	
 	// PID values
-	private final double kP = 0.0353;
+	private final double kP = 0.037;
 	private final double kI = 0;
 	private final double kD = 0.3;
 
@@ -36,12 +36,12 @@ public class Elevator extends Subsystem {
 		
 		talon.configPeakOutputForward(1.0, 0); // Max power going up
 		talon.configPeakOutputReverse(-1.0, 0); // Max power going down
-		talon.configNominalOutputForward(0.05, 0);
-		talon.configNominalOutputReverse(-0.05, 0);
+		talon.configNominalOutputForward(0.30, 0);
+		talon.configNominalOutputReverse(-0.30, 0);
 		talon.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
 		talon.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
 		talon.configForwardSoftLimitEnable(false, 0);
-		talon.configReverseSoftLimitEnable(false, 0);
+		talon.configReverseSoftLimitEnable(true, 0);
 		
 		// Set PID values
 		talon.config_kP(0, kP, 0);
