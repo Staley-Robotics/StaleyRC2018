@@ -30,9 +30,9 @@ public class Elevator extends Subsystem {
 		talon = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR_PORT);
 		// Brake mode if brake is true		Coast Mode if brake is false
 		talon.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
-		// Configures the sensor hooked up to it to be an encoder. 
-		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-		talon.setSensorPhase(false);
+		talon.setInverted(true);
+		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0); 	// Configures the sensor hooked up to it to be an encoder. 
+		talon.setSensorPhase(true);
 		
 		talon.configPeakOutputForward(1.0, 0); // Max power going up
 		talon.configPeakOutputReverse(-1.0, 0); // Max power going down
