@@ -2,6 +2,7 @@ package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.util.Constants;
+import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -52,7 +53,7 @@ public class SetElevatorPosition extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.elevator.stopElevator();
-																		// teleop
+		LiveVariableStory.pos = Robot.elevator.getPosition();		
 		States.elevatorState = States.ElevatorStates.joystickControl;
 	}
 

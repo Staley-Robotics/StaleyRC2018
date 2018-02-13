@@ -2,6 +2,8 @@ package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
+import org.usfirst.frc.team4959.robot.util.Constants;
+import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -28,9 +30,10 @@ public class MoveElevator extends Command {
 			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl;
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				LiveVariableStory.pos = elevator.getPosition();
 			}
 			else {
-				elevator.stopElevator(); // To help maintain the elevator's position
+				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
 			}
 		}
 	}
