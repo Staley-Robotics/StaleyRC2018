@@ -10,4 +10,5 @@ public class FieldDimensions {
 	public static final double DS_TO_SWITCH = 140 - ROBOT_SIZE;
 	public static final double DS_TO_SCALE = 299.65 - ROBOT_SIZE;
 	public static final double HALF_DS_TO_SWITCH = DS_TO_SWITCH / 2;
+	public static final double DS_TO_SCALE_DECISION_POINT = 220 - ROBOT_SIZE;
 }
