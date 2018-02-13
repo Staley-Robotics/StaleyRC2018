@@ -24,12 +24,12 @@ public class DriveTurn extends Command {
 	private double stopThreshold = 1;
 	private Timer timer;
 	private double time;
-	private double turn = 0;
+	private double turn;
 
 	public DriveTurn(double inches, double power, double turn, double seconds) {
 		requires(Robot.driveTrain);
 		driveTrain = Robot.driveTrain;
-		this.turn = turn - 0.23;
+		this.turn = turn;
 		desiredDistance = inches;
 		desiredPower = -power;
 		time = seconds;
@@ -46,8 +46,7 @@ public class DriveTurn extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double currentAngle = driveTrain.getYaw();
-		currentDisplacement = driveTrain.ticksToInches(((driveTrain.getRightEncoderDistance()) + driveTrain.getLeftEncoderDistance()) / 2,
-				Constants.TICKS_PER_REVOLUTION, Constants.WHEEL_DIAMETER, Constants.GEAR_RATIO);
+		currentDisplacement = (driveTrain.getLeftEncoderDistance() + driveTrain.getRightEncoderDistance() / 2);
 
 		double error = Math.abs(desiredDistance) - Math.abs(currentDisplacement);
 		if (error < pThreshold) {
@@ -67,8 +66,6 @@ public class DriveTurn extends Command {
 			}
 		}
 		
-		SmartDashboard.putNumber("Desired Power: ", desiredPower);
-		SmartDashboard.putNumber("Turn Power", turn);
 		System.out.println("Left Encoder: " + driveTrain.getLeftEncoderDistance());
 		System.out.println("Right Encoder: " + driveTrain.getRightEncoderDistance());
 		System.out.println("Current Displacement: " + currentDisplacement);
