@@ -18,7 +18,7 @@ public class Constants {
 	
 	// Soft limits for how far the elevator can go (Not in use)
 	public static final int FWD_SOFT_LIMIT = 20000; // Adjust this later on
-	public static final int REV_SOFT_LIMIT = -5000;
+	public static final int REV_SOFT_LIMIT = -8000;
 	
 	// ***** Encoder Constants *****
 //	public static final double ENCODER_DISTANCE_PER_PULSE = 0.07575; // Pulses per revolution of encoders
