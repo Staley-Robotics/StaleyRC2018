@@ -77,8 +77,10 @@ public class Elevator extends Subsystem {
 	public void moveElevator(double power) {
 		talon.set(-power);
 		// Sets minimal power to send to motor when controlled by player
-		talon.configNominalOutputForward(0.15, 0);
-		talon.configNominalOutputReverse(-0.15, 0);
+//		talon.configNominalOutputForward(0.15, 0);
+//		talon.configNominalOutputReverse(-0.15, 0);
+		talon.configNominalOutputForward(0.6, 0);
+		talon.configNominalOutputReverse(-0.6, 0);
 	}
 	
 	// Zeros the encoder connected to the talon SRX
