@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team4959.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,6 +27,7 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team4959.robot.util.CollisionDetection;
 import org.usfirst.frc.team4959.robot.util.States;
 
 /**
@@ -46,6 +48,8 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Elevator elevator;
 	public static Climber climber;
+	
+	CollisionDetection collisionDetection;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -110,6 +114,7 @@ public class Robot extends TimedRobot {
 		driveTrain.shifterOff();
 		intake.closeIntake();
 		elevator.zeroPosition();
+		driveTrain.resetNavx();
 
 		m_autonomousCommand = m_chooser.getSelected();
 
@@ -141,6 +146,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		
+		collisionDetection = new CollisionDetection();
 	}
 
 	/**
@@ -159,6 +166,12 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
 		SmartDashboard.putNumber("Elevator Motor Power: ", elevator.getMotorPower());
+		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
+		
+		if ( collisionDetection.collisionDetector()) {
+			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.5);
+			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0.5);
+		}
 	}
 
 	/**
