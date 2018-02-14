@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Victor;
@@ -51,7 +52,7 @@ public class DriveTrain extends Subsystem {
 		leftEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
 
 		// Gyro setup
-		navx = new AHRS(SPI.Port.kMXP);
+		navx = new AHRS(SerialPort.Port.kUSB1);
 
 		// Drivetrain setup
 		frontLeft = new Victor(RobotMap.FRONT_LEFT_DRIVE_MOTOR_PORT);
