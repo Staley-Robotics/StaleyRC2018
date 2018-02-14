@@ -54,7 +54,8 @@ public class DriveStraight extends Command {
 		drivePO = new PIDOutput() {
 			@Override
 			public void pidWrite(double output) {
-				driveTrain.execute(output, driveTrain.getYaw() * -0.02);
+//				driveTrain.execute(output, driveTrain.getYaw() * -0.02);
+				driveTrain.execute(output, 0);
 			}
 		};
 

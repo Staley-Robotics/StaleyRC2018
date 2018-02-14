@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveToSwitch extends CommandGroup {
 
     public DriveToSwitch() {
+		addSequential(new DriveTurn(10, 0.5, 0, 1.2));
 		addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to
-		addSequential(new DriveTurn(5, 0.5, 0, 1.2));
-		addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH-15, 0.85, 0, 2)); // Drive Forward to switch
+		addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH-20, 0.8, 0, 2)); // Drive Forward to switch
 		addSequential(new DriveTurn(25, 0.5, 0, 1.5));
 		addSequential(new Delay(0.25));
 		addSequential(new AutoDropSequence()); // Drop power cube into switch

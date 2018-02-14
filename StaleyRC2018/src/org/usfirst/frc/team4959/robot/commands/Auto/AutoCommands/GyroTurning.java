@@ -57,16 +57,16 @@ public class GyroTurning extends Command implements PIDOutput{
     protected void initialize() {
     	System.out.println("Gyro initialize");
     	driveTrain.resetNavx();
-    	
-    	turnPID.setSetpoint(angle);
-    	turnPID.enable();
-    	
+    	System.out.println("Starting angle: " + driveTrain.getYaw());
     	time.start();
+
+    	turnPID.setSetpoint(angle);
+    	turnPID.enable();    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	System.out.println(driveTrain.getYaw());
+    	System.out.println("Angle: " + driveTrain.getYaw());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -94,6 +94,6 @@ public class GyroTurning extends Command implements PIDOutput{
     // Outputs the motor speed from the PIDController
 	@Override
 	public void pidWrite(double output) {
-		driveTrain.arcadeDrive(0, output);
+		driveTrain.arcadeDrive(0, -output);
 	}
 }
