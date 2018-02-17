@@ -20,10 +20,11 @@ public class GyroTurning extends Command implements PIDOutput{
 	private Timer time;
 	
 	private double angle;
+	private double startingAngle;
 	private double seconds;
 	
 	// PID Values
-	private final double kP = 0.024;
+	private final double kP = 0.02;
 	private final double kI = 0;
 	private final double kD = 0.06;
 	
@@ -44,24 +45,28 @@ public class GyroTurning extends Command implements PIDOutput{
     	
     	// prevent the motors from receiving too little power
     	if(angle > 0)
-    		turnPID.setOutputRange(0.4, 1);
+    		turnPID.setOutputRange(0.4, 1.0);
     	else if(angle < 0)
     		turnPID.setOutputRange(-1, -0.4);
     	
     	// Tolerance of how far off the angle can be
     	turnPID.setAbsoluteTolerance(0.5);
-    	turnPID.setContinuous(false);
+    	turnPID.setContinuous(true);
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	driveTrain.shifterOff();
+    	System.out.println("Low gear");
     	System.out.println("Gyro initialize");
-    	driveTrain.resetNavx();
-    	System.out.println("Starting angle: " + driveTrain.getYaw());
+    	startingAngle = driveTrain.getYaw();
+    	
+    	System.out.println("Starting Angle: " + startingAngle);
+    	System.out.println("SetPoin: " + (angle + startingAngle));
     	time.start();
-
-    	turnPID.setSetpoint(angle);
-    	turnPID.enable();    	
+    	turnPID.setSetpoint(angle + startingAngle);
+    	turnPID.enable();    
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -76,12 +81,16 @@ public class GyroTurning extends Command implements PIDOutput{
 
     // Called once after isFinished returns true
     protected void end() {
-		SmartDashboard.putNumber("Motor Power", turnPID.get());
+    	driveTrain.shifterOn();
+
+    	System.out.println("High gear");
+		SmartDashboard.putNumber("Gyro Turning Motor Power", turnPID.get());
     	System.out.println("Finished: "  + driveTrain.getYaw());
+    	System.out.println();
+    	
     	driveTrain.arcadeDrive(0, 0);
     	turnPID.disable();
     	turnPID.reset();
-    	driveTrain.resetNavx();
     	time.reset();
     }
 

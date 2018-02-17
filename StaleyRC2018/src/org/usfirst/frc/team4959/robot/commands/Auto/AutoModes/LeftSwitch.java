@@ -1,12 +1,8 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
-import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
-import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 

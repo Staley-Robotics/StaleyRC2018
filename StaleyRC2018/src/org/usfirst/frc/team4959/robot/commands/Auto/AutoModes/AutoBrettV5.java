@@ -1,6 +1,10 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
+import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOff;
+import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOn;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -12,8 +16,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoBrettV5 extends CommandGroup {
 
 	public AutoBrettV5() {
-//		addSequential(new DriveTurn(80, 0.9, 0, 3));
-//		addSequential(new DriveStraight(60));
-		addSequential(new GyroTurning(90, 2));
+		
+		addSequential(new DriveTurn(70, 0.7, -0.5, 3));
 	}
 }
