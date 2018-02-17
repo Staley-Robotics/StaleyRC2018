@@ -7,7 +7,7 @@ import com.kauailabs.navx.frc.AHRS;
 public class CollisionDetection {
 	AHRS navx = Robot.driveTrain.getNavx();
 	
-	final static double kCollisionThreshold_DeltaG = 0.5f;
+	final static double kCollisionThreshold_DeltaG = 5.0f;
 		
 	double last_world_linear_accel_x = 0;
 	double last_world_linear_accel_y = 0;
