@@ -5,42 +5,46 @@ package org.usfirst.frc.team4959.robot.util;
  */
 
 public class States {
-	
-	public static ElevatorStates elevatorState;
+
+	public static ElevatorControlStates elevatorControlState;
 	public static ElevatorPosStates elevatorPosState;
 	public static ShifterStates shifterState;
 	public static IntakeClawStates intakeClawState;
-	
-	// Tells us if the elevator is currently being controlled by player's joystick or the PID Controller
-	public static enum ElevatorStates {
-		joystickControl,
-		pidControl;
+	public static ElevatorSoftLimitStates elevatorSoftLimitState;
+
+	// Tells us if the elevator is currently being controlled by player's joystick
+	// or the PID Controller
+	public static enum ElevatorControlStates {
+		joystickControl, pidControl;
 	}
-	
+
 	// Tells us if the shifter is in low gear or high gear
 	public static enum ShifterStates {
-		low,
-		high;
+		low, high;
 	}
-	
+
 	// Tells us if the in-take claw is open or closed
 	public static enum IntakeClawStates {
-		open,
-		closed;
+		open, closed;
 	}
-	
+
 	public static enum ElevatorPosStates {
 		bottom, 
-		switchPos, 
-		scaleLow, scaleMid, scaleHigh,
-		userControl;
+		switchPos,
+		scaleLow, scaleMid, scaleHigh, 
+		userControl, positionHeld;
 	}
 	
+	public static enum ElevatorSoftLimitStates {
+		disabled, enabled;
+	}
+
 	// Resets all of the states
 	public static void resetStates() {
-		elevatorState = ElevatorStates.joystickControl;
+		elevatorControlState = ElevatorControlStates.joystickControl;
 		elevatorPosState = ElevatorPosStates.userControl;
-		shifterState = ShifterStates.low;
+		shifterState = ShifterStates.high;
 		intakeClawState = IntakeClawStates.closed;
+		elevatorSoftLimitState = ElevatorSoftLimitStates.enabled;
 	}
 }
