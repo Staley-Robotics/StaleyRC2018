@@ -4,18 +4,27 @@ import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.commands.Pneumatics.RunCompressor;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * Subsystem controlling anything that only belongs to Pneumatics
- * Usually only the compressor 
+ * Subsystem controlling anything that only belongs to Pneumatics Usually only
+ * the compressor
  */
 public class Pneumatics extends Subsystem {
-	
-	Compressor compressor = new Compressor(RobotMap.COMPRESSOR_PORT);
-	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+
+	Compressor compressor;
+
+	public Pneumatics() {
+		try {
+			compressor = new Compressor(RobotMap.COMPRESSOR_PORT);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Instantiating Compressor: " + ex.getMessage(), true);
+		}
+	}
+
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new RunCompressor());
