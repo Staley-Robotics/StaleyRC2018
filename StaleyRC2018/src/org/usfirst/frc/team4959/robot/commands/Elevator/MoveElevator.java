@@ -2,6 +2,7 @@ package org.usfirst.frc.team4959.robot.commands.Elevator;
 
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
+import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
 
@@ -13,8 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MoveElevator extends Command {
 
 	Elevator elevator;
-	public static boolean motorStopper = true;
-	
+
 	public MoveElevator() {
 		requires(Robot.elevator);
 		elevator = Robot.elevator;
@@ -26,19 +26,25 @@ public class MoveElevator extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (States.elevatorState == States.ElevatorStates.joystickControl) {
-			if (Robot.m_oi.getLeftStickYCont2() > 0.15 || Robot.m_oi.getLeftStickYCont2() < -0.15) {
-				// Makes sure motor doesn't try to stay where it was, not sure if this does anything since elevator was jank due to encoder and motor controller needing to be inverted
-				if(motorStopper) {
-					elevator.stopElevator();
-					motorStopper = false;
-				}
+		if (States.elevatorControlState == States.ElevatorControlStates.joystickControl) {
+			if (Robot.m_oi.getLeftStickYCont2() > 0.10) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
+				
+				System.out.println("Going up");
+			} else if (Robot.m_oi.getLeftStickYCont2() < -0.10) {
+				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being	 controlled by the user
+				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				LiveVariableStory.pos = elevator.getPosition();
+				
+				System.out.println("Going down");
 			} else {
-				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
-				motorStopper = true;
+				States.elevatorPosState = States.ElevatorPosStates.positionHeld;
+				elevator.stopElevator();
+//				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
+				
+//				System.out.println("Staying put at "  + LiveVariableStory.pos);
 			}
 		}
 	}

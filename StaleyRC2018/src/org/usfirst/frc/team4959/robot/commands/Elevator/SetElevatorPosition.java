@@ -21,7 +21,7 @@ public class SetElevatorPosition extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.elevator.setPosition(pos);
-		States.elevatorState = States.ElevatorStates.pidControl;
+		States.elevatorControlState = States.ElevatorControlStates.pidControl;
 
 		if (pos == Constants.ELEVATOR_BOTTOM_ELEVATION)
 			States.elevatorPosState = States.ElevatorPosStates.bottom;
@@ -54,7 +54,7 @@ public class SetElevatorPosition extends Command {
 	protected void end() {
 		Robot.elevator.stopElevator();
 		LiveVariableStory.pos = Robot.elevator.getPosition();		
-		States.elevatorState = States.ElevatorStates.joystickControl;
+		States.elevatorControlState = States.ElevatorControlStates.joystickControl;
 	}
 
 	// Called when another command which requires one or more of the same
