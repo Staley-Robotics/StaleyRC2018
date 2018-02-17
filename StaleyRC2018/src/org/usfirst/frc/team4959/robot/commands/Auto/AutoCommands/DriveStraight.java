@@ -74,7 +74,6 @@ public class DriveStraight extends Command {
 	protected void initialize() {
 		drivePos.reset();
 		driveTrain.resetEncoders();
-		driveTrain.resetNavx();
 		driveToSetpoint(distance);
 		drivePos.enable();
 	}
