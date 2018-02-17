@@ -6,8 +6,8 @@ import org.usfirst.frc.team4959.robot.util.Constants;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -40,19 +40,30 @@ public class DriveTrain extends Subsystem {
 
 	public DriveTrain() {
 		// Encoder setup
-		leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_ONE, RobotMap.LEFT_ENCODER_PORT_TWO, false,
-				Encoder.EncodingType.k4X);
-		rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_ONE, RobotMap.RIGHT_ENCODER_PORT_TWO, false,
-				Encoder.EncodingType.k4X);
-		leftEncoder.reset();
-		rightEncoder.reset();
-		rightEncoder.setReverseDirection(true);
+		try {
+			leftEncoder = new Encoder(RobotMap.LEFT_ENCODER_PORT_ONE, RobotMap.LEFT_ENCODER_PORT_TWO, false,
+					Encoder.EncodingType.k4X);
+			leftEncoder.reset();
+			leftEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Instantiating Left Encoder: " + ex.getMessage(), true);
+		}
+		try {
+			rightEncoder = new Encoder(RobotMap.RIGHT_ENCODER_PORT_ONE, RobotMap.RIGHT_ENCODER_PORT_TWO, false,
+					Encoder.EncodingType.k4X);
+			rightEncoder.reset();
+			rightEncoder.setReverseDirection(true);
+			rightEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Instantiating Right Encoder: " + ex.getMessage(), true);
+		}
 		
-		rightEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
-		leftEncoder.setDistancePerPulse(Constants.ENCODER_DISTANCE_PER_PULSE);
-
 		// Gyro setup
-		navx = new AHRS(SerialPort.Port.kUSB1);
+		try {
+			navx = new AHRS(SerialPort.Port.kUSB);
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error Instantiating navX: " + ex.getMessage(), true);
+		}
 
 		// Drivetrain setup
 		frontLeft = new Victor(RobotMap.FRONT_LEFT_DRIVE_MOTOR_PORT);
@@ -65,13 +76,6 @@ public class DriveTrain extends Subsystem {
 
 		m_drive = new DifferentialDrive(leftSide, rightSide);
 		m_drive.setSafetyEnabled(false);
-
-		// Live Window stuff
-		setName("Drive Train");
-		addChild("Gyro", navx);
-		addChild("Left Encoder", leftEncoder);
-		addChild("Right Encoder", rightEncoder);
-		addChild("Differential Drive", m_drive);
 	}
 
 	@Override
@@ -110,19 +114,19 @@ public class DriveTrain extends Subsystem {
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
 		double turnSpeedModifier = 0.7;
-		
+
 		backward = backward * speedModifier;
 		forward = forward * speedModifier;
 		rotate = -rotate * turnSpeedModifier;
 
 		if (backward > 0) {
-			 m_drive.arcadeDrive(backward, rotate);
-//			leftSide.set(backward - rotate);
-//			rightSide.set(backward + rotate);		
+			m_drive.arcadeDrive(backward, rotate);
+			// leftSide.set(backward - rotate);
+			// rightSide.set(backward + rotate);
 		} else if (forward > 0) {
-			 m_drive.arcadeDrive(-forward, rotate);
-//			leftSide.set((-forward - rotate));
-//			rightSide.set((-forward + rotate) * .90);
+			m_drive.arcadeDrive(-forward, rotate);
+			// leftSide.set((-forward - rotate));
+			// rightSide.set((-forward + rotate) * .90);
 		} else {
 			m_drive.arcadeDrive(0, rotate);
 		}
@@ -160,18 +164,19 @@ public class DriveTrain extends Subsystem {
 		leftEncoder.reset();
 		rightEncoder.reset();
 	}
-	
-	// Takes in encoder ticks and returns it as inches 
+
+	// Takes in encoder ticks and returns it as inches
 	public double ticksToInches(double ticks, double ticksPerRev, double wheelDiameter, double gearRatio) {
 		return ((ticks / ticksPerRev) * gearRatio * (wheelDiameter * Math.PI));
-		
+
 	}
 
 	// ***** NavX *****
 
-	public void resetNavx() {
-		navx.reset();
-	}
+	// Do not use
+//	public void resetNavx() {
+//		navx.reset();
+//	}
 
 	// Resets the yaw value set by user (Z-axis by default)
 	public void resetYaw() {
