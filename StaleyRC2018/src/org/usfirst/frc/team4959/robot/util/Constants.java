@@ -29,8 +29,4 @@ public class Constants {
 	// Physical constants for the drive train
 	public static final double WHEEL_DIAMETER = 6;
 	public static final double GEAR_RATIO = 0.1;
-	
-	// Current Limits for Elevator Motors
-	public static final double HIGHEST_ELEVATOR_CURRENT = 130;
-	public static final double LOWEST_ELEVATOR_CURRENT = 120;
 }

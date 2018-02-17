@@ -32,7 +32,6 @@ import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
-import org.usfirst.frc.team4959.robot.util.Limiter;
 import org.usfirst.frc.team4959.robot.util.States;
 
 /**
@@ -54,8 +53,6 @@ public class Robot extends TimedRobot {
 	public static Elevator elevator;
 	public static Climber climber;
 	
-	public static Limiter limiter;
-
 	CollisionDetection collisionDetection;
 
 	Command m_autonomousCommand;
@@ -74,8 +71,6 @@ public class Robot extends TimedRobot {
 		elevator = new Elevator();
 		climber = new Climber();
 		
-		limiter = new Limiter();
-
 		States.resetStates();
 
 		elevator.zeroPosition();
@@ -175,7 +170,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
-		SmartDashboard.putNumber("Elevator Motor Power: ", elevator.getTalonMotorPower());
+		SmartDashboard.putNumber("First Elevator Motor Power: ", elevator.getTalonOneMotorPower());
+		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		
 		SmartDashboard.putData(new DisableSoftLimits());

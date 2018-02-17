@@ -23,6 +23,8 @@ public class DisableSoftLimits extends Command {
     protected void execute() {
     	Robot.elevator.talon.configForwardSoftLimitEnable(false, 0);
 		Robot.elevator.talon.configReverseSoftLimitEnable(false, 0);
+		Robot.elevator.talon2.configForwardSoftLimitEnable(false, 0);
+		Robot.elevator.talon2.configReverseSoftLimitEnable(false, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
