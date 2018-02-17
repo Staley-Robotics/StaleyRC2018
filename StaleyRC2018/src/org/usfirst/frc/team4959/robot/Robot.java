@@ -16,18 +16,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToScale;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToScale;
+import org.usfirst.frc.team4959.robot.commands.Elevator.DisableSoftLimits;
+import org.usfirst.frc.team4959.robot.commands.Elevator.EnableSoftLimits;
 import org.usfirst.frc.team4959.robot.subsystems.Climber;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
+import org.usfirst.frc.team4959.robot.util.Limiter;
 import org.usfirst.frc.team4959.robot.util.States;
 
 /**
@@ -49,8 +54,10 @@ public class Robot extends TimedRobot {
 	public static Elevator elevator;
 	public static Climber climber;
 	
+	public static Limiter limiter;
+
 	CollisionDetection collisionDetection;
-	
+
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -67,10 +74,12 @@ public class Robot extends TimedRobot {
 		elevator = new Elevator();
 		climber = new Climber();
 		
+		limiter = new Limiter();
+
 		States.resetStates();
 
-		driveTrain.resetNavx();
-		
+		elevator.zeroPosition();
+
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
 		m_chooser.addDefault("Delay", new Delay(15));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
@@ -79,6 +88,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Right Switch", new RightSwitch());
 		m_chooser.addObject("Right To Scale", new RightToScale());
 		m_chooser.addObject("Left To Scale", new LeftToScale());
+		m_chooser.addObject("Turn 90 Degrees", new GyroTurning(90, 5));
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
@@ -111,10 +121,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		driveTrain.shifterOff();
+		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
-		driveTrain.resetNavx();
 
 		m_autonomousCommand = m_chooser.getSelected();
 
@@ -130,7 +139,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		//System.out.print(driveTrain.getTrueAngle());
 	}
 
 	@Override
@@ -140,19 +148,20 @@ public class Robot extends TimedRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 
-		driveTrain.resetNavx();
 		driveTrain.resetEncoders();
+		
 
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		
+
 		collisionDetection = new CollisionDetection();
 	}
 
 	/**
 	 * This function is called periodically during operator control.
 	 */
+	@SuppressWarnings("static-access")
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -161,17 +170,21 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
 		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
-		SmartDashboard.putString("Elevator State: ", States.elevatorState.toString());
+		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
+		SmartDashboard.putString("Elevator Control State: ", States.elevatorControlState.toString());
 		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
 		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
-		SmartDashboard.putNumber("Elevator Motor Power: ", elevator.getMotorPower());
-		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
+		SmartDashboard.putNumber("Elevator Motor Power: ", elevator.getTalonMotorPower());
+		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		
-		if ( collisionDetection.collisionDetector()) {
-			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.5);
-			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0.5);
-		}
+		SmartDashboard.putData(new DisableSoftLimits());
+		SmartDashboard.putData(new EnableSoftLimits());
+
+//		if (collisionDetection.collisionDetector()) {
+//			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.5);
+//			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0.5);
+//		}
 	}
 
 	/**
