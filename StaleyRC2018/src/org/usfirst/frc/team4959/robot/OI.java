@@ -8,7 +8,6 @@
 package org.usfirst.frc.team4959.robot;
 //Change?
 
-import org.usfirst.frc.team4959.robot.commands.Drive.ResetGyro;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Elevator.ZeroElevator;
@@ -93,9 +92,6 @@ public class OI {
 		// Sets the encoder on the elevator to 0
 		Button zeroElevator = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
 		zeroElevator.whenPressed(new ZeroElevator());
-		
-		Button resetNavx = new JoystickButton(xboxController, RobotMap.START_BUTTON);
-		resetNavx.whenPressed(new ResetGyro());
 	}
 	
 	// ***** Getters for X-Box controller(s) raw axis *****
