@@ -22,6 +22,7 @@ public class RunClimberMotor extends Command {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
+	@SuppressWarnings("static-access")
 	protected void execute() {
 		if (Robot.m_oi.getRightStickYCont2() >= 0.10 || Robot.m_oi.getRightStickYCont2() <= -0.1) {
 			Robot.climber.runClimber(power);
