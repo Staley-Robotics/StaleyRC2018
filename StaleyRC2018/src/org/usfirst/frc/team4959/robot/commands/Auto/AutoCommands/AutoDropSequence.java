@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands;
 
-import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
