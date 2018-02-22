@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Moves the elevator to a set point.
  */
 public class SetElevatorPosition extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	private double pos;
 
@@ -37,8 +39,8 @@ public class SetElevatorPosition extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println("SetElevatorPosition:Execute: trying to go to position.");
-		System.out.println("Position: " + Robot.elevator.getPosition() + " / " + pos);
+		System.out.println(TAG + "SetElevatorPosition:Execute: trying to go to position.");
+		System.out.println(TAG + "Position: " + Robot.elevator.getPosition() + " / " + pos);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -55,6 +57,8 @@ public class SetElevatorPosition extends Command {
 		Robot.elevator.stopElevator();
 		LiveVariableStory.pos = Robot.elevator.getPosition();		
 		States.elevatorControlState = States.ElevatorControlStates.joystickControl;
+		
+		System.out.println(TAG + "Set Position " + LiveVariableStory.pos + " canceled");
 	}
 
 	// Called when another command which requires one or more of the same

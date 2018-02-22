@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * the power cube
  */
 public class IntakePistonToggle extends Command {
-	private final String TAG = "Intake: ";
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public IntakePistonToggle() {
 

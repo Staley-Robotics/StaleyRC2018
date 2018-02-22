@@ -14,9 +14,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * DriveTurn(Inches, Power, Turn, Time)
  */
 public class AutoBrettV5 extends CommandGroup {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public AutoBrettV5() {
 		
-		addSequential(new DriveTurn(70, 0.7, -0.5, 3));
+		addSequential(new DriveTurn(50, 6, 0, 5));
 	}
 }

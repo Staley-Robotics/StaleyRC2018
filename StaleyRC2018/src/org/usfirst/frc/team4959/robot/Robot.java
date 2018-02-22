@@ -32,6 +32,7 @@ import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
+import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
 
 /**
@@ -44,6 +45,10 @@ import org.usfirst.frc.team4959.robot.util.States;
  * Tyler sux at building.
  */
 public class Robot extends TimedRobot {
+	
+	private final String TAG = ("Robot" + ": ");
+	
+	public static boolean isEnabled = false;
 
 	// ***** Subsystems *****
 	public static DriveTrain driveTrain;
@@ -85,6 +90,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Left To Scale", new LeftToScale());
 		m_chooser.addObject("Turn 90 Degrees", new GyroTurning(90, 5));
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		isEnabled = false;
 	}
 
 	/**
@@ -94,11 +101,35 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		isEnabled = false;
+		//LiveVariableStory.pos = 0;
 		elevator.stopElevator();
+		
+		//m_oi.cancelPositionCommands();
+		//elevator.disableTalonPIDsetPoint();
 	}
 
 	@Override
 	public void disabledPeriodic() {
+		isEnabled = false;
+		LiveVariableStory.pos = Robot.elevator.getPosition();
+		
+		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
+		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
+		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
+		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
+		SmartDashboard.putString("Elevator Control State: ", States.elevatorControlState.toString());
+		SmartDashboard.putString("Shifter State: ", States.shifterState.toString());
+		SmartDashboard.putString("Intake Claw State: ", States.intakeClawState.toString());
+		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
+		SmartDashboard.putNumber("First Elevator Motor Power: ", elevator.getTalonOneMotorPower());
+		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
+		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
+		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
+		SmartDashboard.putNumber("Left Joystick 1: ", m_oi.getLeftStickXCont1());
+		SmartDashboard.putNumber("Left Joystick 2: ", m_oi.getLeftStickXCont2());
+		
 		Scheduler.getInstance().run();
 	}
 
@@ -116,6 +147,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		isEnabled = true;
+		
 		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
@@ -138,6 +171,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		isEnabled = true;
+		
+//		m_oi.cancelPositionCommands();
+
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -149,7 +186,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-
+		
+//		elevator.disableTalonPIDsetPoint();
 		collisionDetection = new CollisionDetection();
 	}
 
@@ -173,6 +211,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("First Elevator Motor Power: ", elevator.getTalonOneMotorPower());
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
+		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
+
 		
 		SmartDashboard.putData(new DisableSoftLimits());
 		SmartDashboard.putData(new EnableSoftLimits());
@@ -188,6 +228,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		isEnabled = true;
+
 		LiveWindow.add(driveTrain);
 	}
 }

@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Toggles the shifter to high/low gear
  */
 public class ShifterToggle extends Command {
-
-	private final String TAG = "Shifter: ";
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public ShifterToggle() {
 	}
@@ -24,14 +24,14 @@ public class ShifterToggle extends Command {
 		// Toggles to high gear
 		if (States.shifterState == States.ShifterStates.low) {
 			Robot.driveTrain.shifterOn();
-			States.shifterState = States.ShifterStates.high;
-			System.out.println("High Gear");
+			
+			System.out.println(TAG + "High Gear");
 		}
 		// Toggles to low gear
 		else {
 			Robot.driveTrain.shifterOff();
-			States.shifterState = States.ShifterStates.low;
-			System.out.println("Low Gear");
+			
+			System.out.println(TAG + "Low Gear");
 		}
 	}
 
@@ -43,9 +43,9 @@ public class ShifterToggle extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		if (States.shifterState == States.ShifterStates.low) {
-			System.out.println(TAG + "Shifter on End");
+//			System.out.println(TAG + "Shifter on End");
 		} else {
-			System.out.println(TAG + "Shifter off End");
+//			System.out.println(TAG + "Shifter off End");
 		}
 	}
 

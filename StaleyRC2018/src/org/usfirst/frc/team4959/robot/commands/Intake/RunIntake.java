@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntake extends Command {
 	
+	private final String TAG = (this.getName() + ": ");
+	
 	private double intakeInPower;
 	private double intakeOutPower;
 	private final double DEAD_ZONE = 0.1;
@@ -37,6 +39,8 @@ public class RunIntake extends Command {
     	else {
     		Robot.intake.succBoi(0);
     	}
+    	
+    	Robot.intake.runPivot(Robot.m_oi.getRightStickYCont2());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -13,96 +13,96 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Rotates the robot using the NavX Gyro 
  */
 
-public class GyroTurning extends Command implements PIDOutput{
-	
+public class GyroTurning extends Command {
+
+	private final String TAG = (this.getName() + ": ");
+
 	private DriveTrain driveTrain;
-	private PIDController turnPID;
 	private Timer time;
-	
-	private double angle;
+
+	private double targetAngle;
 	private double startingAngle;
+	private double currentAngle;
+	private double error;
 	private double seconds;
-	
+
+	private double power;
+
+	private boolean isClockwise;
+
 	// PID Values
 	private final double kP = 0.02;
 	private final double kI = 0;
 	private final double kD = 0.06;
-	
-    public GyroTurning(double angle, double seconds) {
-    	requires(Robot.driveTrain);
-        
-    	driveTrain = Robot.driveTrain;
-    	
-    	time = new Timer();
-    	time.reset();
-    	
-    	this.angle = angle;
-    	this.seconds = seconds;
-    	
-    	turnPID = new PIDController(kP, kI, kD, driveTrain.getNavx(), this);
-    	// Range of angles that can be inputted
-    	turnPID.setInputRange(-180, 180);
-    	
-    	// prevent the motors from receiving too little power
-    	if(angle > 0)
-    		turnPID.setOutputRange(0.4, 1.0);
-    	else if(angle < 0)
-    		turnPID.setOutputRange(-1, -0.4);
-    	
-    	// Tolerance of how far off the angle can be
-    	turnPID.setAbsoluteTolerance(0.5);
-    	turnPID.setContinuous(true);
-    }
-    
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	driveTrain.shifterOff();
-    	System.out.println("Low gear");
-    	System.out.println("Gyro initialize");
-    	startingAngle = driveTrain.getYaw();
-    	
-    	System.out.println("Starting Angle: " + startingAngle);
-    	System.out.println("SetPoin: " + (angle + startingAngle));
-    	time.start();
-    	turnPID.setSetpoint(angle + startingAngle);
-    	turnPID.enable();    
-    	
-    }
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	System.out.println("Angle: " + driveTrain.getYaw());
-    }
+	public GyroTurning(double angle, double seconds) {
+		requires(Robot.driveTrain);
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-       return turnPID.onTarget() || time.get() > seconds;
-    }
+		driveTrain = Robot.driveTrain;
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	driveTrain.shifterOn();
+		time = new Timer();
+		time.reset();
 
-    	System.out.println("High gear");
-		SmartDashboard.putNumber("Gyro Turning Motor Power", turnPID.get());
-    	System.out.println("Finished: "  + driveTrain.getYaw());
-    	System.out.println();
-    	
-    	driveTrain.arcadeDrive(0, 0);
-    	turnPID.disable();
-    	turnPID.reset();
-    	time.reset();
+		this.targetAngle = angle;
+		this.seconds = seconds;
+
+		power = 0.6;
+
+		isClockwise = angle > 0;
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		time.start();
+
+		startingAngle = driveTrain.getYaw();
+		targetAngle += startingAngle;
+	}
+
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		currentAngle = driveTrain.getYaw();
+
+		if (isClockwise) {
+			error = targetAngle - currentAngle;
+			double Pout = error * kP;
+			
+			if (error < 20) {
+				driveTrain.arcadeDrive(0, Pout);
+			} else {
+				driveTrain.arcadeDrive(0, power);
+			}
+		} else {
+			error = currentAngle - targetAngle;
+			double Pout = error * kP;
+			
+			if (error < 20) {
+				driveTrain.arcadeDrive(0, Pout);
+			} else {
+				driveTrain.arcadeDrive(0, power);
+			}
+		}
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+    	return Math.abs(error) < 2 || time.get() > seconds;
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	end();
-    }
+	// Called once after isFinished returns true
+	protected void end() {
+		driveTrain.arcadeDrive(0, 0);
 
-    // Outputs the motor speed from the PIDController
-	@Override
-	public void pidWrite(double output) {
-		driveTrain.arcadeDrive(0, -output);
+		time.stop();
+		time.reset();
+
+		driveTrain.shifterOn();
+		System.out.println(TAG + "High gear");
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		end();
 	}
 }

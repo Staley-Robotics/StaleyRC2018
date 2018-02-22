@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Runs the compressor automatically
  */
 public class RunCompressor extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public RunCompressor() {
 		requires(Robot.pneumatics);

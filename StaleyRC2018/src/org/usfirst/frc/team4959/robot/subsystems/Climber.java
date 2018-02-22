@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Subsystem for our climber system to climb the run at the end of the game
  */
 public class Climber extends Subsystem {
+	
+	private final String TAG = (this.getName() + ": ");
+	
 	private Victor winchOne;
 	private Victor winchTwo;
 	

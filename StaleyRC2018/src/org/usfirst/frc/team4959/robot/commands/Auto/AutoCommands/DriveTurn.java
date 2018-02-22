@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveTurn extends Command {
 	
+	private final String TAG = (this.getName() + ": ");
+	
 	DriveTrain driveTrain;
 	Timer timer;
 
@@ -47,7 +49,7 @@ public class DriveTurn extends Command {
 		startingAngle = driveTrain.getYaw();
 		currentAngle = startingAngle;
 		
-		System.out.println("Drive Turn Initialized.  Gyro at: " + startingAngle);
+		System.out.println(TAG + "Drive Turn Initialized.  Gyro at: " + startingAngle);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -72,21 +74,21 @@ public class DriveTurn extends Command {
 				Robot.driveTrain.arcadeDrive(desiredPower, turn);
 			}
 		}
-		System.out.println("Gyro: " + currentAngle + "\t\tError: " + error  + "\t\tCurrent Diplacemnt: " + currentDisplacement);
+		System.out.println(TAG + "Gyro: " + currentAngle + "\t\tError: " + error  + "\t\tCurrent Diplacemnt: " + currentDisplacement);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if (Math.abs(currentDisplacement - desiredDistance) <= stopThreshold) 
-			System.out.println("Ended with distance");
+			System.out.println(TAG + "Ended with distance");
 		else if (timer.get() > time) 
-			System.out.print("Drive Turn Time out");
+			System.out.print(TAG + "Drive Turn Time out");
 		return Math.abs(currentDisplacement - desiredDistance) <= stopThreshold || timer.get() > time || Math.abs(desiredDistance) - Math.abs(currentDisplacement) < 0;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		System.out.println("Target: " + desiredDistance + "\tCurrent Displacement: " + currentDisplacement + "\tTimer: " + timer.get() + "\n");
+		System.out.println(TAG + "Target: " + desiredDistance + "\tCurrent Displacement: " + currentDisplacement + "\tTimer: " + timer.get() + "\n");
 		timer.reset();
 		Robot.driveTrain.leftDrive(0);
 		Robot.driveTrain.rightDrive(0);

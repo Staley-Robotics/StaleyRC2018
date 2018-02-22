@@ -3,6 +3,7 @@ package org.usfirst.frc.team4959.robot.subsystems;
 import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.commands.Drive.JoystickDrive;
 import org.usfirst.frc.team4959.robot.util.Constants;
+import org.usfirst.frc.team4959.robot.util.States;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -19,6 +20,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * Controls basic drive functionality of the robot
  */
 public class DriveTrain extends Subsystem {
+
+	private final String TAG = (this.getName() + ": ");
 
 	public AHRS navx;
 
@@ -57,7 +60,7 @@ public class DriveTrain extends Subsystem {
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error Instantiating Right Encoder: " + ex.getMessage(), true);
 		}
-		
+
 		// Gyro setup
 		try {
 			navx = new AHRS(SerialPort.Port.kUSB);
@@ -117,7 +120,13 @@ public class DriveTrain extends Subsystem {
 
 		backward = backward * speedModifier;
 		forward = forward * speedModifier;
-		rotate = -rotate * turnSpeedModifier;
+		if (rotate > Constants.JOYSTICK_X_AXIS_DEADZONE) {
+			rotate = -rotate * turnSpeedModifier;
+		} else if (rotate < Constants.JOYSTICK_X_AXIS_DEADZONE) {
+			rotate = -rotate * turnSpeedModifier;
+		} else {
+			rotate = 0;
+		}
 
 		if (backward > 0) {
 			m_drive.arcadeDrive(backward, rotate);
@@ -140,14 +149,16 @@ public class DriveTrain extends Subsystem {
 
 	// Shifts the gear-box up
 	public void shifterOn() {
-		shifter2.set(true);
-		shifter.set(false);
+		shifter2.set(false);
+		shifter.set(true);
+		States.shifterState = States.ShifterStates.high;
 	}
 
 	// Shifts the gear-box down
 	public void shifterOff() {
-		shifter.set(true);
-		shifter2.set(false);
+		shifter.set(false);
+		shifter2.set(true);
+		States.shifterState = States.ShifterStates.low;
 	}
 
 	// ***** Encoders *****
@@ -174,9 +185,9 @@ public class DriveTrain extends Subsystem {
 	// ***** NavX *****
 
 	// Do not use
-//	public void resetNavx() {
-//		navx.reset();
-//	}
+	// public void resetNavx() {
+	// navx.reset();
+	// }
 
 	// Resets the yaw value set by user (Z-axis by default)
 	public void resetYaw() {

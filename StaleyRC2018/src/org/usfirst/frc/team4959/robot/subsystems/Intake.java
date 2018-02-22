@@ -13,15 +13,20 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * and the piston that expands and closes the claw
  */
 public class Intake extends Subsystem {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	DoubleSolenoid intakeSolenoid;
 
 	private Victor rightMotor;
 	private Victor leftMotor;
+	private Victor pivotMotor;
 
 	public Intake() {
 		rightMotor = new Victor(RobotMap.INTAKE_RIGHT_PORT);
 		leftMotor = new Victor(RobotMap.INTAKE_LEFT_PORT);
+		pivotMotor = new Victor(RobotMap.INTAKE_PIVOT_PORT);
+		
 		try {
 			intakeSolenoid = new DoubleSolenoid(RobotMap.INTAKE_SOLENOID_PORT_ONE, RobotMap.INTAKE_SOLENOID_PORT_TWO);
 		} catch (RuntimeException ex) {
@@ -31,6 +36,10 @@ public class Intake extends Subsystem {
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new RunIntake());
+	}
+	
+	public void runPivot(double power) {
+		pivotMotor.set(power);
 	}
 
 	// Runs intake motors.

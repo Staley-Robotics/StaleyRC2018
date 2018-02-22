@@ -11,11 +11,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * Starts from the center and goes to whichever scale we own to put a power cube
  * in it.
+ * Not a priority
  * 
  * DriveTurn(inches, power, turn, time)
  * GyroTurning(angle)
  */
 public class CenterScale extends CommandGroup {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public CenterScale() {
 		

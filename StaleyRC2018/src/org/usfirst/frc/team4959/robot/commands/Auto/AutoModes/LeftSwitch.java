@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * GyroTurning(Angle)
  */
 public class LeftSwitch extends CommandGroup {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public LeftSwitch() {
 

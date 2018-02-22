@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * The code used for driving straight to the switch, dropping the cube there, then backing off
  */
 public class DriveToSwitch extends CommandGroup {
+	
+	private final String TAG = (this.getName() + ": ");
 
     public DriveToSwitch() {
 		addSequential(new DriveTurn(10, 0.5, 0, 1.2));

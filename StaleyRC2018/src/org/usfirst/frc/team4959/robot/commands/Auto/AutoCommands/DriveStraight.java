@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Currently not in use
  */
 public class DriveStraight extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	private DriveTrain driveTrain;
 	private double distance;
@@ -80,8 +82,8 @@ public class DriveStraight extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
-		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
+		SmartDashboard.putNumber(TAG + "Left Encoder: ", driveTrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber(TAG + "Right Encoder: ", driveTrain.getRightEncoderDistance());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

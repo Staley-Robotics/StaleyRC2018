@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Zeros the encoder on the elevator
  */
 public class ZeroElevator extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
     public ZeroElevator() {
 

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DisableSoftLimits extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
     public DisableSoftLimits() {
         // Use requires() here to declare subsystem dependencies

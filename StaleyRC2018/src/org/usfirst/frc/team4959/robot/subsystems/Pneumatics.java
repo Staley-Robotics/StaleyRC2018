@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * the compressor
  */
 public class Pneumatics extends Subsystem {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	Compressor compressor;
 

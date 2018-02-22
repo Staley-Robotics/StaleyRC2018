@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Shifts the gear-box into high
  */
 public class ShifterOn extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	public ShifterOn() {
 	}
@@ -28,7 +30,7 @@ public class ShifterOn extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		System.out.println("Shifter on end");
+		System.out.println(TAG + "Shifter on end");
 	}
 
 	// Called when another command which requires one or more of the same

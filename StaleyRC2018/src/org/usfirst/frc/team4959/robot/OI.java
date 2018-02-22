@@ -24,6 +24,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	private final String TAG = ("OI" + ": ");
+	
 	public static Joystick xboxController;
 	public static Joystick xboxControllertwo;
 	
@@ -94,6 +97,15 @@ public class OI {
 		zeroElevator.whenPressed(new ZeroElevator());
 	}
 	
+	public void cancelPositionCommands() {
+		bottomPosition.cancel();
+		switchPosition.cancel();
+		lowScalePosition.cancel();
+		midScalePosition.cancel();
+		highScalePosition.cancel();
+		System.out.println("Canceled Commands");
+	}
+	
 	// ***** Getters for X-Box controller(s) raw axis *****
 
 	// Controller 1
@@ -118,6 +130,10 @@ public class OI {
 	}
 
 	// Controller 2
+	public double getLeftStickXCont2() {
+		return xboxControllertwo.getRawAxis(RobotMap.LEFT_X_AXIS);
+	}
+	
 	public double getRightStickYCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_Y_AXIS);
 	}

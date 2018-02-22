@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * from a controller.
  */
 public class JoystickDrive extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	private DriveTrain driveTrain;
 

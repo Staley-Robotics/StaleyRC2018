@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Expands the claws of the in-take to release a power cube or get ready to pick one up
  */
 public class ExpandIntake extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
     public ExpandIntake() {
         

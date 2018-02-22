@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoRunIntake extends Command {
 	
+	private final String TAG = (this.getName() + ": ");
+	
 	private double power;
 	private double seconds;
 	private Timer time = new Timer();
@@ -22,7 +24,7 @@ public class AutoRunIntake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("Auto Intake started");
+    	System.out.println(TAG + "Auto Intake started");
     	time.start();
     }
 
@@ -39,7 +41,7 @@ public class AutoRunIntake extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.intake.succBoi(0);
-    	System.out.println("Auto Intake finished\n");
+    	System.out.println(TAG + "Auto Intake finished\n");
     }
 
     // Called when another command which requires one or more of the same

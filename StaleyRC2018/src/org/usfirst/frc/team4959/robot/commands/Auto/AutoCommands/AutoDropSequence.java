@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * AutoRunIntake(power, time)
  */
 public class AutoDropSequence extends CommandGroup {
+	private final String TAG = (this.getName() + ": ");
 
     public AutoDropSequence() {
 //    	addSequential(new ExpandIntake());

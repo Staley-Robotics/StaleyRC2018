@@ -14,6 +14,8 @@ package org.usfirst.frc.team4959.robot;
  * floating around.
  */
 public class RobotMap {
+	
+	private final String TAG = ("RobotMap" + ": ");
 
 	// ***** HID Controllers *****
 	public static final int XBOX_PORT = 0;
@@ -53,20 +55,21 @@ public class RobotMap {
 	public static final int FRONT_RIGHT_DRIVE_MOTOR_PORT = 0;
 	public static final int REAR_RIGHT_DRIVE_MOTOR_PORT = 1;
 
-	public static final int CLIMBER_MOTOR_PORT_ONE = 1; // TalonSRX
-	public static final int CLIMBER_MOTOR_PORT_TWO = 7; // VictorSP
+	public static final int CLIMBER_MOTOR_PORT_ONE = 6; 
+	public static final int CLIMBER_MOTOR_PORT_TWO = 7; 	
 	
 	public static final int INTAKE_LEFT_PORT = 2;
 	public static final int INTAKE_RIGHT_PORT = 3;
+	public static final int INTAKE_PIVOT_PORT = 8;
 			
 	public static final int ELEVATOR_MOTOR_PORT_ONE = 0; // TalonSRX
-	public static final int ELEVATOR_MOTOR_PORT_TWO = 6; // VictorSP
+	public static final int ELEVATOR_MOTOR_PORT_TWO = 1; // TalonSRX
 	
 	// ***** Pneumatics Ports *****
 	public static final int COMPRESSOR_PORT = 0;
 	
-	public static final int SHIFTER_ONE_PORT = 2;
-	public static final int SHIFTER_TWO_PORT = 5;
+	public static final int SHIFTER_ONE_PORT = 7;
+	public static final int SHIFTER_TWO_PORT = 0;
 	
 	public static final int INTAKE_SOLENOID_PORT_ONE = 1;
 	public static final int INTAKE_SOLENOID_PORT_TWO = 6; 

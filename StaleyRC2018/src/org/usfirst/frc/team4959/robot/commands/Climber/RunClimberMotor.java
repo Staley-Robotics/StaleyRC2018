@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4959.robot.commands.Climber;
 
 import org.usfirst.frc.team4959.robot.Robot;
+import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,6 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Runs the winch to pull us up to the rung
  */
 public class RunClimberMotor extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	private double power;
 
@@ -24,12 +27,11 @@ public class RunClimberMotor extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@SuppressWarnings("static-access")
 	protected void execute() {
-		if (Robot.m_oi.getRightStickYCont2() >= 0.10 || Robot.m_oi.getRightStickYCont2() <= -0.1) {
+		if (Robot.m_oi.getRightStickYCont1() >= Constants.JOYSTICK_Y_AXIS_DEADZONE || Robot.m_oi.getRightStickYCont1() <= -Constants.JOYSTICK_Y_AXIS_DEADZONE) {
 			Robot.climber.runClimber(power);
-			Robot.m_oi.xboxControllertwo.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(Robot.m_oi.getRightStickYCont2()));
-		}
-		else {
-			Robot.m_oi.xboxControllertwo.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+			Robot.m_oi.xboxController.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(Robot.m_oi.getRightStickYCont1()));
+		} else {
+			Robot.m_oi.xboxController.setRumble(GenericHID.RumbleType.kRightRumble, 0);
 		}
 	}
 

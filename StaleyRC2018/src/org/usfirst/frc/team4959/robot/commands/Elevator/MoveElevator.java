@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
  * Moves the elevator using user input of the left joy-stick on controller 2
  */
 public class MoveElevator extends Command {
+	
+	private final String TAG = (this.getName() + ": ");
 
 	Elevator elevator;
 
@@ -27,24 +29,28 @@ public class MoveElevator extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (States.elevatorControlState == States.ElevatorControlStates.joystickControl) {
-			if (Robot.m_oi.getLeftStickYCont2() > 0.10) {
+			if (Robot.m_oi.getLeftStickYCont2() > Constants.JOYSTICK_Y_AXIS_DEADZONE) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
 				
-				System.out.println("Going up");
-			} else if (Robot.m_oi.getLeftStickYCont2() < -0.10) {
+				System.out.println(TAG + "Going up");
+			} else if (Robot.m_oi.getLeftStickYCont2() < -Constants.JOYSTICK_Y_AXIS_DEADZONE) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being	 controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
 				
-				System.out.println("Going down");
+				System.out.println(TAG + "Going down");
 			} else {
 				States.elevatorPosState = States.ElevatorPosStates.positionHeld;
-				elevator.stopElevator();
-//				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
+//				elevator.stopElevator();
 				
-//				System.out.println("Staying put at "  + LiveVariableStory.pos);
+				if (LiveVariableStory.pos < Constants.REV_SOFT_LIMIT) {
+					LiveVariableStory.pos = 0;
+				}
+				elevator.setPosition(LiveVariableStory.pos); // To help maintain the elevator's position
+				
+//				System.out.println(TAG + "Staying put at "  + LiveVariableStory.pos);
 			}
 		}
 	}
@@ -56,10 +62,13 @@ public class MoveElevator extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		elevator.stopElevator();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		//System.out.println(TAG + "Move Elevator interupted");
+		end();
 	}
 }
