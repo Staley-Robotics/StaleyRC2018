@@ -34,13 +34,14 @@ public class LeftToScale extends CommandGroup {
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_MID_SCALE_ELEVATION)); // TODO change to High Scale for comp
 			addSequential(new DriveTurn(15, 0.6, 0.7, 3)); // small turn left
 			addSequential(new DriveTurn(15, 0.6, -0.4, 3)); // correction right to straight
-			addSequential(new DriveTurn(45, 0.8, 0, 4)); // Drive to scale
-			addSequential(new DriveTurn(63, 0.5, -0.55, 5)); // turn into scale
+			addSequential(new DriveTurn(55, 0.8, 0, 4)); // Drive to scale
+			addSequential(new DriveTurn(65, 0.5, -0.62, 5)); // turn into scale
+			addSequential(new DriveTurn(20, 0.65, 0, 2));
 			addSequential(new DriveTurn(1, -0.3, 0, 1));
 			addSequential(new Delay(0.5));
 			addSequential(new AutoDropSequence()); // Drop cube into scale
-			addSequential(new DriveTurn(15, -0.6, 0, 2)); 
-			addSequential(new DriveTurn(30, -0.6, -0.8, 2));
+//			addSequential(new DriveTurn(15, -0.6, 0, 2)); 
+//			addSequential(new DriveTurn(30, -0.6, -0.8, 2));
 //			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
 //			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 135), 0.8, 0, 4)); // Goes straight to decision point
 //			addParallel(new SetElevatorPosition(Constants.ELEVATOR_MID_SCALE_ELEVATION)); // TODO change to High Scale for comp

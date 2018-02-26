@@ -134,7 +134,7 @@ public class Elevator extends Subsystem {
 
 		// Setting position to go to
 		talon.set(ControlMode.Position, position);
-//		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
+		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
 	}
 	
 	public void disableTalonPIDsetPoint() {
@@ -159,7 +159,7 @@ public class Elevator extends Subsystem {
 		talon2.configPeakOutputReverse(-PEAK_MOVE, 0);
 
 		talon.set(ControlMode.PercentOutput, -power);
-//		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
+		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
 	}
 
 	// Zeros the encoder connected to the talon SRX
@@ -175,5 +175,6 @@ public class Elevator extends Subsystem {
 	// Stops the elevator
 	public void stopElevator() {
 		talon.stopMotor();
+		talon2.stopMotor();
 	}
 }

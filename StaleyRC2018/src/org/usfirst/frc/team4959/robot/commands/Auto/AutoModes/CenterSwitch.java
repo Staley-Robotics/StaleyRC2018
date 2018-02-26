@@ -29,14 +29,14 @@ public class CenterSwitch extends CommandGroup {
 			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
 			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
-			addSequential(new DriveTurn(47, 0.7, -0.65, 3)); // Moves forward while turning right
-			addSequential(new DriveTurn(40, 0.7, 0.71, 3)); // Moves forward while turning left to straighten back out
-			addSequential(new Delay(0.5));
+			addSequential(new DriveTurn(47, 0.7, -0.75, 3)); // Moves forward while turning right
+			addSequential(new DriveTurn(40, 0.7, 0.735, 3)); // Moves forward while turning left to straighten back out
+			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(10, 0.6, 0, 3)); // Straight into the switch
-			addSequential(new AutoDropSequence());
-			addSequential(new DriveTurn(12, -0.6, 0, 3)); // Straight into the switch
-			addSequential(new DriveTurn(30, -0.7, -0.70, 3)); // Moves forward while turning left to straighten back out
-			addSequential(new DriveTurn(30, -0.7, 0.65, 3)); // Moves forward while turning right
+//			addSequential(new AutoDropSequence());
+//			addSequential(new DriveTurn(12, -0.6, 0, 3)); // Straight into the switch
+//			addSequential(new DriveTurn(30, -0.7, -0.70, 3)); // Moves forward while turning left to straighten back out
+//			addSequential(new DriveTurn(30, -0.7, 0.65, 3)); // Moves forward while turning right
 ////			addSequential(new GyroTurning(-45, 3)); // Turn out to the left
 //			addParallel(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 //			addSequential(new DriveTurn(30, 0.6, 0, 3)); // Drive towards cube pile

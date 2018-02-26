@@ -32,12 +32,14 @@ public class MoveElevator extends Command {
 			if (Robot.m_oi.getLeftStickYCont2() > Constants.JOYSTICK_Y_AXIS_DEADZONE) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				System.out.println(TAG + " Joystickvalue Pos: " + Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
 				
 				System.out.println(TAG + "Going up");
 			} else if (Robot.m_oi.getLeftStickYCont2() < -Constants.JOYSTICK_Y_AXIS_DEADZONE) {
 				States.elevatorPosState = States.ElevatorPosStates.userControl; // Verifies that the robot is being	 controlled by the user
 				elevator.moveElevator(Robot.m_oi.getLeftStickYCont2());
+				System.out.println(TAG + " Joystickvalue Neg: " + Robot.m_oi.getLeftStickYCont2());
 				LiveVariableStory.pos = elevator.getPosition();
 				
 				System.out.println(TAG + "Going down");
