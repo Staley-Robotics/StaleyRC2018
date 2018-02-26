@@ -109,43 +109,93 @@ public class OI {
 	// ***** Getters for X-Box controller(s) raw axis *****
 
 	// Controller 1
+	/**
+	 * Returns the current x-axis value of the left joystick on controller 1
+	 * 
+	 * @return x-axis value of left joystick on controller 1
+	 */
 	public double getLeftStickXCont1() {
 		return xboxController.getRawAxis(RobotMap.LEFT_X_AXIS);
 	}
 	
+	/**
+	 * Returns the current y-axis value of the left joystick on controller 1
+	 * 
+	 * @return y-axis value of left joystick on controller 1
+	 */
 	public double getLeftStickYCont1() {
 		return xboxController.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 	
+	/**
+	 * Returns the current y-axis value of the right joystick on controller 1
+	 * 
+	 * @return y-axis value of the right joystick on controller 1
+	 */
 	public double getRightStickYCont1() {
 		return xboxController.getRawAxis(RobotMap.RIGHT_Y_AXIS);
 	}
 	
+	/**
+	 * Returns the current value of the left trigger on controller 1
+	 * 
+	 * @return value of left trigger on controller 1
+	 */
 	public double getLeftTriggerCont1() {
 		return xboxController.getRawAxis(RobotMap.LEFT_TRIGGER);
 	}
 	
+	/**
+	 * Returns the current value of the right trigger on controller 1
+	 * 
+	 * @return value of right trigger on controller 1
+	 */
 	public double getRightTriggerCont1() {
 		return xboxController.getRawAxis(RobotMap.RIGHT_TRIGGER);
 	}
 
 	// Controller 2
+	/**
+	 * Returns the value of the x-axis of the left joystick on controller 2
+	 * 
+	 * @return x-axis value of left joystick on controller 2
+	 */
 	public double getLeftStickXCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.LEFT_X_AXIS);
 	}
 	
-	public double getRightStickYCont2() {
-		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_Y_AXIS);
-	}
-
+	/**
+	 * Returns the value of the y-axis of the left joystick on controller 2
+	 * 
+	 * @return y-axis value of left joystick on controller 2
+	 */
 	public double getLeftStickYCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.LEFT_Y_AXIS);
 	}
 	
+	/**
+	 * Returns the value of the y-axis of the right joystick on controller 2
+	 * 
+	 * @return y-axis value of right joystick on controller 2
+	 */
+	public double getRightStickYCont2() {
+		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_Y_AXIS);
+	}
+	
+	/**
+	 * Returns the value of the left trigger on controller 2
+	 * 
+	 * @return value of left trigger on controller 2
+	 */
 	public double getLeftTriggerCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.LEFT_TRIGGER);
 	}
 	
+	/**
+	 * Returns the value of the right trigger on controller 2
+	 * 
+	 * @return value of right trigger on controller 2
+	 */
 	public double getRightTriggerCont2() {
 		return xboxControllertwo.getRawAxis(RobotMap.RIGHT_TRIGGER);
 	}

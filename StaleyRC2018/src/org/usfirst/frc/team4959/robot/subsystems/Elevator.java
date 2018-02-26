@@ -98,28 +98,50 @@ public class Elevator extends Subsystem {
 		setDefaultCommand(new MoveElevator());
 	}
 
-	// Lets us know if the first talon SRX is alive
+	/**
+	 * Lets us know if the first talon SRX is alive
+	 * 
+	 * @return true If TalonSRX one is alive
+	 * @return false If TalonSRX one isn't alive
+	 */
 	public boolean talonOneIsAlive() {
 		return talon.isAlive();
 	}
 
-	// Lets us know if the second talon SRX is alive
+	/**
+	 * Lets us know if the second talon SRX is alive
+	 * 
+	 * @return true if TalonSRX two is alive
+	 * @return false if TalonSRX two isn't alive
+	 */
 	public boolean talonTwoIsAlive() {
 		return talon2.isAlive();
 	}
 
-	// Returns what percent of motor power is being used by the first elevator motor
+	/**
+	 * Returns what percent of motor power is being used by the first elevator motor
+	 * 
+	 * @return percent motor power being sent through TalonSRX one
+	 */
 	public double getTalonOneMotorPower() {
 		return talon.getMotorOutputPercent();
 	}
 
-	// Returns what percent of motor power is being used by the second elevator
-	// motor
+	/**
+	 * Returns what percent of motor power is being used by the second elevator motor
+	 * 
+	 * @return percent motor power being sent through TalonSRX two
+	 */
 	public double getTalonTwoMotorPower() {
 		return talon2.getMotorOutputPercent();
 	}
 
-	// Used to set a position for the elevator to move to and makes it begin moving.
+	/**
+	 * Used to set a position for the elevator to move to and makes it begin moving.
+	 * Sets nominal and peak outputs for elevator motors during PID control
+	 * 
+	 * @param position encoder value the elevator is to move to
+	 */
 	public void setPosition(double position) {
 		// Sets minimal power to send to motor when moving on its own
 		talon.configNominalOutputForward(NOMINAL_PID, 0);
@@ -137,6 +159,7 @@ public class Elevator extends Subsystem {
 		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
 	}
 	
+	// Disables elevator
 	public void disableTalonPIDsetPoint() {
 		System.out.println(TAG + "disable set point");
 //		talon.set(ControlMode.Disabled, 0);
@@ -145,7 +168,12 @@ public class Elevator extends Subsystem {
 		talon2.stopMotor();
 	}
 
-	// Powers the elevator motor with specified power
+	/**
+	 * Powers the elevator motor with specified power
+	 * Sets nominal and peak outputs for elevator motors during joystick control
+	 * 
+	 * @param power Power sent to the elevator motors
+	 */
 	public void moveElevator(double power) {
 		// Sets minimal power to send to motors when controlled by player
 		talon.configNominalOutputForward(NOMINAL_MOVE, 0);
@@ -167,7 +195,11 @@ public class Elevator extends Subsystem {
 		talon.setSelectedSensorPosition(0, 0, 0);
 	}
 
-	// Returns the current encoder value
+	/**
+	 * Returns the current encoder value
+	 * 
+	 * @return current elevator encoder value
+	 */
 	public double getPosition() {
 		return talon.getSelectedSensorPosition(0);
 	}

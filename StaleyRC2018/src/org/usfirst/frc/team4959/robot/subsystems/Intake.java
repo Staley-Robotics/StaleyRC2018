@@ -38,11 +38,20 @@ public class Intake extends Subsystem {
 		setDefaultCommand(new RunIntake());
 	}
 	
+	/**
+	 * Runs the pivot motor for the intake
+	 * 
+	 * @param power Power to send to the pivot motor
+	 */
 	public void runPivot(double power) {
 		pivotMotor.set(power);
 	}
 
-	// Runs intake motors.
+	/**
+	 * Runs intake motors.
+	 * 
+	 * @param power Power to send to the intake motors
+	 */
 	public void succBoi(double power) {
 		leftMotor.set(-power);
 		rightMotor.set(-power);

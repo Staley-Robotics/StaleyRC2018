@@ -26,7 +26,11 @@ public class Climber extends Subsystem {
         setDefaultCommand(new RunClimberMotor(Robot.m_oi.getRightStickYCont2()));
     }
     
-    // Runs the climber motors at the given power. 
+    /**
+     * Runs the climber motors at the given power. 
+     * 
+     * @param power Power to send to climber motors
+     */
     public void runClimber(double power) {
     	winchOne.set(power);
     	winchTwo.set(power);
