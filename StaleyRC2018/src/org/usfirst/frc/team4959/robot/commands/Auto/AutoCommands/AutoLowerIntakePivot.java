@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Moves the intake to the desired position. 
  */
 public class AutoLowerIntakePivot extends Command {
 	

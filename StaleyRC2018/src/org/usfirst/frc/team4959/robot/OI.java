@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = ("OI" + ": ");
 	
 	public static Joystick xboxController;

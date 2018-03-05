@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 	
 	private Victor winchOne;

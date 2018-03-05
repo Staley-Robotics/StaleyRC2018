@@ -2,13 +2,16 @@ package org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands;
 
 import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
 import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
-import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * Picks up a cube during autonomous
+ * 
+ * AutoRunIntake(power, time)
+ * DriveTurn(inches, power, turn, time)
+ * Delay(time)
  */
 public class AutoPickupSequence extends CommandGroup {
 

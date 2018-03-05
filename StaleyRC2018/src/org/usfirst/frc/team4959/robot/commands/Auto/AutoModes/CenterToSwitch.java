@@ -1,13 +1,10 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoPickupSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
-import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -15,16 +12,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  * Drops a power cube at whichever side of the switch belongs to us.
  * 
- * DriveTurn(inches, power, turn, time) GyroTurning(angle)
+ * DriveTurn(inches, power, turn, time) 
+ * GyroTurning(angle)
+ * SetElevatorPosition(height)
+ * Delay(time)
  */
-public class CenterSwitch extends CommandGroup {
-	private final String TAG = (this.getName() + ": ");
-
-	public CenterSwitch() {
+public class CenterToSwitch extends CommandGroup {
+	
+	public CenterToSwitch() {
 		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to move forward without dragging
 																	
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
+			// ***** Place a cube in the right switch *****
 			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
 			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
@@ -33,6 +33,8 @@ public class CenterSwitch extends CommandGroup {
 			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(20, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());
+			
+			// ***** Try for the a second cube in the switch *****
 //			addSequential(new DriveTurn(12, -0.6, 0, 3)); // Straight into the switch
 //			addSequential(new DriveTurn(30, -0.7, -0.70, 3)); // Moves forward while turning left to straighten back out
 //			addSequential(new DriveTurn(30, -0.7, 0.65, 3)); // Moves forward while turning right
@@ -50,6 +52,7 @@ public class CenterSwitch extends CommandGroup {
 
 		// If left switch is ours
 		else {
+			//***** Place a cube in the left switch *****
 			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
 			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));

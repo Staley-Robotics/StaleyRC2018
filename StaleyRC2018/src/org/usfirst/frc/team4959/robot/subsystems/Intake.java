@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Intake extends Subsystem {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
 	DoubleSolenoid intakeSolenoid;

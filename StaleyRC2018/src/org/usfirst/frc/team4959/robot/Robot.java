@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team4959.robot;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,9 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToScale;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToSwitch;
@@ -45,6 +43,7 @@ import org.usfirst.frc.team4959.robot.util.States;
  */
 public class Robot extends TimedRobot {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = ("Robot" + ": ");
 	
 	public static boolean isEnabled = false;
@@ -83,7 +82,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Delay", new Delay(15));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
 		m_chooser.addObject("Left To Switch", new LeftToSwitch());
-		m_chooser.addObject("Center To Switch", new CenterSwitch());
+		m_chooser.addObject("Center To Switch", new CenterToSwitch());
 		m_chooser.addObject("Right To Switch", new RightToSwitch());
 		m_chooser.addObject("Right To Scale", new RightToScale());
 		m_chooser.addObject("Left To Scale", new LeftToScale());

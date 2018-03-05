@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunCompressor extends Command {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
 	public RunCompressor() {

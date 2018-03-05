@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class DriveTrain extends Subsystem {
 
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
 	public AHRS navx;

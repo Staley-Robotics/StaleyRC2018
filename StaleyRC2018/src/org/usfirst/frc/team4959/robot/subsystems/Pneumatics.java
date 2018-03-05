@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
 	Compressor compressor;

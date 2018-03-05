@@ -15,6 +15,7 @@ package org.usfirst.frc.team4959.robot;
  */
 public class RobotMap {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = ("RobotMap" + ": ");
 
 	// ***** HID Controllers *****

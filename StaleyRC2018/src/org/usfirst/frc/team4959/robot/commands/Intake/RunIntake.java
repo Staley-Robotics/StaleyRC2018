@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntake extends Command {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 	
 	private double intakeInPower;

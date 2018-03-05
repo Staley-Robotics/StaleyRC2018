@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ExpandIntake extends Command {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
     public ExpandIntake() {

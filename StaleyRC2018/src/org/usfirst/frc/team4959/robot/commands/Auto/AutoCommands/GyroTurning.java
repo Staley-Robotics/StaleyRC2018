@@ -3,11 +3,8 @@ package org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands;
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  * Rotates the robot using the NavX Gyro 
@@ -32,8 +29,6 @@ public class GyroTurning extends Command {
 
 	// PID Values
 	private final double kP = 0.02;
-	private final double kI = 0;
-	private final double kD = 0.06;
 
 	public GyroTurning(double angle, double seconds) {
 		requires(Robot.driveTrain);
