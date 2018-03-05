@@ -127,8 +127,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
-		SmartDashboard.putNumber("Left Joystick 1: ", m_oi.getLeftStickXCont1());
-		SmartDashboard.putNumber("Left Joystick 2: ", m_oi.getLeftStickXCont2());
 		
 		Scheduler.getInstance().run();
 	}
