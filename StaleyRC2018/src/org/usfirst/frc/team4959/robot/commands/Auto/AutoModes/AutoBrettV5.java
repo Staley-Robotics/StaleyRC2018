@@ -5,6 +5,7 @@ import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOff;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOn;
+import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,6 +20,6 @@ public class AutoBrettV5 extends CommandGroup {
 
 	public AutoBrettV5() {
 		
-		addSequential(new DriveTurn(50, 6, 0, 5));
+		addSequential(new DriveTurn(FieldDimensions.DS_TO_AUTO_LINE, 6, 0, 5));
 	}
 }

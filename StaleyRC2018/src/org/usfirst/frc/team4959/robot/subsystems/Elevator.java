@@ -33,7 +33,7 @@ public class Elevator extends Subsystem {
 	private final double NOMINAL_PID = 0.08;
 	private final double NOMINAL_MOVE = 0.085;
 	private final double PEAK_PID_FWD = 0.9;
-	private final double PEAK_PID_REV = -0.7;
+	private final double PEAK_PID_REV = -0.8;
 	private final double PEAK_MOVE = 1.0;
 
 	public Elevator() {

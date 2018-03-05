@@ -19,11 +19,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * 
  * DriveTurn(Inches, Power, Turn, Time) GyroTurning(Angle)
  */
-public class RightSwitch extends CommandGroup {
+public class RightToSwitch extends CommandGroup {
 	
 	private final String TAG = (this.getName() + ": ");
 
-	public RightSwitch() {
+	public RightToSwitch() {
 
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {

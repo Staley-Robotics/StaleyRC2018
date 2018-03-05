@@ -16,11 +16,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * DriveTurn(inches, power, turn, time)
  * GyroTurning(angle)
  */
-public class CenterScale extends CommandGroup {
+public class CenterToScale extends CommandGroup {
 	
 	private final String TAG = (this.getName() + ": ");
 
-	public CenterScale() {
+	public CenterToScale() {
 		
 		// If right scale is ours
 		if (PlateColorChecker.rightScaleColor()) {

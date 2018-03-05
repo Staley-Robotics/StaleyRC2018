@@ -143,7 +143,7 @@ public class DriveTrain extends Subsystem {
 	 */
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
-		double turnSpeedModifier = 0.7;
+		double turnSpeedModifier = 0.85;
 
 		backward = backward * speedModifier;
 		forward = forward * speedModifier;

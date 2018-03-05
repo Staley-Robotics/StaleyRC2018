@@ -1,8 +1,12 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
 
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
+import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
@@ -16,34 +20,39 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * DriveTurn(Inches, Power, Turn, Time) 
  * GyroTurning(Angle)
  */
-public class LeftSwitch extends CommandGroup {
+public class LeftToSwitch extends CommandGroup {
 	
 	private final String TAG = (this.getName() + ": ");
 
-	public LeftSwitch() {
+	public LeftToSwitch() {
+		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to move forward without dragging
+		addSequential(new Delay(0.1));
 
 		// If left switch is ours
 		if (PlateColorChecker.leftSwitchColor()) {
-			addSequential(new DriveToSwitch());
+			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
+			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
+			addSequential(new DriveTurn(60, 0.9, 0, 3));
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
+			addSequential(new DriveTurn(28, 0.7, -0.88, 2));
+			addSequential(new Delay(0.3));
+			addSequential(new DriveTurn(12, 0.6, 0, 1));
+			addSequential(new AutoDropSequence());
 		}
 		// If right switch is ours
 		else {
-			addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 1)); // Goes straight
-			addSequential(new DriveTurn(50, 0.8, -0.75, 3)); // Moves forward while turning left
-			addSequential(new DriveTurn(42, 0.8, 0.75, 3)); // Moves forward while turning right to straighten back out
-			addSequential(new DriveTurn(30, 0.9, 0, 0.5)); // Move past the switch
 
 			// If left scale is ours
 			if (PlateColorChecker.leftScaleColor()) {
-//				addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION));
-//				addSequential(new DriveTurn(75, 1, 0, 2)); // Move all the way to the scale
-//				addSequential(new GyroTurning(90, 1)); // Turn towards the scale
-//				addSequential(new AutoDropSequence()); // Place the power cube
-//				addSequential(new DriveTurn(-30, -0.5, 0, 1)); // Back off the scale 
+				addSequential(new LeftToScale());
 			}
 
 			// If right scale is ours
 			else {
+				addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 1)); // Goes straight
+				addSequential(new DriveTurn(50, 0.8, -0.75, 3)); // Moves forward while turning left
+				addSequential(new DriveTurn(42, 0.8, 0.75, 3)); // Moves forward while turning right to straighten back out
+				addSequential(new DriveTurn(30, 0.9, 0, 0.5)); // Move past the switch
 //				addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION));
 //				addSequential(new DriveTurn(30, 0.9, 0, 0.5)); // Move to between the switch and scale
 //				addSequential(new DriveTurn(20, 0.8, 0.6, 1)); // Turn right

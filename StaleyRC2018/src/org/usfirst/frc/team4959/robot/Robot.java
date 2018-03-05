@@ -16,13 +16,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterSwitch;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToScale;
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightSwitch;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.commands.Elevator.DisableSoftLimits;
 import org.usfirst.frc.team4959.robot.commands.Elevator.EnableSoftLimits;
@@ -83,12 +82,11 @@ public class Robot extends TimedRobot {
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
 		m_chooser.addDefault("Delay", new Delay(15));
 		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
-		m_chooser.addObject("Left Switch", new LeftSwitch());
-		m_chooser.addObject("CenterToSwitch", new CenterSwitch());
-		m_chooser.addObject("Right Switch", new RightSwitch());
+		m_chooser.addObject("Left To Switch", new LeftToSwitch());
+		m_chooser.addObject("Center To Switch", new CenterSwitch());
+		m_chooser.addObject("Right To Switch", new RightToSwitch());
 		m_chooser.addObject("Right To Scale", new RightToScale());
 		m_chooser.addObject("Left To Scale", new LeftToScale());
-		m_chooser.addObject("Turn 90 Degrees", new GyroTurning(90, 5));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		isEnabled = false;
