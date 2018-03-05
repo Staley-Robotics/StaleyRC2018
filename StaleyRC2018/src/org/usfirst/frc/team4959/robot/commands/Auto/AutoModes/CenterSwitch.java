@@ -21,9 +21,8 @@ public class CenterSwitch extends CommandGroup {
 	private final String TAG = (this.getName() + ": ");
 
 	public CenterSwitch() {
-		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to
-																					// drop into switch
-
+		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to move forward without dragging
+																	
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
 			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
