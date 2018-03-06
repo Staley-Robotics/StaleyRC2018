@@ -5,6 +5,7 @@ import org.usfirst.frc.team4959.robot.commands.Intake.RunIntake;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,6 +23,8 @@ public class Intake extends Subsystem {
 	private Victor rightMotor;
 	private Victor leftMotor;
 	private Victor pivotMotor;
+	
+	private Encoder pivotEncoder;
 
 	public Intake() {
 		rightMotor = new Victor(RobotMap.INTAKE_RIGHT_PORT);
@@ -33,12 +36,20 @@ public class Intake extends Subsystem {
 		} catch (RuntimeException ex) {
 			DriverStation.reportError("Error instantiating Intake Solenoid: " + ex.getMessage(), true);
 		}
+		
+		try {
+			pivotEncoder = new Encoder(RobotMap.INTAKE_PIVOT_ENCODER_PORT_ONE, RobotMap.INTAKE_PIVOT_ENCODER_PORT_TWO, true, Encoder.EncodingType.k2X);
+			
+		} catch (RuntimeException ex) {
+			DriverStation.reportError("Error instantiating Intake Pivot Encoder: " + ex.getMessage(), true);
+		}
 	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new RunIntake());
 	}
 	
+	// ***** Intake Pivot *****
 	/**
 	 * Runs the pivot motor for the intake
 	 * 
@@ -47,7 +58,17 @@ public class Intake extends Subsystem {
 	public void runPivot(double power) {
 		pivotMotor.set(power);
 	}
+	
+	/**
+	 * Returns the encoder value for the encoder on the intake pivot
+	 * 
+	 * @return encoder value of the encoder on the intake pivot
+	 */
+	public double getPivotEncoderDistance () {
+		return pivotEncoder.getDistance();
+	}
 
+	// ***** Intake Motor Methods *****
 	/**
 	 * Runs intake motors.
 	 * 
@@ -58,6 +79,7 @@ public class Intake extends Subsystem {
 		rightMotor.set(-power);
 	}
 
+	// ***** Intake Solenoid Methods *****
 	// Retracts piston to inversely expand the intake
 	public void expandIntake() {
 		intakeSolenoid.set(DoubleSolenoid.Value.kForward);
