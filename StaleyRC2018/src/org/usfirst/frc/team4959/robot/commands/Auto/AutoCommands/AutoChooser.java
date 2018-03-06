@@ -5,7 +5,7 @@ import org.usfirst.frc.team4959.robot.util.AutoControl;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Changes the autoMode enum type object to the selected auto
  */
 public class AutoChooser extends Command {
 	
