@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class JoystickDrive extends Command {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
 	private DriveTrain driveTrain;

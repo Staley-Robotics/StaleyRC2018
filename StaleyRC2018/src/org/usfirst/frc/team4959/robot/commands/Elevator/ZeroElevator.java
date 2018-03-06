@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ZeroElevator extends Command {
 	
+	@SuppressWarnings("unused")
 	private final String TAG = (this.getName() + ": ");
 
     public ZeroElevator() {
