@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoChooser;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterToSwitch;
@@ -28,6 +29,7 @@ import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
 import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
@@ -77,15 +79,17 @@ public class Robot extends TimedRobot {
 		States.resetStates();
 
 		elevator.zeroPosition();
+		
+		AutoControl.setDefaultModes();
 
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
-		m_chooser.addDefault("Delay", new Delay(15));
-		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
-		m_chooser.addObject("Left To Switch", new LeftToSwitch());
-		m_chooser.addObject("Center To Switch", new CenterToSwitch());
-		m_chooser.addObject("Right To Switch", new RightToSwitch());
-		m_chooser.addObject("Right To Scale", new RightToScale());
-		m_chooser.addObject("Left To Scale", new LeftToScale());
+		m_chooser.addDefault("Delay", new AutoChooser(AutoControl.AutoModes.delay));
+		m_chooser.addObject("Auto Brett V5", new AutoChooser(AutoControl.AutoModes.autoBrettV5));
+		m_chooser.addObject("Center To Switch", new AutoChooser(AutoControl.AutoModes.centerToSwitch));
+		m_chooser.addObject("Left To Scale", new AutoChooser(AutoControl.AutoModes.leftToScale));
+		m_chooser.addObject("Left To Switch", new AutoChooser(AutoControl.AutoModes.leftToSwitch));
+		m_chooser.addObject("Right To Scale", new AutoChooser(AutoControl.AutoModes.rightToScale));
+		m_chooser.addObject("Right To Switch", new AutoChooser(AutoControl.AutoModes.rightToSwitch));
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		isEnabled = false;
@@ -114,6 +118,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
+		SmartDashboard.putNumber("Intake Pivot Encoder: ", intake.getPivotEncoderDistance());
 		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
 		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
 		SmartDashboard.putString("Elevator Control State: ", States.elevatorControlState.toString());
@@ -147,9 +152,32 @@ public class Robot extends TimedRobot {
 		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
+				
+		m_chooser.getSelected().start();
 
-		m_autonomousCommand = m_chooser.getSelected();
-
+		if (AutoControl.autoMode == AutoControl.AutoModes.delay) {
+			m_autonomousCommand = new Delay(15);
+			System.out.println("Running Delay");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.autoBrettV5) {
+			m_autonomousCommand = new AutoBrettV5();
+			System.out.println("Running AutoBrettV5");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.centerToSwitch) {
+			m_autonomousCommand = new CenterToSwitch();
+			System.out.println("Running Center To Switch");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.leftToScale) {
+			m_autonomousCommand = new LeftToScale();
+			System.out.println("Running Left To Scale");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.leftToSwitch) {
+			m_autonomousCommand = new LeftToSwitch();
+			System.out.println("Running Left To Switch");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.rightToScale) {
+			m_autonomousCommand = new RightToScale();
+			System.out.println("Running Right To Scale");
+		} else if (AutoControl.autoMode == AutoControl.AutoModes.rightToSwitch) {
+			m_autonomousCommand = new RightToSwitch();
+			System.out.println("Running Right To Switch");
+		}
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -197,6 +225,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Left Encoder: ", driveTrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Right Encoder: ", driveTrain.getRightEncoderDistance());
 		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
+		SmartDashboard.putNumber("Intake Pivot Encoder: ", intake.getPivotEncoderDistance());
 		SmartDashboard.putNumber("Gyro Yaw: ", driveTrain.getYaw());
 		SmartDashboard.putBoolean("NavX Connection: ", driveTrain.isNavxConnected());
 		SmartDashboard.putString("Elevator Control State: ", States.elevatorControlState.toString());
