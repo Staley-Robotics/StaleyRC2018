@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.LeftToSwitch;
@@ -27,6 +28,7 @@ import org.usfirst.frc.team4959.robot.subsystems.Climber;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
 import org.usfirst.frc.team4959.robot.subsystems.Intake;
+import org.usfirst.frc.team4959.robot.subsystems.LightDriveLEDController;
 import org.usfirst.frc.team4959.robot.subsystems.Pneumatics;
 import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
@@ -56,11 +58,14 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Elevator elevator;
 	public static Climber climber;
+	public static LightDriveLEDController ldrive;
 	
 	CollisionDetection collisionDetection;
 
 	Command m_autonomousCommand;
 	public static SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public static SendableChooser<AutoControl.ToScalePreferences> scalePreferenceChooser = new SendableChooser<>();
+	public static SendableChooser<AutoControl.ToSwitchPreferences> switchPreferenceChooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -74,6 +79,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		elevator = new Elevator();
 		climber = new Climber();
+		ldrive = new LightDriveLEDController();
 		
 		States.resetStates();
 
@@ -90,6 +96,16 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Right To Scale", new RightToScale());
 		m_chooser.addObject("Right To Switch", new RightToSwitch());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		scalePreferenceChooser.addDefault("Can't Go To Switch", AutoControl.ToScalePreferences.noGoToSwitch);
+		scalePreferenceChooser.addObject("Can Go To Switch", AutoControl.ToScalePreferences.canGoToSwitch);
+		SmartDashboard.putData("To Scale Preference", scalePreferenceChooser);
+		
+		switchPreferenceChooser.addDefault("Can't Go To Scale", AutoControl.ToSwitchPreferences.noGoToScale);
+		switchPreferenceChooser.addObject("Can Go To Scale", AutoControl.ToSwitchPreferences.canGoToScale);
+		SmartDashboard.putData("To Switch Auto Prefence", switchPreferenceChooser);
+		
+		SmartDashboard.putData("Gyro", new GyroTurning(90, 6));
 		
 		isEnabled = false;
 	}
@@ -111,6 +127,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		ldrive.updateLEDs();
+		
 		isEnabled = false;
 		LiveVariableStory.pos = Robot.elevator.getPosition();
 		
@@ -151,6 +169,9 @@ public class Robot extends TimedRobot {
 		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
+		
+		// Sets preferences for secondary options in auto
+		AutoControl.setToScalePreference(scalePreferenceChooser.getSelected());
 		
 		// Sets the selected auto mode
 		if (m_chooser.getSelected().toString().equalsIgnoreCase("Delay")) {
@@ -207,6 +228,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		ldrive.updateLEDs();
 	}
 
 	@Override
@@ -253,10 +276,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
-
 		
 		SmartDashboard.putData(new DisableSoftLimits());
 		SmartDashboard.putData(new EnableSoftLimits());
+		
+		ldrive.updateLEDs();
 
 //		if (collisionDetection.collisionDetector()) {
 //			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.5);
