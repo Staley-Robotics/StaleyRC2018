@@ -7,7 +7,7 @@ package org.usfirst.frc.team4959.robot.util;
 public class Constants {
 	// Intake speeds for taking in and sending out
 	public static final double INTAKE_IN_SPEED = 0.7;
-	public static final double INTAKE_OUT_SPEED = -0.4;
+	public static final double INTAKE_OUT_SPEED = -1;
 	
 	// Set elevations for the elevator
 	public static final double ELEVATOR_BOTTOM_ELEVATION = 3000;
