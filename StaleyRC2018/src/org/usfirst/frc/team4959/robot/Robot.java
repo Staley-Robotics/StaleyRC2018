@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoChooser;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.AutoBrettV5;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.CenterToSwitch;
@@ -61,7 +60,7 @@ public class Robot extends TimedRobot {
 	CollisionDetection collisionDetection;
 
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public static SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -83,13 +82,13 @@ public class Robot extends TimedRobot {
 		AutoControl.setDefaultModes();
 
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
-		m_chooser.addDefault("Delay", new AutoChooser(AutoControl.AutoModes.delay));
-		m_chooser.addObject("Auto Brett V5", new AutoChooser(AutoControl.AutoModes.autoBrettV5));
-		m_chooser.addObject("Center To Switch", new AutoChooser(AutoControl.AutoModes.centerToSwitch));
-		m_chooser.addObject("Left To Scale", new AutoChooser(AutoControl.AutoModes.leftToScale));
-		m_chooser.addObject("Left To Switch", new AutoChooser(AutoControl.AutoModes.leftToSwitch));
-		m_chooser.addObject("Right To Scale", new AutoChooser(AutoControl.AutoModes.rightToScale));
-		m_chooser.addObject("Right To Switch", new AutoChooser(AutoControl.AutoModes.rightToSwitch));
+		m_chooser.addDefault("Delay", new Delay(15));
+		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
+		m_chooser.addObject("Center To Switch", new CenterToSwitch());
+		m_chooser.addObject("Left To Scale", new LeftToScale());
+		m_chooser.addObject("Left To Switch", new LeftToSwitch());
+		m_chooser.addObject("Right To Scale", new RightToScale());
+		m_chooser.addObject("Right To Switch", new RightToSwitch());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		isEnabled = false;
@@ -152,9 +151,27 @@ public class Robot extends TimedRobot {
 		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
-				
-		m_chooser.getSelected().start();
+		
+		// Sets the selected auto mode
+		if (m_chooser.getSelected().toString().equalsIgnoreCase("Delay")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.delay);
+		} if (m_chooser.getSelected().toString().equalsIgnoreCase("AutoBrettV5")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.autoBrettV5);
+		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("CenterToSwitch")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.centerToSwitch);
+		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("LeftToScale")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.leftToScale);
+		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("LeftToSwitch")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.leftToSwitch);
+		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("RightToScale")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.rightToScale);
+		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("RightToSwitch")) {
+			AutoControl.setAutomode(AutoControl.AutoModes.rightToSwitch);
+		}
+						
+		System.out.println("Chosen Mode AutoInit: " + m_chooser.getSelected().toString());
 
+		// Sets the autonomousCommand to the selected auto mode
 		if (AutoControl.autoMode == AutoControl.AutoModes.delay) {
 			m_autonomousCommand = new Delay(15);
 			System.out.println("Running Delay");
@@ -177,7 +194,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new RightToSwitch();
 			System.out.println("Running Right To Switch");
 		}
-		
+				
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

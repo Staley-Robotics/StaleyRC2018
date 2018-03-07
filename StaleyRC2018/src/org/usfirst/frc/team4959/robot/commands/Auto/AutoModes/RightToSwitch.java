@@ -31,7 +31,7 @@ public class RightToSwitch extends CommandGroup {
 		if (PlateColorChecker.rightSwitchColor()) {
 			// ***** Place a cube in the right switch *****	
 			addSequential(new DriveTurn(10, 0.5, 0, 1.2));
-			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to
+//			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION)); // Raises elevator to position to
 			addSequential(new DriveTurn(FieldDimensions.DS_TO_SWITCH-42, 0.7, 0, 2)); // Drive Forward to switch
 			addSequential(new DriveTurn(30, 0.4, 0, 1.5));
 			addSequential(new ShifterOff());

@@ -15,11 +15,27 @@ public class AutoControl {
 	}
 	
 	public static enum ToScalePreferences {
-		canGoToSwitch, noGoToSwitch;
+		/*
+		 * The robot is allowed to go to the nearby switch if owned if the desired scale is not owned
+		 */
+		canGoToSwitch, 
+		
+		/*
+		 * The robot is not allowed to go to the nearby switch if the desired scale is not owned
+		 */
+		noGoToSwitch;
 	}
 	
 	public static enum ToSwitchPreferences {
-		canGoToScale, noGoToScale;
+		/*
+		 * The robot is allowed to go to the nearby scale if owned if the desired switch is not owned
+		 */
+		canGoToScale, 
+		
+		/*
+		 * The robot is not allowed to go to the nearby scale if the desired switch is not owned
+		 */
+		noGoToScale;
 	}
 	
 	// Sets the default states for autoMode and the preferences

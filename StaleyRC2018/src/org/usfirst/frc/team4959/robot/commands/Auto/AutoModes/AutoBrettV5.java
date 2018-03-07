@@ -14,6 +14,6 @@ public class AutoBrettV5 extends CommandGroup {
 	
 	public AutoBrettV5() {
 		// ***** Cross the auto line *****
-		addSequential(new DriveTurn(FieldDimensions.DS_TO_AUTO_LINE, 6, 0, 5));
+		addSequential(new DriveTurn(FieldDimensions.DS_TO_AUTO_LINE-20, 6, 0, 5));
 	}
 }
