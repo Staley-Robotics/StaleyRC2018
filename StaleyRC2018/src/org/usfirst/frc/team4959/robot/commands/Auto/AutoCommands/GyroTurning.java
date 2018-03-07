@@ -77,11 +77,21 @@ public class GyroTurning extends Command {
 				driveTrain.arcadeDrive(0, power);
 			}
 		}
+		currentAngle = driveTrain.getYaw();
+		error = targetAngle - currentAngle;
+		
+		System.out.println("Current Angle: " + currentAngle + "\tTarget Angle: " + targetAngle + "\tError: " + error);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-    	return Math.abs(error) < 2 || time.get() > seconds;
+		if (Math.abs(error) < 2) {
+			System.out.println("Ended by distance");
+		} else if (time.get() > seconds) {
+			System.out.println("Ended by time");
+		}
+		
+    	return Math.abs(error) < 2 || time.get() > seconds || Math.abs(targetAngle) < Math.abs(currentAngle);
     }
 
 	// Called once after isFinished returns true
