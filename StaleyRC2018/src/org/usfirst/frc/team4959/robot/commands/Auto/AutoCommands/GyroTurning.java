@@ -3,6 +3,8 @@ package org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands;
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,25 +12,22 @@ import edu.wpi.first.wpilibj.command.Command;
  * Rotates the robot using the NavX Gyro 
  */
 
-public class GyroTurning extends Command {
+public class GyroTurning extends Command implements PIDOutput {
 
 	private final String TAG = (this.getName() + ": ");
 
 	private DriveTrain driveTrain;
+	private PIDController turnPID;
 	private Timer time;
-
-	private double targetAngle;
-	private double startingAngle;
-	private double currentAngle;
-	private double error;
+	private Timer delay;
+	
+	private double angle;
 	private double seconds;
-
-	private double power;
-
-	private boolean isClockwise;
 
 	// PID Values
 	private final double kP = 0.02;
+	private final double kI = 0;
+	private final double kD = 0.06;
 
 	public GyroTurning(double angle, double seconds) {
 		requires(Robot.driveTrain);
@@ -38,65 +37,61 @@ public class GyroTurning extends Command {
 		time = new Timer();
 		time.reset();
 
-		this.targetAngle = angle;
+		delay = new Timer();
+		delay.reset();
+
+		this.angle = angle;
 		this.seconds = seconds;
 
-		power = 0.6;
+		turnPID = new PIDController(kP, kI, kD, driveTrain.getNavx(), this);
+		// Range of angles that can be inputted
+		turnPID.setInputRange(-180, 180);
 
-		isClockwise = angle > 0;
+		// prevent the motors from receiving too little power
+		if (angle > 0)
+			turnPID.setOutputRange(0.4, 1);
+		else if (angle < 0)
+			turnPID.setOutputRange(-1, -0.4);
+
+		// Tolerance of how far off the angle can be
+		turnPID.setAbsoluteTolerance(0.5);
+		turnPID.setContinuous(false);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		time.start();
+		driveTrain.resetNavx();
+		driveTrain.shifterOff();
 
-		startingAngle = driveTrain.getYaw();
-		targetAngle += startingAngle;
+		delay.start();
+		while (delay.get() < 0.1) {
+			System.out.println("Delaying Gyro");
+		}
+		delay.stop();
+
+		time.start();
+		turnPID.setSetpoint(angle);
+		turnPID.enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		currentAngle = driveTrain.getYaw();
-
-		if (isClockwise) {
-			error = targetAngle - currentAngle;
-			double Pout = error * kP;
-			
-			if (error < 20) {
-				driveTrain.arcadeDrive(0, Pout);
-			} else {
-				driveTrain.arcadeDrive(0, power);
-			}
-		} else {
-			error = currentAngle - targetAngle;
-			double Pout = error * kP;
-			
-			if (error < 20) {
-				driveTrain.arcadeDrive(0, Pout);
-			} else {
-				driveTrain.arcadeDrive(0, power);
-			}
-		}
-		currentAngle = driveTrain.getYaw();
-		error = targetAngle - currentAngle;
-		
-		System.out.println("Current Angle: " + currentAngle + "\tTarget Angle: " + targetAngle + "\tError: " + error);
+		System.out.println("Angle: " + driveTrain.getYaw());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (Math.abs(error) < 2) {
-			System.out.println("Ended by distance");
-		} else if (time.get() > seconds) {
-			System.out.println("Ended by time");
-		}
-		
-    	return Math.abs(error) < 2 || time.get() > seconds || Math.abs(targetAngle) < Math.abs(currentAngle);
-    }
+		return turnPID.onTarget() || time.get() > seconds;
+	}
 
 	// Called once after isFinished returns true
 	protected void end() {
 		driveTrain.arcadeDrive(0, 0);
+
+		System.out.println("Finished: " + driveTrain.getYaw());
+
+		turnPID.disable();
+		turnPID.reset();
 
 		time.stop();
 		time.reset();
@@ -109,5 +104,13 @@ public class GyroTurning extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		end();
+	}
+
+	/*
+	 * Outputs the motor speed from the PIDController
+	 */
+	@Override
+	public void pidWrite(double output) {
+		driveTrain.arcadeDrive(0, -output);
 	}
 }

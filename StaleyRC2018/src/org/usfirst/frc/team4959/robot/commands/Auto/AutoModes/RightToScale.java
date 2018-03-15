@@ -4,6 +4,7 @@ import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequenc
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -29,17 +30,16 @@ public class RightToScale extends CommandGroup {
 			// ***** Place the cube in the right scale *****
 			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
 			addParallel(new SetElevatorPosition(40000));
-			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 133), 0.8, 0, 4)); // Goes straight to decision point
-			addParallel(new SetElevatorPosition(Constants.ELEVATOR_MID_SCALE_ELEVATION)); // TODO change to High Scale for comp
-			addSequential(new DriveTurn(15, 0.6, -0.7, 3)); // small turn right
+			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 1406), 0.8, 0, 4)); // Goes straight to decision point
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION)); // TODO change to High Scale for comp
+			addSequential(new DriveTurn(20, 0.6, -0.72, 3)); // small turn right
 			addSequential(new DriveTurn(15, 0.6, 0.4, 3)); // correction left to straight
-			addSequential(new DriveTurn(45, 0.8, 0, 4)); // Drive to scale
-			addSequential(new DriveTurn(57, 0.5, 0.53, 5)); // turn into scale
+			addSequential(new DriveTurn(55, 0.8, 0, 4)); // Drive to scale
+			addSequential(new DriveTurn(65, 0.5, 0.58, 5)); // turn into scale
+			addSequential(new DriveTurn(2, 0.65, 0, 2));
 			addSequential(new DriveTurn(1, -0.3, 0, 1));
 			addSequential(new Delay(0.5));
 			addSequential(new AutoDropSequence()); // Drop cube into scale
-			addSequential(new DriveTurn(15, -0.6, 0, 2)); 
-			addSequential(new DriveTurn(30, -0.6, 0.8, 2));
 			
 			// ***** Try to place a second cube in the switch *****
 //			if (PlateColorChecker.rightSwitchColor()) {
@@ -60,8 +60,25 @@ public class RightToScale extends CommandGroup {
 		
 		// If left scale is ours
 		else {
-			// ***** Cross the auto line *****
-			addSequential(new AutoBrettV5());
+			if (AutoControl.toScalePreference == AutoControl.ToScalePreferences.canGoToSwitch) {
+				if (PlateColorChecker.rightSwitchColor()) {
+					// ***** Place a cube in the right switch *****
+					addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
+					addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
+					addSequential(new DriveTurn(60, 0.9, 0, 3));
+					addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
+					addSequential(new DriveTurn(28, 0.7, 0.88, 2)); // Drive while turning left
+					addSequential(new Delay(0.3));
+					addSequential(new DriveTurn(12, 0.6, 0, 1));
+					addSequential(new AutoDropSequence());
+				} else {
+					// ***** Cross the auto line *****
+					addSequential(new AutoBrettV5());
+				}
+			} else {
+				// ***** Cross the auto line *****
+				addSequential(new AutoBrettV5());
+			}
 		}
-	}
+	} 
 }

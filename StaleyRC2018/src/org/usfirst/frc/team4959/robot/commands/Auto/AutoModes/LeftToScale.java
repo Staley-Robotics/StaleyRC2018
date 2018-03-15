@@ -4,6 +4,7 @@ import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequenc
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -30,7 +31,7 @@ public class LeftToScale extends CommandGroup {
 			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
 			addParallel(new SetElevatorPosition(40000));
 			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 133), 0.8, 0, 4)); // Goes straight to decision point
-			addParallel(new SetElevatorPosition(Constants.ELEVATOR_MID_SCALE_ELEVATION)); // TODO change to High Scale for comp
+			addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION)); // TODO change to High Scale for comp
 			addSequential(new DriveTurn(15, 0.6, 0.7, 3)); // small turn left
 			addSequential(new DriveTurn(15, 0.6, -0.4, 3)); // correction right to straight
 			addSequential(new DriveTurn(55, 0.8, 0, 4)); // Drive to scale
@@ -58,8 +59,17 @@ public class LeftToScale extends CommandGroup {
 		
 		// If right scale is ours
 		else {
-			// ***** Cross the auto line *****
-			addSequential(new AutoBrettV5());
+			if (AutoControl.toScalePreference == AutoControl.ToScalePreferences.canGoToSwitch) {
+				if (PlateColorChecker.leftSwitchColor()) {
+					addSequential(new LeftToSwitch());
+				} else {
+					// ***** Cross the auto line *****
+					addSequential(new AutoBrettV5());
+				}
+			} else {
+				// ***** Cross the auto line *****
+				addSequential(new AutoBrettV5());
+			}
 		}
 	}
 }

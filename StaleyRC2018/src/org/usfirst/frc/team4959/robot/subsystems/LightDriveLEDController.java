@@ -26,7 +26,8 @@ public class LightDriveLEDController extends Subsystem {
     }
     
     public void setColor (Color color) {
-    	ldrive_can.SetColor(1, color);
+    	ldrive_can.SetColor(2, color);
+    	System.out.println(ldrive_can.GetStatus().toString());
     }
     
     public void updateLEDs() {

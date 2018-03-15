@@ -1,11 +1,13 @@
 package org.usfirst.frc.team4959.robot.subsystems;
 
+import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.RobotMap;
 import org.usfirst.frc.team4959.robot.commands.Drive.JoystickDrive;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.States;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.mach.LightDrive.Color;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -91,7 +93,8 @@ public class DriveTrain extends Subsystem {
 	/**
 	 * Sends power to the left side of the drive train
 	 * 
-	 * @param speed Power to send to the left side of the drive train
+	 * @param speed
+	 *            Power to send to the left side of the drive train
 	 */
 	public void leftDrive(double speed) {
 		leftSide.set(speed);
@@ -100,7 +103,8 @@ public class DriveTrain extends Subsystem {
 	/**
 	 * Sends power to the right side of the drive train
 	 * 
-	 * @param speed Power to send to the right side of the drive train
+	 * @param speed
+	 *            Power to send to the right side of the drive train
 	 */
 	public void rightDrive(double speed) {
 		rightSide.set(speed);
@@ -109,8 +113,10 @@ public class DriveTrain extends Subsystem {
 	/**
 	 * Drives the robot using arcade drive
 	 * 
-	 * @param power Power sent to the drive train
-	 * @param turn Turn power sent to the drive train
+	 * @param power
+	 *            Power sent to the drive train
+	 * @param turn
+	 *            Turn power sent to the drive train
 	 */
 	public void execute(double power, double turn) {
 		arcadeDrive(power, turn);
@@ -124,50 +130,65 @@ public class DriveTrain extends Subsystem {
 	// ***** Drives *****
 
 	/**
-	 * Sends power to right and left sides individually
-	 * Not in use
+	 * Sends power to right and left sides individually Not in use
 	 * 
-	 * @param speedL Power to send to the motors on the left side of drive train
-	 * @param speedR Power to send to the motors on right side of drive train
+	 * @param speedL
+	 *            Power to send to the motors on the left side of drive train
+	 * @param speedR
+	 *            Power to send to the motors on right side of drive train
 	 */
 	public void tankDrive(double speedL, double speedR) {
 		m_drive.tankDrive(speedL, speedR);
 	}
 
 	/**
-	 * Controls robot using forwards, backwards, and rotation values
-	 * The drive we are using right now
+	 * Controls robot using forwards, backwards, and rotation values The drive we
+	 * are using right now
 	 * 
-	 * @param backward Power sent for going reverse from left trigger
-	 * @param forward Power sent for going forward from right trigger
-	 * @param rotate Rotation power sent to robot from left joystick's x-axis
+	 * @param backward
+	 *            Power sent for going reverse from left trigger
+	 * @param forward
+	 *            Power sent for going forward from right trigger
+	 * @param rotate
+	 *            Rotation power sent to robot from left joystick's x-axis
 	 */
 	public void worldOfTanksDrive(double backward, double forward, double rotate) {
 		double speedModifier = 1;
-		double turnSpeedModifier = 0.85;
+		double turnSpeedModifier = 1.0;
+		if (States.shifterState == States.ShifterStates.high) {
+			turnSpeedModifier = 1;
+		} else {
+			turnSpeedModifier = 0.85;
+		}
 
 		backward = backward * speedModifier;
 		forward = forward * speedModifier;
-		if (rotate > Constants.JOYSTICK_X_AXIS_DEADZONE || rotate < Constants.JOYSTICK_X_AXIS_DEADZONE) {
+		if (rotate > Constants.JOYSTICK_X_AXIS_DEADZONE || rotate < -Constants.JOYSTICK_X_AXIS_DEADZONE) {
 			rotate = -rotate * turnSpeedModifier;
+			if (rotate > 0.9 || rotate < -0.9) {
+				shifterOff();
+			}
 		} else {
 			rotate = 0;
+			shifterOn();
 		}
 
 		if (backward > 0) {
-			m_drive.arcadeDrive(backward, rotate);
+			m_drive.arcadeDrive(backward, rotate, true);
 		} else if (forward > 0) {
-			m_drive.arcadeDrive(-forward, rotate);
+			m_drive.arcadeDrive(-forward, rotate, true);
 		} else {
-			m_drive.arcadeDrive(0, rotate);
+			m_drive.arcadeDrive(0, rotate, true);
 		}
 	}
 
 	/**
 	 * Controls robot's drive train with power and turn values
 	 * 
-	 * @param power Power sent to robot's drive train
-	 * @param turn Turn power sent to robot's drive train
+	 * @param power
+	 *            Power sent to robot's drive train
+	 * @param turn
+	 *            Turn power sent to robot's drive train
 	 */
 	public void arcadeDrive(double power, double turn) {
 		m_drive.arcadeDrive(power, turn);
@@ -180,6 +201,7 @@ public class DriveTrain extends Subsystem {
 		shifter2.set(false);
 		shifter.set(true);
 		States.shifterState = States.ShifterStates.high;
+		// Robot.ldrive.setColor(Color.WHITE);
 	}
 
 	// Shifts the gear-box down
@@ -187,6 +209,7 @@ public class DriveTrain extends Subsystem {
 		shifter.set(false);
 		shifter2.set(true);
 		States.shifterState = States.ShifterStates.low;
+		// Robot.ldrive.setColor(Color.YELLOW);
 	}
 
 	// ***** Encoders *****
@@ -222,12 +245,16 @@ public class DriveTrain extends Subsystem {
 
 	// ***** NavX *****
 
-	// Do not use
-	// public void resetNavx() {
-	// navx.reset();
-	// }
+	/*
+	 * Resets the gyro on the Navx
+	 */
+	public void resetNavx() {
+		navx.reset();
+	}
 
-	// Resets the yaw value set by user (Z-axis by default)
+	/*
+	 * Resets the yaw value set by user (Z-axis by default)
+	 */
 	public void resetYaw() {
 		navx.zeroYaw();
 	}

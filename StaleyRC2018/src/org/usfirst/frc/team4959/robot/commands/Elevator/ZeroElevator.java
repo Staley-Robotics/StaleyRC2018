@@ -3,6 +3,7 @@ package org.usfirst.frc.team4959.robot.commands.Elevator;
 import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -25,6 +26,8 @@ public class ZeroElevator extends Command {
     protected void execute() {
     	Robot.elevator.zeroPosition();
     	LiveVariableStory.pos = 0;
+    	Robot.m_oi.xboxControllertwo.setRumble(RumbleType.kRightRumble, 1);
+    	Robot.m_oi.xboxControllertwo.setRumble(RumbleType.kLeftRumble, 1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,6 +37,8 @@ public class ZeroElevator extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.m_oi.xboxControllertwo.setRumble(RumbleType.kRightRumble, 0);
+    	Robot.m_oi.xboxControllertwo.setRumble(RumbleType.kLeftRumble, 0);
     }
 
     // Called when another command which requires one or more of the same

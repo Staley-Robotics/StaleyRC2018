@@ -18,7 +18,7 @@ public class SetPivotPosition extends Command {
         this.position = position;
         this.power = power;
         
-        tolerance = 50;
+        tolerance = 5;
     }
 
     // Called just before this Command runs the first time
@@ -32,15 +32,17 @@ public class SetPivotPosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Math.abs(position) - Math.abs(Robot.intake.getPivotEncoderDistance())) < tolerance;
+        return Math.abs(Math.abs(position) - Math.abs(Robot.intake.getPivotEncoderDistance())) < tolerance || Math.abs(Robot.m_oi.getRightStickYCont2()) > 0.08;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Set Pivot Position End.");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	this.end();
     }
 }

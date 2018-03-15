@@ -60,12 +60,28 @@ public class Intake extends Subsystem {
 	}
 	
 	/**
+	 * Returns the power being sent to the pivot motor
+	 * 
+	 * @return power being sent to the pivot motor
+	 */
+	public double getPivotMotorPower () {
+		return pivotMotor.get();
+	}
+	
+	/**
 	 * Returns the encoder value for the encoder on the intake pivot
 	 * 
 	 * @return encoder value of the encoder on the intake pivot
 	 */
 	public double getPivotEncoderDistance () {
 		return pivotEncoder.getDistance();
+	}
+	
+	/**
+	 * Resets the encoder value for the encoder on the intake pivot
+	 */
+	public void zeroPivotEncoder () {
+		pivotEncoder.reset();
 	}
 
 	// ***** Intake Motor Methods *****

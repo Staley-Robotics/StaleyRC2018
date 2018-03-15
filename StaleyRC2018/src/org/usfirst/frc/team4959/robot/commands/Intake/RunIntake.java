@@ -14,13 +14,13 @@ public class RunIntake extends Command {
 	private final String TAG = (this.getName() + ": ");
 	
 	private double intakeInPower;
-	private double intakeOutPower;
+	private double intakeOutPowerModifier;
 	private final double DEAD_ZONE = 0.1;
 
     public RunIntake() {
     	requires(Robot.intake);
     	intakeInPower = Constants.INTAKE_IN_SPEED;
-    	intakeOutPower = Constants.INTAKE_OUT_SPEED;
+    	intakeOutPowerModifier = Constants.INTAKE_OUT_SPEED_MODIFIER;
     }
 
     // Called just before this Command runs the first time
@@ -31,7 +31,7 @@ public class RunIntake extends Command {
     protected void execute() {
     	// Push out
     	if(Robot.m_oi.getLeftTriggerCont2() > DEAD_ZONE) {
-    		Robot.intake.succBoi(intakeOutPower);
+    		Robot.intake.succBoi(Robot.m_oi.getLeftTriggerCont2() * intakeOutPowerModifier);
     	}
     	// Bring in
     	else if(Robot.m_oi.getRightTriggerCont2() > DEAD_ZONE) {
@@ -41,7 +41,11 @@ public class RunIntake extends Command {
     		Robot.intake.succBoi(0);
     	}
     	
-    	Robot.intake.runPivot(Robot.m_oi.getRightStickYCont2());
+    	if (Robot.m_oi.getRightStickYCont2() > 0.15 || Robot.m_oi.getRightStickYCont2() < -0.15) {
+    		Robot.intake.runPivot(-Robot.m_oi.getRightStickYCont2());
+    	} else {
+    		Robot.intake.runPivot(0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -14,6 +14,6 @@ public class AutoDropSequence extends CommandGroup {
     public AutoDropSequence() {
 //    	addSequential(new ExpandIntake());
     	addSequential(new Delay(0.25));
-		addSequential(new AutoRunIntake(Constants.INTAKE_OUT_SPEED, 1));
+		addSequential(new AutoRunIntake(Constants.INTAKE_OUT_SPEED_MODIFIER, 1));
     }
 }

@@ -29,7 +29,7 @@ public class CenterToSwitch extends CommandGroup {
 			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
 			addSequential(new DriveTurn(47, 0.7, -0.75, 3)); // Moves forward while turning right
-			addSequential(new DriveTurn(40, 0.7, 0.76, 3)); // Moves forward while turning left to straighten back out
+			addSequential(new DriveTurn(40, 0.7, 0.745, 3)); // Moves forward while turning left to straighten back out
 			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(20, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());

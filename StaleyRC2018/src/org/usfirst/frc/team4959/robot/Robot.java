@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team4959.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +25,8 @@ import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToSwitch;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoModes.RightToScale;
 import org.usfirst.frc.team4959.robot.commands.Elevator.DisableSoftLimits;
 import org.usfirst.frc.team4959.robot.commands.Elevator.EnableSoftLimits;
+import org.usfirst.frc.team4959.robot.commands.Elevator.ZeroElevator;
+import org.usfirst.frc.team4959.robot.commands.Intake.SetPivotPosition;
 import org.usfirst.frc.team4959.robot.subsystems.Climber;
 import org.usfirst.frc.team4959.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4959.robot.subsystems.Elevator;
@@ -34,6 +37,8 @@ import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.CollisionDetection;
 import org.usfirst.frc.team4959.robot.util.LiveVariableStory;
 import org.usfirst.frc.team4959.robot.util.States;
+
+import com.mach.LightDrive.Color;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -58,12 +63,15 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Elevator elevator;
 	public static Climber climber;
-	public static LightDriveLEDController ldrive;
+//	public static LightDriveLEDController ldrive;
 	
 	CollisionDetection collisionDetection;
+	
+	public static boolean pivotControl;
+	public static SetPivotPosition lowerPivotForAuto;
 
 	Command m_autonomousCommand;
-	public static SendableChooser<Command> m_chooser = new SendableChooser<>();
+	public static SendableChooser<String> m_chooser = new SendableChooser<>();
 	public static SendableChooser<AutoControl.ToScalePreferences> scalePreferenceChooser = new SendableChooser<>();
 	public static SendableChooser<AutoControl.ToSwitchPreferences> switchPreferenceChooser = new SendableChooser<>();
 
@@ -79,7 +87,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		elevator = new Elevator();
 		climber = new Climber();
-		ldrive = new LightDriveLEDController();
+//		ldrive = new LightDriveLEDController();
 		
 		States.resetStates();
 
@@ -88,13 +96,13 @@ public class Robot extends TimedRobot {
 		AutoControl.setDefaultModes();
 
 		// Add a list of autonomous modes to choose from to the Smart Dashboard
-		m_chooser.addDefault("Delay", new Delay(15));
-		m_chooser.addObject("Auto Brett V5", new AutoBrettV5());
-		m_chooser.addObject("Center To Switch", new CenterToSwitch());
-		m_chooser.addObject("Left To Scale", new LeftToScale());
-		m_chooser.addObject("Left To Switch", new LeftToSwitch());
-		m_chooser.addObject("Right To Scale", new RightToScale());
-		m_chooser.addObject("Right To Switch", new RightToSwitch());
+		m_chooser.addDefault("Delay", "Delay");
+		m_chooser.addObject("Auto Brett V5", "AutoBrettV5");
+		m_chooser.addObject("Center To Switch", "CenterToSwitch");
+		m_chooser.addObject("Left To Scale", "LeftToScale");
+		m_chooser.addObject("Left To Switch", "LeftToSwitch");
+		m_chooser.addObject("Right To Scale", "RightToScale");
+		m_chooser.addObject("Right To Switch", "RightToSwitch");
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		scalePreferenceChooser.addDefault("Can't Go To Switch", AutoControl.ToScalePreferences.noGoToSwitch);
@@ -107,6 +115,7 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putData("Gyro", new GyroTurning(90, 6));
 		
+		SmartDashboard.putData("Zero Elevator", new ZeroElevator());
 		isEnabled = false;
 	}
 
@@ -127,7 +136,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		ldrive.updateLEDs();
+//		ldrive.updateLEDs();
 		
 		isEnabled = false;
 		LiveVariableStory.pos = Robot.elevator.getPosition();
@@ -174,20 +183,32 @@ public class Robot extends TimedRobot {
 		AutoControl.setToScalePreference(scalePreferenceChooser.getSelected());
 		
 		// Sets the selected auto mode
-		if (m_chooser.getSelected().toString().equalsIgnoreCase("Delay")) {
+		if (m_chooser.getSelected().equalsIgnoreCase("Delay")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.delay);
-		} if (m_chooser.getSelected().toString().equalsIgnoreCase("AutoBrettV5")) {
+		} if (m_chooser.getSelected().equalsIgnoreCase("AutoBrettV5")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.autoBrettV5);
-		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("CenterToSwitch")) {
+		} else if (m_chooser.getSelected().equalsIgnoreCase("CenterToSwitch")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.centerToSwitch);
-		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("LeftToScale")) {
+		} else if (m_chooser.getSelected().equalsIgnoreCase("LeftToScale")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.leftToScale);
-		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("LeftToSwitch")) {
+		} else if (m_chooser.getSelected().equalsIgnoreCase("LeftToSwitch")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.leftToSwitch);
-		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("RightToScale")) {
+		} else if (m_chooser.getSelected().equalsIgnoreCase("RightToScale")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.rightToScale);
-		} else if (m_chooser.getSelected().toString().equalsIgnoreCase("RightToSwitch")) {
+		} else if (m_chooser.getSelected().equalsIgnoreCase("RightToSwitch")) {
 			AutoControl.setAutomode(AutoControl.AutoModes.rightToSwitch);
+		}
+		
+		if (switchPreferenceChooser.getSelected() == AutoControl.ToSwitchPreferences.canGoToScale) {
+			AutoControl.toSwitchPreference = AutoControl.ToSwitchPreferences.canGoToScale;
+		} else {
+			AutoControl.toSwitchPreference = AutoControl.ToSwitchPreferences.noGoToScale;
+		}
+		
+		if (scalePreferenceChooser.getSelected() == AutoControl.ToScalePreferences.canGoToSwitch) {
+			AutoControl.toScalePreference = AutoControl.ToScalePreferences.canGoToSwitch;
+		} else {
+			AutoControl.toScalePreference = AutoControl.ToScalePreferences.noGoToSwitch;
 		}
 						
 		System.out.println("Chosen Mode AutoInit: " + m_chooser.getSelected().toString());
@@ -216,6 +237,9 @@ public class Robot extends TimedRobot {
 			System.out.println("Running Right To Switch");
 		}
 				
+		lowerPivotForAuto = new SetPivotPosition(intake.getPivotEncoderDistance() - 404, -1);
+		pivotControl = true;
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -229,12 +253,21 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-		ldrive.updateLEDs();
+		if (pivotControl) {
+			lowerPivotForAuto.start();
+			pivotControl = false;
+//			(new DisableSoftLimits()).start();
+		}
+		
+//		ldrive.updateLEDs();
+		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
 	}
 
 	@Override
 	public void teleopInit() {
 		isEnabled = true;
+		
+		intake.zeroPivotEncoder();
 		
 //		m_oi.cancelPositionCommands();
 
@@ -277,15 +310,21 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
 		
+		SmartDashboard.putNumber("TalonSRX One Current: ", elevator.getTalonOneCurrent());
+		SmartDashboard.putNumber("TalonSRX Two Current: ", elevator.getTalonTwoCurrent());
+		
 		SmartDashboard.putData(new DisableSoftLimits());
 		SmartDashboard.putData(new EnableSoftLimits());
 		
-		ldrive.updateLEDs();
+//		ldrive.updateLEDs();
 
-//		if (collisionDetection.collisionDetector()) {
-//			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.5);
-//			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0.5);
-//		}
+		if (collisionDetection.collisionDetector()) {
+			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0.75);
+			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0.8);
+		} else {
+			m_oi.xboxController.setRumble(RumbleType.kRightRumble, 0);
+			m_oi.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+		}
 	}
 
 	/**

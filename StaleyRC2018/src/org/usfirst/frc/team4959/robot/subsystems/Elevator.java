@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -22,6 +23,7 @@ public class Elevator extends Subsystem {
 
 	public WPI_TalonSRX talon;
 	public WPI_TalonSRX talon2;
+	private DigitalInput limitSwitch;
 
 	boolean brake = true;
 
@@ -42,10 +44,10 @@ public class Elevator extends Subsystem {
 			talon = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR_PORT_ONE);
 			// Brake mode if brake is true Coast Mode if brake is false
 			talon.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
-			talon.setInverted(false);
+			talon.setInverted(true);
 			// Configures the sensor hooked up to it to be an encoder.
 			talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-			talon.setSensorPhase(false); // Inverts the sensor
+			talon.setSensorPhase(true); // Inverts the sensor
 
 			talon.configPeakOutputForward(PEAK_MOVE, 0); // Max power going up
 			talon.configPeakOutputReverse(-PEAK_MOVE, 0); // Max power going down
@@ -70,16 +72,17 @@ public class Elevator extends Subsystem {
 			talon2 = new WPI_TalonSRX(RobotMap.ELEVATOR_MOTOR_PORT_TWO);
 			// Brake mode if brake is true Coast Mode if brake is false
 			talon2.setNeutralMode(brake ? NeutralMode.Brake : NeutralMode.Coast);
+//			talon2.setNeutralMode(NeutralMode.Coast);
 			talon2.setInverted(true);
 
 			talon2.configPeakOutputForward(PEAK_MOVE, 0); // Max power going up
 			talon2.configPeakOutputReverse(-PEAK_MOVE, 0); // Max power going down
 			talon2.configNominalOutputForward(NOMINAL_MOVE, 0); // Minimal power going up
 			talon2.configNominalOutputReverse(-NOMINAL_MOVE, 0); // Minimal power going down
-			talon2.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
-			talon2.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
-			talon2.configForwardSoftLimitEnable(true, 0);
-			talon2.configReverseSoftLimitEnable(true, 0);
+//			talon2.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
+//			talon2.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
+//			talon2.configForwardSoftLimitEnable(false, 0);
+//			talon2.configReverseSoftLimitEnable(false, 0);
 			
 			talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_TWO);
 
@@ -91,6 +94,7 @@ public class Elevator extends Subsystem {
 			DriverStation.reportError("Error Instantiating TalonSRX: " + ex.getMessage(), true);
 		}
 		
+		limitSwitch = new DigitalInput(RobotMap.ELEVATOR_LIMIT_SWITCH_PORT);
 	}
 
 	// ***** Elevator Motor Control *****
@@ -135,6 +139,24 @@ public class Elevator extends Subsystem {
 	public double getTalonTwoMotorPower() {
 		return talon2.getMotorOutputPercent();
 	}
+	
+	/**
+	 * Returns how much current is flowing through talonSRX one
+	 * 
+	 * @return the current flowing through talonSRX one
+	 */
+	public double getTalonOneCurrent () {
+		return talon.getOutputCurrent();
+	}
+	
+	/**
+	 * Returns how much current is flowing through talonSRX two
+	 * 
+	 * @return the current flowing through talonSRX two
+	 */
+	public double getTalonTwoCurrent () {
+		return talon2.getOutputCurrent();
+	}
 
 	/**
 	 * Used to set a position for the elevator to move to and makes it begin moving.
@@ -143,20 +165,25 @@ public class Elevator extends Subsystem {
 	 * @param position encoder value the elevator is to move to
 	 */
 	public void setPosition(double position) {
-		// Sets minimal power to send to motor when moving on its own
-		talon.configNominalOutputForward(NOMINAL_PID, 0);
-		talon.configNominalOutputReverse(-NOMINAL_PID, 0);
-		talon2.configNominalOutputForward(NOMINAL_PID, 0);
-		talon2.configNominalOutputReverse(-NOMINAL_PID, 0);
-		// Sets max power to send to motor when moving on its own
-		talon.configPeakOutputForward(PEAK_PID_FWD, 0);
-		talon.configPeakOutputReverse(PEAK_PID_REV, 0);
-		talon2.configPeakOutputForward(PEAK_PID_FWD, 0);
-		talon2.configPeakOutputReverse(PEAK_PID_REV, 0);
+		if(getPosition() > 4000 && getPosition() < position) {
+			// Sets minimal power to send to motor when moving on its own
+			talon.configNominalOutputForward(NOMINAL_PID, 0);
+			talon.configNominalOutputReverse(-NOMINAL_PID, 0);
+			talon2.configNominalOutputForward(NOMINAL_PID, 0);
+			talon2.configNominalOutputReverse(-NOMINAL_PID, 0);
+			// Sets max power to send to motor when moving on its own
+			talon.configPeakOutputForward(PEAK_PID_FWD, 0);
+			talon.configPeakOutputReverse(PEAK_PID_REV, 0);
+			talon2.configPeakOutputForward(PEAK_PID_FWD, 0);
+			talon2.configPeakOutputReverse(PEAK_PID_REV, 0);
 
-		// Setting position to go to
-		talon.set(ControlMode.Position, position);
-		talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
+			// Setting position to go to
+			talon.set(ControlMode.Position, position);
+			talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
+		} else {
+			talon.set(0);
+			talon2.set(0);
+		}
 	}
 	
 	// Disables elevator
@@ -193,6 +220,8 @@ public class Elevator extends Subsystem {
 	// Zeros the encoder connected to the talon SRX
 	public void zeroPosition() {
 		talon.setSelectedSensorPosition(0, 0, 0);
+		
+		System.out.println(TAG + "Zeroing elevator encoder");
 	}
 
 	/**
@@ -208,5 +237,15 @@ public class Elevator extends Subsystem {
 	public void stopElevator() {
 		talon.stopMotor();
 		talon2.stopMotor();
+	}
+	
+	/**
+	 * Returns if the limit switch is being touched
+	 * 
+	 * @return true if limit switch is being pressed
+	 * @return false if limit switch isn't being pressed
+	 */
+	public boolean getLimitSwitch () {
+		return limitSwitch.get();
 	}
 }

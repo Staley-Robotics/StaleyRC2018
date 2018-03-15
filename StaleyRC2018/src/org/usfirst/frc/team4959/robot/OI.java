@@ -13,6 +13,8 @@ import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Elevator.ZeroElevator;
 import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
 import org.usfirst.frc.team4959.robot.commands.Intake.ExpandIntake;
+import org.usfirst.frc.team4959.robot.commands.Intake.SetPivotPosition;
+import org.usfirst.frc.team4959.robot.commands.Intake.ZeroPivotEncoder;
 import org.usfirst.frc.team4959.robot.util.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -85,17 +87,13 @@ public class OI {
 		highScaleElevation.cancelWhenPressed(midScalePosition);
 		highScaleElevation.whenPressed(highScalePosition);
 		
-		// Stops any elevation command to allow player to use joy-stick control on the elevator. 
-		Button stopElevator = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
-		stopElevator.cancelWhenPressed(bottomPosition);
-		stopElevator.cancelWhenPressed(switchPosition);
-		stopElevator.cancelWhenPressed(lowScalePosition);
-		stopElevator.cancelWhenPressed(midScalePosition);
-		stopElevator.cancelWhenPressed(highScalePosition);
+		// Zeros the encoder on the pivot
+		Button zeroPivot = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
+		zeroPivot.whenPressed(new ZeroPivotEncoder());
 		
 		// Sets the encoder on the elevator to 0
-		Button zeroElevator = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
-		zeroElevator.whenPressed(new ZeroElevator());
+//		Button zeroElevator = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
+//		zeroElevator.whenPressed(new ZeroElevator());
 	}
 	
 	public void cancelPositionCommands() {

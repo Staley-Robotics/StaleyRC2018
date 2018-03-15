@@ -39,8 +39,8 @@ public class SetElevatorPosition extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println(TAG + "SetElevatorPosition:Execute: trying to go to position.");
-		System.out.println(TAG + "Position: " + Robot.elevator.getPosition() + " / " + pos);
+//		System.out.println(TAG + "SetElevatorPosition:Execute: trying to go to position.");
+//		System.out.println(TAG + "Position: " + Robot.elevator.getPosition() + " / " + pos);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -49,6 +49,9 @@ public class RobotMap {
 	
 	public static final int INTAKE_PIVOT_ENCODER_PORT_ONE = 4;
 	public static final int INTAKE_PIVOT_ENCODER_PORT_TWO = 5;
+	
+	// ***** Limit Switch *****
+	public static final int ELEVATOR_LIMIT_SWITCH_PORT = 6;
 
 	// ***** Motor/Speed Controller Ports *****
 	public static final int FRONT_LEFT_DRIVE_MOTOR_PORT = 4;

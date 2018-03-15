@@ -29,17 +29,13 @@ public class ShifterToggle extends Command {
 		// Toggles to high gear
 		if (States.shifterState == States.ShifterStates.low) {
 			Robot.driveTrain.shifterOn();
-			
-			Robot.ldrive.setColor(lowColor);
-			
+						
 			System.out.println(TAG + "High Gear");
 		}
 		// Toggles to low gear
 		else {
 			Robot.driveTrain.shifterOff();
-			
-			Robot.ldrive.setColor(highColor);
-			
+						
 			System.out.println(TAG + "Low Gear");
 		}
 	}
