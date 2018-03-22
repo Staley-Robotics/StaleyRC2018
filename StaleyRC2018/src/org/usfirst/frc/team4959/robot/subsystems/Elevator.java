@@ -37,6 +37,7 @@ public class Elevator extends Subsystem {
 	private final double PEAK_PID_FWD = 0.9;
 	private final double PEAK_PID_REV = -0.8;
 	private final double PEAK_MOVE = 1.0;
+	private final double SPEED_MODIFIER_MOVE_REV = 0.75;
 
 	public Elevator() {
 		// Setting up the first TalonSRX
@@ -56,7 +57,7 @@ public class Elevator extends Subsystem {
 			talon.configForwardSoftLimitThreshold(Constants.FWD_SOFT_LIMIT, 0); // The farthest distance it can go up
 			talon.configReverseSoftLimitThreshold(Constants.REV_SOFT_LIMIT, 0); // The farthest distance it can go down
 			talon.configForwardSoftLimitEnable(true, 0);
-			talon.configReverseSoftLimitEnable(true, 0);
+			talon.configReverseSoftLimitEnable(false, 0);
 
 			zeroPosition();
 
@@ -165,7 +166,7 @@ public class Elevator extends Subsystem {
 	 * @param position encoder value the elevator is to move to
 	 */
 	public void setPosition(double position) {
-		if(getPosition() > 4000 && getPosition() < position) {
+//		if(getPosition() > 4000 && getPosition() < position) {
 			// Sets minimal power to send to motor when moving on its own
 			talon.configNominalOutputForward(NOMINAL_PID, 0);
 			talon.configNominalOutputReverse(-NOMINAL_PID, 0);
@@ -180,10 +181,10 @@ public class Elevator extends Subsystem {
 			// Setting position to go to
 			talon.set(ControlMode.Position, position);
 			talon2.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_PORT_ONE);
-		} else {
-			talon.set(0);
-			talon2.set(0);
-		}
+//		} else {
+//			talon.set(0);
+//			talon2.set(0);
+//		}
 	}
 	
 	// Disables elevator
@@ -246,6 +247,6 @@ public class Elevator extends Subsystem {
 	 * @return false if limit switch isn't being pressed
 	 */
 	public boolean getLimitSwitch () {
-		return limitSwitch.get();
+		return !limitSwitch.get();
 	}
 }

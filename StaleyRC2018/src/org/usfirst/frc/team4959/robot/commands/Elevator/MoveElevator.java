@@ -66,8 +66,12 @@ public class MoveElevator extends Command {
 			}
 			
 			// While the limit switch is being hit, zero the encoder
-			if (elevator.getLimitSwitch())
-				elevator.zeroPosition();
+			if (elevator.getLimitSwitch()) {
+				if (States.elevatorControlState != States.ElevatorControlStates.pidControl) {
+					elevator.zeroPosition();
+					LiveVariableStory.pos = 0;
+				}
+			}
 		}
 	}
 

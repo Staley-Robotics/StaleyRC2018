@@ -24,6 +24,8 @@ public class SetElevatorPosition extends Command {
 	protected void initialize() {
 		Robot.elevator.setPosition(pos);
 		States.elevatorControlState = States.ElevatorControlStates.pidControl;
+		
+		System.out.println("SetPosition Initialized");
 
 		if (pos == Constants.ELEVATOR_BOTTOM_ELEVATION)
 			States.elevatorPosState = States.ElevatorPosStates.bottom;
@@ -39,7 +41,7 @@ public class SetElevatorPosition extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-//		System.out.println(TAG + "SetElevatorPosition:Execute: trying to go to position.");
+		System.out.println(TAG + "SetElevatorPosition:Execute: trying to go to position." + States.elevatorPosState);
 //		System.out.println(TAG + "Position: " + Robot.elevator.getPosition() + " / " + pos);
 	}
 

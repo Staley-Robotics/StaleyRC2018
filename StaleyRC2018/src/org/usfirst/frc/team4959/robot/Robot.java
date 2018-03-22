@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team4959.robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -64,6 +66,7 @@ public class Robot extends TimedRobot {
 	public static Elevator elevator;
 	public static Climber climber;
 //	public static LightDriveLEDController ldrive;
+	private UsbCamera camera;
 	
 	CollisionDetection collisionDetection;
 	
@@ -115,6 +118,10 @@ public class Robot extends TimedRobot {
 		
 		SmartDashboard.putData("Gyro", new GyroTurning(90, 6));
 		
+		camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(360, 270);
+		camera.setFPS(15);
+		
 		SmartDashboard.putData("Zero Elevator", new ZeroElevator());
 		isEnabled = false;
 	}
@@ -155,6 +162,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
+		SmartDashboard.putBoolean("Limit Switch", elevator.getLimitSwitch());
 		
 		Scheduler.getInstance().run();
 	}
@@ -309,6 +317,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
 		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
+		SmartDashboard.putBoolean("Limit Switch", elevator.getLimitSwitch());
 		
 		SmartDashboard.putNumber("TalonSRX One Current: ", elevator.getTalonOneCurrent());
 		SmartDashboard.putNumber("TalonSRX Two Current: ", elevator.getTalonTwoCurrent());

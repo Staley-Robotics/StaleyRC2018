@@ -24,7 +24,7 @@ public class Climber extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-        setDefaultCommand(new RunClimberMotor(Robot.m_oi.getRightStickYCont2()));
+        setDefaultCommand(new RunClimberMotor());
     }
     
     /**

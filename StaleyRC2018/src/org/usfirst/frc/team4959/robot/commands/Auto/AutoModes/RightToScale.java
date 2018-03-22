@@ -63,40 +63,40 @@ public class RightToScale extends CommandGroup {
 
 		// If left scale is ours
 		else {
-			// ***** Place a cube in the right scale *****
-			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
-			addParallel(new SetElevatorPosition(40000));
-			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4)); // Goes straight to decision
-																							// point
-			addSequential(new GyroTurning(-90, 1.3));
-			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4));
-			addSequential(new GyroTurning(90, 1.3));
-			addSequential(new DriveTurn(40, 0.7, 0, 4));
-			addSequential(new AutoDropSequence());
-
-			// Backup sequence
-			addSequential(new DriveTurn(40, -0.4, 0, 3));
-			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
-			// if (AutoControl.toScalePreference ==
-			// AutoControl.ToScalePreferences.canGoToSwitch) {
-			// if (PlateColorChecker.rightSwitchColor()) {
-			// // ***** Place a cube in the right switch *****
-			// addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
-			// addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
-			// addSequential(new DriveTurn(60, 0.9, 0, 3));
-			// addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
-			// addSequential(new DriveTurn(28, 0.7, 0.88, 2)); // Drive while turning left
-			// addSequential(new Delay(0.3));
-			// addSequential(new DriveTurn(12, 0.6, 0, 1));
-			// addSequential(new AutoDropSequence());
-			// } else {
-			// // ***** Cross the auto line *****
-			// addSequential(new AutoBrettV5());
-			// }
-			// } else {
-			// // ***** Cross the auto line *****
-			// addSequential(new AutoBrettV5());
-			// }
+//			// ***** Place a cube in the right scale *****
+//			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
+//			addParallel(new SetElevatorPosition(40000));
+//			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4)); // Goes straight to decision
+//																							// point
+//			addSequential(new GyroTurning(-90, 1.3));
+//			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4));
+//			addSequential(new GyroTurning(90, 1.3));
+//			addSequential(new DriveTurn(40, 0.7, 0, 4));
+//			addSequential(new AutoDropSequence());
+//
+//			// Backup sequence
+//			addSequential(new DriveTurn(40, -0.4, 0, 3));
+//			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
+			 if (AutoControl.toScalePreference ==
+			 AutoControl.ToScalePreferences.canGoToSwitch) {
+			 if (PlateColorChecker.rightSwitchColor()) {
+			 // ***** Place a cube in the right switch *****
+			 addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
+			 addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
+			 addSequential(new DriveTurn(60, 0.9, 0, 3));
+			 addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
+			 addSequential(new DriveTurn(28, 0.7, 0.88, 2)); // Drive while turning left
+			 addSequential(new Delay(0.3));
+			 addSequential(new DriveTurn(12, 0.6, 0, 1));
+			 addSequential(new AutoDropSequence());
+			 } else {
+			 // ***** Cross the auto line *****
+			 addSequential(new AutoBrettV5());
+			 }
+			 } else {
+			 // ***** Cross the auto line *****
+			 addSequential(new AutoBrettV5());
+			 }
 		}
 	}
 }

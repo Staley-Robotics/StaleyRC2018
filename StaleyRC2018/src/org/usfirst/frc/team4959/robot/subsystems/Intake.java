@@ -91,7 +91,7 @@ public class Intake extends Subsystem {
 	 * @param power Power to send to the intake motors
 	 */
 	public void succBoi(double power) {
-		leftMotor.set(-power);
+		leftMotor.set(power);
 		rightMotor.set(-power);
 	}
 
