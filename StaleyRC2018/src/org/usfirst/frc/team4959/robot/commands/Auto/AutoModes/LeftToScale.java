@@ -42,6 +42,10 @@ public class LeftToScale extends CommandGroup {
 			addSequential(new Delay(0.5));
 			addSequential(new AutoDropSequence()); // Drop cube into scale
 			
+			// Backup sequence
+			addSequential(new DriveTurn(40, -0.4, 0, 3));
+			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
+			
 			// ***** Try to place a second cube in the switch *****
 //			addSequential(new DriveTurn(15, -0.6, 0, 2)); 
 //			addSequential(new DriveTurn(30, -0.6, -0.8, 2));
@@ -66,6 +70,13 @@ public class LeftToScale extends CommandGroup {
 			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4)); // Goes straight to decision point
 			addSequential(new GyroTurning(90, 1.3));
 			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4));
+			addSequential(new GyroTurning(-90, 1.3));
+			addSequential(new DriveTurn(40, 0.7, 0, 4));
+			addSequential(new AutoDropSequence());
+			
+			// Backup sequence
+			addSequential(new DriveTurn(40, -0.4, 0, 3));
+			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 			
 //			if (AutoControl.toScalePreference == AutoControl.ToScalePreferences.canGoToSwitch) {
 //				if (PlateColorChecker.leftSwitchColor()) {

@@ -34,6 +34,9 @@ public class CenterToSwitch extends CommandGroup {
 			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(20, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());
+			// Backup sequence
+			addSequential(new DriveTurn(40, -0.4, 0, 3));
+			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 			
 			// ***** Try for the a second cube in the switch *****
 //			addSequential(new DriveTurn(12, -0.6, 0, 3)); // Straight into the switch
@@ -63,8 +66,10 @@ public class CenterToSwitch extends CommandGroup {
 			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(25, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());
+			// Backup sequence
+			addSequential(new DriveTurn(40, -0.4, 0, 3));
+			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 		}
-		addSequential(new DriveTurn(40, -0.4, 0, 3));
-		addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
+		
 	}
 }
