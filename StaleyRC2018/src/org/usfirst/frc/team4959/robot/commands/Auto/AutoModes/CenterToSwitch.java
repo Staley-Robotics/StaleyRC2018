@@ -5,6 +5,7 @@ import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
+import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -63,5 +64,7 @@ public class CenterToSwitch extends CommandGroup {
 			addSequential(new DriveTurn(25, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());
 		}
+		addSequential(new DriveTurn(40, -0.4, 0, 3));
+		addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 	}
 }

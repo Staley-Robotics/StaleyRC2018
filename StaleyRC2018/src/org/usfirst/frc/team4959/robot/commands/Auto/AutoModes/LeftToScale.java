@@ -3,6 +3,7 @@ package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
+import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.GyroTurning;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.Constants;
@@ -59,17 +60,23 @@ public class LeftToScale extends CommandGroup {
 		
 		// If right scale is ours
 		else {
-			if (AutoControl.toScalePreference == AutoControl.ToScalePreferences.canGoToSwitch) {
-				if (PlateColorChecker.leftSwitchColor()) {
-					addSequential(new LeftToSwitch());
-				} else {
-					// ***** Cross the auto line *****
-					addSequential(new AutoBrettV5());
-				}
-			} else {
-				// ***** Cross the auto line *****
-				addSequential(new AutoBrettV5());
+			// ***** Place a cube in the right scale *****
+			addSequential(new DriveTurn(30, 0.5, 0, 1)); // Slow start to not jerk the robot
+			addParallel(new SetElevatorPosition(40000));
+			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4)); // Goes straight to decision point
+			addSequential(new GyroTurning(90, 1.3));
+			addSequential(new DriveTurn((FieldDimensions.DS_TO_SCALE - 100), 0.8, 0, 4));
+			
+//			if (AutoControl.toScalePreference == AutoControl.ToScalePreferences.canGoToSwitch) {
+//				if (PlateColorChecker.leftSwitchColor()) {
+//					addSequential(new LeftToSwitch());
+//				} else {
+//					// ***** Cross the auto line *****
+//					addSequential(new AutoBrettV5());
+//				}
+//			} else {
+//				// ***** Cross the auto line *****
+//				addSequential(new AutoBrettV5());
 			}
 		}
 	}
-}

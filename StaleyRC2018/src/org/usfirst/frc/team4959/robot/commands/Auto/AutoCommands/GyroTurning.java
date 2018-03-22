@@ -63,6 +63,7 @@ public class GyroTurning extends Command implements PIDOutput {
 		driveTrain.resetNavx();
 		driveTrain.shifterOff();
 
+		// Delay while the gyro is reseting
 		delay.start();
 		while (delay.get() < 0.1) {
 			System.out.println("Delaying Gyro");

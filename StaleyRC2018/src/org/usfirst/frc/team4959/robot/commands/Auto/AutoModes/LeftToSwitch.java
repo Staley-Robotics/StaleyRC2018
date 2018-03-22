@@ -40,12 +40,11 @@ public class LeftToSwitch extends CommandGroup {
 			addSequential(new DriveTurn(12, 0.6, 0, 1));
 			addSequential(new AutoDropSequence());
 		}
-		
 		// If right switch is ours
 		else {
-			
 			if(AutoControl.toSwitchPreference == AutoControl.ToSwitchPreferences.canGoToScale) {
 				if (PlateColorChecker.leftScaleColor()) {
+					// ***** Place a cube in the left switch *****
 					addSequential(new LeftToScale());
 				} else {
 					// ***** Cross the auto line *****
@@ -55,27 +54,6 @@ public class LeftToSwitch extends CommandGroup {
 				// ***** Cross the auto line *****
 				addSequential(new AutoBrettV5());
 			}
-
-			// ***** Try to place a cube in the scale *****
-//			// If left scale is ours
-//			if (PlateColorChecker.leftScaleColor()) {
-//				addSequential(new LeftToScale());
-//			}
-//
-//			// If right scale is ours
-//			else {
-//				addSequential(new DriveTurn(FieldDimensions.HALF_DS_TO_SWITCH, 0.99, 0, 1)); // Goes straight
-//				addSequential(new DriveTurn(50, 0.8, -0.75, 3)); // Moves forward while turning left
-//				addSequential(new DriveTurn(42, 0.8, 0.75, 3)); // Moves forward while turning right to straighten back out
-//				addSequential(new DriveTurn(30, 0.9, 0, 0.5)); // Move past the switch
-//				addParallel(new SetElevatorPosition(Constants.ELEVATOR_HIGH_SCALE_ELEVATION));
-//				addSequential(new DriveTurn(30, 0.9, 0, 0.5)); // Move to between the switch and scale
-//				addSequential(new DriveTurn(20, 0.8, 0.6, 1)); // Turn right
-//				addSequential(new DriveTurn(60, 1, 0, 2)); // Drive to the right side of the scale
-//				addSequential(new GyroTurning(-90, 1)); // Turn towards the scale
-//				addSequential(new AutoDropSequence()); // Place the power cube
-//				addSequential(new DriveTurn(-30, -0.5, 0, 2)); // Back off the scale
-//			}
 		}
 	}
 }
