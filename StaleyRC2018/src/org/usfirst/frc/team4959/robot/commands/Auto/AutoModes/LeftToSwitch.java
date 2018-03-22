@@ -39,6 +39,9 @@ public class LeftToSwitch extends CommandGroup {
 			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(12, 0.6, 0, 1));
 			addSequential(new AutoDropSequence());
+			// Backup sequence
+						addSequential(new DriveTurn(40, -0.4, 0, 3));
+						addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 		}
 		// If right switch is ours
 		else {
