@@ -7,17 +7,17 @@ package org.usfirst.frc.team4959.robot.util;
 public class Constants {
 	// Intake speeds for taking in and sending out
 	public static final double INTAKE_IN_SPEED = 0.7;
-	public static final double INTAKE_OUT_SPEED_MODIFIER = -0.39;
+	public static final double INTAKE_OUT_SPEED_MODIFIER = -0.50;
 	
 	// Set elevations for the elevator
 	public static final double ELEVATOR_BOTTOM_ELEVATION = 3000;
 	public static final double ELEVATOR_SWITCH_ELEVATION = 446000;
 	public static final double ELEVATOR_LOW_SCALE_ELEVATION = 953500;
 	public static final double ELEVATOR_MID_SCALE_ELEVATION = 1060000;	//not in use 
-	public static final double ELEVATOR_HIGH_SCALE_ELEVATION = 1174884.0; // was 1160000
+	public static final double ELEVATOR_HIGH_SCALE_ELEVATION = 1221060; // was 1160000
 	
 	// Soft limits for how far the elevator can go 
-	public static final int FWD_SOFT_LIMIT = 1174890; // was 1170000
+	public static final int FWD_SOFT_LIMIT = 1221066; // was 1170000
 	public static final int REV_SOFT_LIMIT = 8000;
 	
 	// Encoder values for intake pivot

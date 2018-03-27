@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
+import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.commands.Intake.SetPivotPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -22,6 +24,7 @@ public class CenterToSwitch extends CommandGroup {
 	
 	public CenterToSwitch() {
 		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to move forward without dragging
+		addParallel(new SetPivotPosition(Robot.intake.getPivotEncoderDistance() - 404, -1));
 																	
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {
@@ -60,10 +63,10 @@ public class CenterToSwitch extends CommandGroup {
 			addSequential(new DriveTurn(10, 0.8, 0, 1)); // Drives straight
 			addSequential(new DriveTurn(2, -0.4, 0, 1)); // Jerkin
 			addParallel(new SetElevatorPosition(Constants.ELEVATOR_SWITCH_ELEVATION));
-			addSequential(new DriveTurn(47, 0.7, 0.75, 3)); // Moves forward while turning left
-			addSequential(new DriveTurn(5, 0.6, 0, 2));
-			addSequential(new DriveTurn(40, 0.7, -0.79, 3)); // Moves forward while turning right to straighten back out
-			addSequential(new Delay(0.3));
+			addSequential(new DriveTurn(49, 0.7, 0.75, 3)); // Moves forward while turning left
+			addSequential(new DriveTurn(22, 0.6, 0, 2));
+			addSequential(new DriveTurn(40, 0.7, -0.78, 3)); // Moves forward while turning right to straighten back out
+//			addSequential(new Delay(0.3));
 			addSequential(new DriveTurn(25, 0.6, 0, 3)); // Straight into the switch
 			addSequential(new AutoDropSequence());
 			// Backup sequence

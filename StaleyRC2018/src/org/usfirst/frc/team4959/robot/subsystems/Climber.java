@@ -21,6 +21,8 @@ public class Climber extends Subsystem {
 	public Climber() {
 		winchOne = new Victor(RobotMap.CLIMBER_MOTOR_PORT_ONE);
 		winchTwo = new Victor(RobotMap.CLIMBER_MOTOR_PORT_TWO);
+		winchOne.setInverted(false);
+		winchTwo.setInverted(true);
 	}
 
     public void initDefaultCommand() {

@@ -1,10 +1,12 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
 
+import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.commands.Intake.SetPivotPosition;
 import org.usfirst.frc.team4959.robot.util.AutoControl;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -27,6 +29,7 @@ public class LeftToSwitch extends CommandGroup {
 	public LeftToSwitch() {
 		addParallel(new SetElevatorPosition(30000)); // Raises elevator to position to move forward without dragging
 		addSequential(new Delay(0.1));
+		addParallel(new SetPivotPosition(Robot.intake.getPivotEncoderDistance() - 404, -1));
 
 		// If left switch is ours
 		if (PlateColorChecker.leftSwitchColor()) {
@@ -40,8 +43,8 @@ public class LeftToSwitch extends CommandGroup {
 			addSequential(new DriveTurn(12, 0.6, 0, 1));
 			addSequential(new AutoDropSequence());
 			// Backup sequence
-						addSequential(new DriveTurn(40, -0.4, 0, 3));
-						addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
+			addSequential(new DriveTurn(40, -0.4, 0, 3));
+			addSequential(new SetElevatorPosition(Constants.ELEVATOR_BOTTOM_ELEVATION));
 		}
 		// If right switch is ours
 		else {

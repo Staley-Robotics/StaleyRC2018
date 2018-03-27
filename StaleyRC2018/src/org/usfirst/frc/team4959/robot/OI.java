@@ -9,6 +9,8 @@ package org.usfirst.frc.team4959.robot;
 //Change?
 
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterToggle;
+import org.usfirst.frc.team4959.robot.commands.Elevator.DisableRevSoftLimit;
+import org.usfirst.frc.team4959.robot.commands.Elevator.EnableRevSoftLimit;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
 import org.usfirst.frc.team4959.robot.commands.Elevator.ZeroElevator;
 import org.usfirst.frc.team4959.robot.commands.Intake.CloseIntake;
@@ -87,13 +89,14 @@ public class OI {
 		highScaleElevation.cancelWhenPressed(midScalePosition);
 		highScaleElevation.whenPressed(highScalePosition);
 		
-		// Zeros the encoder on the pivot
-		Button zeroPivot = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
-		zeroPivot.whenPressed(new ZeroPivotEncoder());
+//		// Zeros the encoder on the pivot
+//		Button zeroPivot = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
+//		zeroPivot.whenPressed(new ZeroPivotEncoder());
 		
-		// Sets the encoder on the elevator to 0
-//		Button zeroElevator = new JoystickButton(xboxControllertwo, RobotMap.BACK_BUTTON);
-//		zeroElevator.whenPressed(new ZeroElevator());
+		//Disables soft Rev softlimit
+		Button disableRevSoftLimit = new JoystickButton(xboxControllertwo, RobotMap.START_BUTTON);
+		disableRevSoftLimit.whileHeld(new DisableRevSoftLimit());
+		disableRevSoftLimit.whenReleased(new EnableRevSoftLimit());
 	}
 	
 	public void cancelPositionCommands() {

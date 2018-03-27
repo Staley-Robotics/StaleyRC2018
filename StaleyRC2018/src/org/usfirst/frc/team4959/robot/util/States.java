@@ -10,7 +10,8 @@ public class States {
 	public static ElevatorPosStates elevatorPosState;
 	public static ShifterStates shifterState;
 	public static IntakeClawStates intakeClawState;
-	public static ElevatorSoftLimitStates elevatorSoftLimitState;
+	public static ElevatorFwdSoftLimitStates elevatorFwdSoftLimitState;
+	public static ElevatorRevSoftLimitStates elevatorRevSoftLimitState;
 
 	// Tells us if the elevator is currently being controlled by player's joystick
 	// or the PID Controller
@@ -35,7 +36,11 @@ public class States {
 		userControl, positionHeld;
 	}
 	
-	public static enum ElevatorSoftLimitStates {
+	public static enum ElevatorFwdSoftLimitStates {
+		disabled, enabled;
+	}
+	
+	public static enum ElevatorRevSoftLimitStates {
 		disabled, enabled;
 	}
 
@@ -45,6 +50,7 @@ public class States {
 		elevatorPosState = ElevatorPosStates.userControl;
 		shifterState = ShifterStates.high;
 		intakeClawState = IntakeClawStates.closed;
-		elevatorSoftLimitState = ElevatorSoftLimitStates.enabled;
+		elevatorFwdSoftLimitState = ElevatorFwdSoftLimitStates.enabled;
+		elevatorRevSoftLimitState = ElevatorRevSoftLimitStates.enabled;
 	}
 }

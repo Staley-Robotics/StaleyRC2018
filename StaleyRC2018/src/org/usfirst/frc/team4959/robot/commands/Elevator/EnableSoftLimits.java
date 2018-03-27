@@ -37,7 +37,8 @@ public class EnableSoftLimits extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	States.elevatorSoftLimitState = States.ElevatorSoftLimitStates.enabled;
+    	States.elevatorFwdSoftLimitState = States.ElevatorFwdSoftLimitStates.enabled;
+    	States.elevatorRevSoftLimitState = States.ElevatorRevSoftLimitStates.enabled;
     }
 
     // Called when another command which requires one or more of the same

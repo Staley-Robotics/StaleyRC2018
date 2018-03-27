@@ -15,6 +15,7 @@ public class RunClimberMotor extends Command {
 	private final String TAG = (this.getName() + ": ");
 
 	private double power;
+	private final double CLIMBER_DEADZONE = 0.3;
 
 	public RunClimberMotor() {
 		requires(Robot.climber);
@@ -29,12 +30,12 @@ public class RunClimberMotor extends Command {
 	@SuppressWarnings("static-access")
 	protected void execute() {
 		power = Robot.m_oi.getRightStickYCont1();
-		if (Robot.m_oi.getRightStickYCont1() >= Constants.JOYSTICK_Y_AXIS_DEADZONE || Robot.m_oi.getRightStickYCont1() <= -Constants.JOYSTICK_Y_AXIS_DEADZONE) {
+		if (Robot.m_oi.getRightStickYCont1() >= CLIMBER_DEADZONE || Robot.m_oi.getRightStickYCont1() <= -CLIMBER_DEADZONE) {
 			Robot.climber.runClimber(power);
-			System.out.println(TAG + "Powering climber"	);
 //			Robot.m_oi.xboxController.setRumble(GenericHID.RumbleType.kRightRumble, Math.abs(Robot.m_oi.getRightStickYCont1()));
 		} else {
 //			Robot.m_oi.xboxController.setRumble(GenericHID.RumbleType.kRightRumble, 0);
+			Robot.climber.runClimber(0);
 		}
 	}
 

@@ -1,11 +1,13 @@
 package org.usfirst.frc.team4959.robot.commands.Auto.AutoModes;
 
+import org.usfirst.frc.team4959.robot.Robot;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.AutoDropSequence;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.Delay;
 import org.usfirst.frc.team4959.robot.commands.Auto.AutoCommands.DriveTurn;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOff;
 import org.usfirst.frc.team4959.robot.commands.Drive.ShifterOn;
 import org.usfirst.frc.team4959.robot.commands.Elevator.SetElevatorPosition;
+import org.usfirst.frc.team4959.robot.commands.Intake.SetPivotPosition;
 import org.usfirst.frc.team4959.robot.util.Constants;
 import org.usfirst.frc.team4959.robot.util.FieldDimensions;
 import org.usfirst.frc.team4959.robot.util.PlateColorChecker;
@@ -23,6 +25,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightToSwitch extends CommandGroup {
 
 	public RightToSwitch() {
+		
+		addParallel(new SetPivotPosition(Robot.intake.getPivotEncoderDistance() - 404, -1));
 
 		// If right switch is ours
 		if (PlateColorChecker.rightSwitchColor()) {

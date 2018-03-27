@@ -160,7 +160,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
 		SmartDashboard.putNumber("First Elevator Motor Power: ", elevator.getTalonOneMotorPower());
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
-		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
+		SmartDashboard.putString("Elevator Fwd Soft Limit State: ", States.elevatorFwdSoftLimitState.toString());
+		SmartDashboard.putString("Elevator Rev Soft Limit State: ", States.elevatorRevSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
 		SmartDashboard.putBoolean("Limit Switch", elevator.getLimitSwitch());
 		
@@ -186,6 +187,7 @@ public class Robot extends TimedRobot {
 		driveTrain.shifterOn();
 		intake.closeIntake();
 		elevator.zeroPosition();
+//		lowerPivotForAuto = new SetPivotPosition(intake.getPivotEncoderDistance() - 404, -1);
 		
 		// Sets preferences for secondary options in auto
 		AutoControl.setToScalePreference(scalePreferenceChooser.getSelected());
@@ -244,9 +246,7 @@ public class Robot extends TimedRobot {
 			m_autonomousCommand = new RightToSwitch();
 			System.out.println("Running Right To Switch");
 		}
-				
-		lowerPivotForAuto = new SetPivotPosition(intake.getPivotEncoderDistance() - 404, -1);
-		pivotControl = true;
+//		pivotControl = true;
 		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
@@ -261,11 +261,11 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-		if (pivotControl) {
-			lowerPivotForAuto.start();
-			pivotControl = false;
-//			(new DisableSoftLimits()).start();
-		}
+//		if (pivotControl) {
+//			lowerPivotForAuto.start();
+//			pivotControl = false;
+////			(new DisableSoftLimits()).start();
+//		}
 		
 //		ldrive.updateLEDs();
 		SmartDashboard.putNumber("Elevator Encoder: ", elevator.getPosition());
@@ -315,7 +315,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Elevator Position State: ", States.elevatorPosState.toString());
 		SmartDashboard.putNumber("First Elevator Motor Power: ", elevator.getTalonOneMotorPower());
 		SmartDashboard.putNumber("Second Elevator Motor Power: ", elevator.getTalonTwoMotorPower());
-		SmartDashboard.putString("Elevator Soft Limit State: ", States.elevatorSoftLimitState.toString());
+		SmartDashboard.putString("Elevator Fwd Soft Limit State: ", States.elevatorFwdSoftLimitState.toString());
+		SmartDashboard.putString("Elevator Rev Soft Limit State: ", States.elevatorRevSoftLimitState.toString());
 		SmartDashboard.putBoolean("Is Enabled: ", isEnabled);
 		SmartDashboard.putBoolean("Limit Switch", elevator.getLimitSwitch());
 		

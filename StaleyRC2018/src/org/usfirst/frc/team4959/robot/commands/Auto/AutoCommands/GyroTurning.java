@@ -25,7 +25,7 @@ public class GyroTurning extends Command implements PIDOutput {
 	private double seconds;
 
 	// PID Values
-	private final double kP = 0.02;
+	private final double kP = 0.023;
 	private final double kI = 0;
 	private final double kD = 0.06;
 
@@ -49,12 +49,12 @@ public class GyroTurning extends Command implements PIDOutput {
 
 		// prevent the motors from receiving too little power
 		if (angle > 0)
-			turnPID.setOutputRange(0.4, 1);
+			turnPID.setOutputRange(0.5, 1);
 		else if (angle < 0)
-			turnPID.setOutputRange(-1, -0.4);
+			turnPID.setOutputRange(-1, -0.5);
 
 		// Tolerance of how far off the angle can be
-		turnPID.setAbsoluteTolerance(0.5);
+		turnPID.setAbsoluteTolerance(1.0);
 		turnPID.setContinuous(false);
 	}
 

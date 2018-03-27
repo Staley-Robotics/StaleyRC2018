@@ -72,6 +72,10 @@ public class MoveElevator extends Command {
 					LiveVariableStory.pos = 0;
 				}
 			}
+			
+		//	boolean LimitSwitchState = elevator.getLimitSwitch();
+			
+		//	if()
 		}
 	}
 
